@@ -5,7 +5,7 @@ const PopularPlaces = () => {
   const coimbatorePlaces = [
     {
       name: 'Isha Yoga Center',
-      image: 'https://images.pexels.com/photos/1051838/pexels-photo-1051838.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: '/image.png',
       distance: '15 km from city center',
       duration: '30 min',
       description: 'Spiritual center founded by Sadhguru with Dhyanalinga',
@@ -13,7 +13,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Brookefields Mall',
-      image: 'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: '/image.png',
       distance: '8 km from RS Puram',
       duration: '18 min',
       description: 'Premier shopping and entertainment destination',
@@ -21,7 +21,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Coimbatore Airport',
-      image: 'https://images.pexels.com/photos/912050/pexels-photo-912050.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: '/image.png',
       distance: '12 km from Junction',
       duration: '25 min',
       description: 'International airport serving Coimbatore',
@@ -29,7 +29,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Marudamalai Temple',
-      image: 'https://images.pexels.com/photos/3844788/pexels-photo-3844788.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: '/image.png',
       distance: '15 km from city',
       duration: '30 min',
       description: 'Famous hilltop temple dedicated to Lord Murugan',
@@ -40,7 +40,7 @@ const PopularPlaces = () => {
   const tamilNaduDestinations = [
     {
       name: 'Ooty (Udhagamandalam)',
-      image: 'https://images.pexels.com/photos/1007426/pexels-photo-1007426.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: '/image.png',
       distance: '85 km from Coimbatore',
       duration: '2.5 hours',
       description: 'Queen of Hill Stations with tea gardens',
@@ -48,7 +48,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Kodaikanal',
-      image: 'https://images.pexels.com/photos/1770809/pexels-photo-1770809.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: '/image.png',
       distance: '180 km from Coimbatore',
       duration: '4 hours',
       description: 'Princess of Hill Stations with pristine lakes',
@@ -56,7 +56,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Chennai',
-      image: 'https://images.pexels.com/photos/161901/paris-sunset-france-monument-161901.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: '/image.png',
       distance: '500 km from Coimbatore',
       duration: '7-8 hours',
       description: 'Capital city with MGR Central Railway Station',
@@ -64,7 +64,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Madurai',
-      image: 'https://images.pexels.com/photos/2064827/pexels-photo-2064827.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: '/image.png',
       distance: '220 km from Coimbatore',
       duration: '4-5 hours',
       description: 'Temple city with famous Meenakshi Amman Temple',
@@ -72,7 +72,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Bangalore',
-      image: 'https://images.pexels.com/photos/1105766/pexels-photo-1105766.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: '/image.png',
       distance: '360 km from Coimbatore',
       duration: '6-7 hours',
       description: 'IT capital and garden city of India',
@@ -80,7 +80,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Kanyakumari',
-      image: 'https://images.pexels.com/photos/3844788/pexels-photo-3844788.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: '/image.png',
       distance: '450 km from Coimbatore',
       duration: '8-9 hours',
       description: 'Southernmost tip with Thiruvalluvar Statue',

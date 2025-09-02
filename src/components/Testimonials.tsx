@@ -4,23 +4,24 @@ import { Star, Quote } from 'lucide-react';
 const Testimonials = () => {
   const testimonials = [
     {
-      name: 'Sarah Johnson',
-      role: 'Business Executive',
-      image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400',
-      rating: 5,
-      text: 'Kovai Drop Taxi has been my go-to taxi service for business trips. Always punctual, professional drivers, and clean vehicles. Highly recommended!'
+     name: 'Saraswathi',
+     role: 'Business Executive',
+     image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400', 
+     rating: 5,
+     text: 'Kovai Drop Taxi has been my go-to taxi service for business trips. Always punctual, professional drivers, and clean vehicles. Highly recommended!'
+   },
+
+    {
+     name: 'Kumaravel',
+     role: 'Frequent Traveler',
+     image: 'https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&w=400',
+     rating: 5,
+     text: 'Kovai Drop Taxi provides excellent service! The drivers are courteous and knowledgeable about the city. The booking system is seamless and pricing is very fair.'
     },
     {
-      name: 'Michael Chen',
-      role: 'Frequent Traveler',
-      image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400',
-      rating: 5,
-      text: 'Kovai Drop Taxi provides excellent service! The drivers are courteous and knowledgeable about the city. The booking system is seamless and pricing is very fair.'
-    },
-    {
-      name: 'Emily Rodriguez',
+      name: 'Kavitha',
       role: 'Local Resident',
-      image: 'https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?auto=compress&cs=tinysrgb&w=400',
+      image: 'https://images.pexels.com/photos/2887717/pexels-photo-2887717.jpeg?auto=compress&cs=tinysrgb&w=400',
       rating: 5,
       text: 'Safe, reliable, and comfortable rides every time. I feel secure traveling with Kovai Drop Taxi, especially during late night trips.'
     }

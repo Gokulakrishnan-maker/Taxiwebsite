@@ -9,10 +9,11 @@ const PopularPlaces = () => {
       distance: '15 km from city center',
       duration: '30 min',
       description: 'Spiritual center founded by Sadhguru with Dhyanalinga',
+      fare: '₹350'
     },
     {
       name: 'Brookefields Mall',
-      image: 'https://images.pexels.com/photos/1040173/pexels-photo-1040173.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/southindia-tusktravel-01.jpg',
       distance: '8 km from RS Puram',
       duration: '18 min',
       description: 'Premier shopping and entertainment destination',
@@ -28,7 +29,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Marudamalai Temple',
-      image: 'https://images.pexels.com/photos/5214413/pexels-photo-5214413.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/southindia-tusktravel-01.jpg',
       distance: '15 km from city',
       duration: '30 min',
       description: 'Famous hilltop temple dedicated to Lord Murugan',

@@ -13,7 +13,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Brookefields Mall',
-      image: 'https://www.tusktravel.com/images/southindia-tusktravel-01.jpg',
+      image: 'https://media1.thrillophilia.com/filestore/taz0cq498v0t1xx9rum0uyrqmw9w_Brook_Fields_Mall__40_Coimbatore.jpg',
       distance: '8 km from RS Puram',
       duration: '18 min',
       description: 'Premier shopping and entertainment destination',
@@ -21,7 +21,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Coimbatore Airport',
-      image: 'https://images.pexels.com/photos/912050/pexels-photo-912050.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://i0.wp.com/www.tusktravel.com/blog/wp-content/uploads/2019/02/kishangarh-airport.jpg?fit=835%2C547&ssl=1',
       distance: '12 km from Junction',
       duration: '25 min',
       description: 'International airport serving Coimbatore',
@@ -40,7 +40,7 @@ const PopularPlaces = () => {
   const tamilNaduDestinations = [
     {
       name: 'Ooty (Udhagamandalam)',
-      image: 'https://images.pexels.com/photos/962464/pexels-photo-962464.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/tamil-nadu/ooty-tt-02.jpg',
       distance: '85 km from Coimbatore',
       duration: '2.5 hours',
       description: 'Queen of Hill Stations with tea gardens',
@@ -48,7 +48,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Kodaikanal',
-      image: 'https://images.pexels.com/photos/1007426/pexels-photo-1007426.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/tamil-nadu/ooty-tt-01.jpg',
       distance: '180 km from Coimbatore',
       duration: '4 hours',
       description: 'Princess of Hill Stations with pristine lakes',
@@ -56,7 +56,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Chennai',
-      image: 'https://images.pexels.com/photos/789750/pexels-photo-789750.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/tamil-nadu/chennai-marina-beach-tt.jpg',
       distance: '500 km from Coimbatore',
       duration: '7-8 hours',
       description: 'Capital city with MGR Central Railway Station',
@@ -64,7 +64,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Madurai',
-      image: 'https://images.pexels.com/photos/3356489/pexels-photo-3356489.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/southindia-tusktravel-02.jpg',
       distance: '220 km from Coimbatore',
       duration: '4-5 hours',
       description: 'Temple city with famous Meenakshi Amman Temple',
@@ -72,7 +72,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Bangalore',
-      image: 'https://images.pexels.com/photos/1098460/pexels-photo-1098460.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/blog/wp-content/uploads/2023/05/Interesting-Facts-About-Bangalore-Karnataka.jpg',
       distance: '360 km from Coimbatore',
       duration: '6-7 hours',
       description: 'IT capital and garden city of India',
@@ -80,7 +80,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Kanyakumari',
-      image: 'https://images.pexels.com/photos/1007427/pexels-photo-1007427.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://i0.wp.com/www.tusktravel.com/blog/wp-content/uploads/2023/02/Thiruvalluvar-Statue-Kanyakumari-Tamil-Nadu.jpg?fit=1024%2C576&ssl=1',
       distance: '450 km from Coimbatore',
       duration: '8-9 hours',
       description: 'Southernmost tip with Thiruvalluvar Statue',

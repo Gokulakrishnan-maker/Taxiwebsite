@@ -4,11 +4,11 @@ import { MapPin, Clock, Star, ArrowRight } from 'lucide-react';
 const PopularPlaces = () => {
   const coimbatorePlaces = [
     {
-      name: 'Marudamalai Temple',
-      image: 'https://images.pexels.com/photos/3844788/pexels-photo-3844788.jpeg?auto=compress&cs=tinysrgb&w=800',
+      name: 'Isha Yoga Center',
+      image: 'https://images.pexels.com/photos/1051838/pexels-photo-1051838.jpeg?auto=compress&cs=tinysrgb&w=800',
       distance: '15 km from city center',
       duration: '30 min',
-      description: 'Famous hilltop temple dedicated to Lord Murugan',
+      description: 'Spiritual center founded by Sadhguru with Dhyanalinga',
       fare: '₹280'
     },
     {
@@ -28,12 +28,12 @@ const PopularPlaces = () => {
       fare: '₹350'
     },
     {
-      name: 'Gedee Car Museum',
-      image: 'https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=800',
-      distance: '20 km from city',
-      duration: '35 min',
-      description: 'Unique vintage car collection museum',
-      fare: '₹420'
+      name: 'Marudamalai Temple',
+      image: 'https://images.pexels.com/photos/3844788/pexels-photo-3844788.jpeg?auto=compress&cs=tinysrgb&w=800',
+      distance: '15 km from city',
+      duration: '30 min',
+      description: 'Famous hilltop temple dedicated to Lord Murugan',
+      fare: '₹280'
     }
   ];
 
@@ -56,18 +56,18 @@ const PopularPlaces = () => {
     },
     {
       name: 'Chennai',
-      image: 'https://images.pexels.com/photos/789750/pexels-photo-789750.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://images.pexels.com/photos/161901/paris-sunset-france-monument-161901.jpeg?auto=compress&cs=tinysrgb&w=800',
       distance: '500 km from Coimbatore',
       duration: '7-8 hours',
-      description: 'Capital city and major business hub',
+      description: 'Capital city with MGR Central Railway Station',
       fare: '₹8,500'
     },
     {
       name: 'Madurai',
-      image: 'https://images.pexels.com/photos/3844788/pexels-photo-3844788.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://images.pexels.com/photos/2064827/pexels-photo-2064827.jpeg?auto=compress&cs=tinysrgb&w=800',
       distance: '220 km from Coimbatore',
       duration: '4-5 hours',
-      description: 'Temple city with rich cultural heritage',
+      description: 'Temple city with famous Meenakshi Amman Temple',
       fare: '₹3,800'
     },
     {
@@ -80,10 +80,10 @@ const PopularPlaces = () => {
     },
     {
       name: 'Kanyakumari',
-      image: 'https://images.pexels.com/photos/1007426/pexels-photo-1007426.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://images.pexels.com/photos/3844788/pexels-photo-3844788.jpeg?auto=compress&cs=tinysrgb&w=800',
       distance: '450 km from Coimbatore',
       duration: '8-9 hours',
-      description: 'Southernmost tip of India with stunning sunsets',
+      description: 'Southernmost tip with Thiruvalluvar Statue',
       fare: '₹7,800'
     }
   ];

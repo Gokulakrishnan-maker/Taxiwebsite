@@ -5,11 +5,10 @@ const PopularPlaces = () => {
   const coimbatorePlaces = [
     {
       name: 'Isha Yoga Center',
-      image: 'https://isha.sadhguru.org/dw/image/v2/BGHX_PRD/on/demandware.static/-/Sites-Isha-Library/default/dwe12278b5/images/home-page/Adiyogi-Statue.jpg?sw=1600',
+      image: 'https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg?auto=compress&cs=tinysrgb&w=800',
       distance: '15 km from city center',
       duration: '30 min',
       description: 'Spiritual center founded by Sadhguru with Dhyanalinga',
-      fare: '₹280'
     },
     {
       name: 'Brookefields Mall',

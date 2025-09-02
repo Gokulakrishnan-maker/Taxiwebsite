@@ -20,11 +20,11 @@ const Testimonials = () => {
     },
     
     {
-    name: 'Kavitha',
-    role: 'Local Resident',
-    image: 'https://images.pexels.com/photos/1704489/pexels-photo-1704489.jpeg?auto=compress&cs=tinysrgb&w=400',
-    rating: 5,
-    text: 'Safe, reliable, and comfortable rides every time. I feel secure traveling with Kovai Drop Taxi, especially during late night trips.'
+     name: 'Kavitha',
+     role: 'Local Resident',
+     image: 'https://images.pexels.com/photos/1704489/pexels-photo-1704489.jpeg?auto=compress&cs=tinysrgb&w=400',
+     rating: 5,
+     text: 'Safe, reliable, and comfortable rides every time. I feel secure traveling with Kovai Drop Taxi, especially during late night trips.'
     }
   ];
 

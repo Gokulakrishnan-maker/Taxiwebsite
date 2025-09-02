@@ -18,13 +18,13 @@ const Testimonials = () => {
      rating: 5,
      text: 'Kovai Drop Taxi provides excellent service! The drivers are courteous and knowledgeable about the city. The booking system is seamless and pricing is very fair.'
     },
+    
     {
     name: 'Kavitha',
     role: 'Local Resident',
-    image: 'https://unsplash.com/photos/VuM21ojgYv0',
+    image: 'https://images.pexels.com/photos/1704489/pexels-photo-1704489.jpeg?auto=compress&cs=tinysrgb&w=400',
     rating: 5,
     text: 'Safe, reliable, and comfortable rides every time. I feel secure traveling with Kovai Drop Taxi, especially during late night trips.'
-    }
   ];
 
   return (

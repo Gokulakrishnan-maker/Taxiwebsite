@@ -29,7 +29,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Marudamalai Temple',
-      image: 'https://images.pexels.com/photos/3356489/pexels-photo-3356489.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://images.pexels.com/photos/5214413/pexels-photo-5214413.jpeg?auto=compress&cs=tinysrgb&w=800',
       distance: '15 km from city',
       duration: '30 min',
       description: 'Famous hilltop temple dedicated to Lord Murugan',

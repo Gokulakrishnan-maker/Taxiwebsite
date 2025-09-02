@@ -5,7 +5,7 @@ const PopularPlaces = () => {
   const coimbatorePlaces = [
     {
       name: 'Isha Yoga Center',
-      image: 'https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/blog/wp-content/uploads/2020/01/Isha-Yoga-Centre-Coimbatore-1.jpg',
       distance: '15 km from city center',
       duration: '30 min',
       description: 'Spiritual center founded by Sadhguru with Dhyanalinga',

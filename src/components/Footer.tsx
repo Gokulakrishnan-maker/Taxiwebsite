@@ -1,5 +1,5 @@
 import React from 'react';
-import { Car, Phone, Mail, MapPin, Facebook, Twitter, Instagram } from 'lucide-react';
+import { Car, Phone, Mail, MapPin, Facebook, Send, Instagram } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -20,7 +20,7 @@ const Footer = () => {
                 <Facebook className="h-5 w-5" />
               </a>
               <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-blue-600 transition-colors">
-                <Twitter className="h-5 w-5" />
+                <Send className="h-5 w-5" />
               </a>
               <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-blue-600 transition-colors">
                 <Instagram className="h-5 w-5" />

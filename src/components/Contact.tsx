@@ -39,7 +39,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Service Area',
-      details: 'No 45, Rajalakshmi colony, tvs nagar, edayarpalayam, Coimbatore - 641025',
+      details: 'Coimbatore & TamilNadu',
       description: 'Local & outstation trips'
     },
     {

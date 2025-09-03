@@ -29,7 +29,7 @@ const PopularPlaces = () => {
     },
     {
       name: 'Marudamalai Temple',
-      image: 'https://blog.kovaiyellowpages.com/blogadmin/images/8PY95cK.jpg',
+      image: 'https://travelsetu.com/apps/uploads/new_destinations_photos/destination/2023/12/21/32c148ab66a9d0dc41ac0c2717c1b106_1000x1000.jpg',
       distance: '15 km from city',
       duration: '30 min',
       description: 'Famous hilltop temple dedicated to Lord Murugan',

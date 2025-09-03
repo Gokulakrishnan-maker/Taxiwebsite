@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, AtSign } from 'lucide-react';
 
 const Contact = () => {
   const [contactForm, setContactForm] = useState({
@@ -31,7 +31,7 @@ const Contact = () => {
       description: '24/7 booking and support'
     },
     {
-      icon: Mail,
+      icon: AtSign,
       title: 'Email Us',
      details: 'kovaidroptaxi38@gmail.com',
       description: 'For general inquiries'

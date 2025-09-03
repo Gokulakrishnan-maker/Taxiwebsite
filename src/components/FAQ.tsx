@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp, Phone, Clock, MapPin } from 'lucide-react';
+import { HelpCircle, ChevronDown, ChevronUp, Phone, Clock, MapPin, AtSign } from 'lucide-react';
 
 const FAQ = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
@@ -131,9 +131,10 @@ const FAQ = () => {
             </a>
             <a 
               href="mailto:kovaidroptaxi38@gmail.com" 
-              className="border-2 border-blue-600 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors"
+              className="border-2 border-blue-600 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors flex items-center space-x-2"
             >
-              Email Support
+              <AtSign className="h-4 w-4" />
+              <span>Email Support</span>
             </a>
           </div>
         </div>

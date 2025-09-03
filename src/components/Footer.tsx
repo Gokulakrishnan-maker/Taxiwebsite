@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Car, Phone, Mail, MapPin, Facebook, Send, Instagram } from 'lucide-react';
+import { Car, Phone, Mail, MapPin, Facebook, Send, Instagram, AtSign } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -48,7 +48,7 @@ const Footer = () => {
                 <span className="text-gray-300">+91 78100 95200</span>
               </div>
               <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-orange-400" />
+                <AtSign className="h-4 w-4 text-orange-400" />
                 <span className="text-gray-300">kovaidroptaxi38@gmail.com</span>
               </div>
               <div className="flex items-center space-x-3">

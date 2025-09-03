@@ -11,7 +11,7 @@ const FAQ = () => {
       questions: [
         {
           question: "How can I book a taxi with Kovai Drop Taxi?",
-          answer: "You can book through our website, call +91 74186 40616, or use our mobile app. We accept advance bookings and immediate pickup requests based on availability."
+          answer: "You can book through our website, call +91 78100 95200, or use our mobile app. We accept advance bookings and immediate pickup requests based on availability."
         },
         {
           question: "How far in advance can I book a taxi?",
@@ -124,10 +124,10 @@ const FAQ = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="tel:+917418640616" 
+              href="tel:+917810095200" 
               className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
-              Call +91 74186 40616
+              Call +91 78100 95200
             </a>
             <a 
               href="mailto:support@kovaidroptaxi.com" 

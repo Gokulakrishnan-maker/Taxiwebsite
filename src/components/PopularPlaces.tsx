@@ -204,10 +204,10 @@ const PopularPlaces = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
-                href="tel:+917418640616" 
+                href="tel:+917810095200" 
                 className="bg-orange-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors"
               >
-                Call +91 74186 40616
+                Call +91 78100 95200
               </a>
               <button className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors">
                 Get Quote Online

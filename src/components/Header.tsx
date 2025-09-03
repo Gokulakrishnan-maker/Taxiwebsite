@@ -25,7 +25,7 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-4">
             <div className="flex items-center space-x-2 text-blue-600">
               <Phone className="h-4 w-4" />
-              <span className="font-semibold">+91 74186 40616</span>
+              <span className="font-semibold">+91 78100 95200</span>
             </div>
             <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors">
               Book Now
@@ -50,7 +50,7 @@ const Header = () => {
               <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
               <div className="flex items-center space-x-2 text-blue-600 pt-2">
                 <Phone className="h-4 w-4" />
-                <span className="font-semibold">+91 74186 40616</span>
+                <span className="font-semibold">+91 78100 95200</span>
               </div>
               <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors w-full">
                 Book Now

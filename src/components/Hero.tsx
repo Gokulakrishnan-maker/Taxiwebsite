@@ -125,7 +125,7 @@ const Hero = () => {
     e.preventDefault();
     
     const fareText = fareEstimate ? `Estimated fare: ₹${fareEstimate}` : 'Fare will be calculated based on actual distance';
-    alert(`Booking request submitted! ${fareText}. We will contact you shortly at +91 74186 40616.`);
+    alert(`Booking request submitted! ${fareText}. We will contact you shortly at +91 78100 95200.`);
   };
 
   return (
@@ -152,8 +152,8 @@ const Hero = () => {
               <button className="bg-orange-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-600 transition-all transform hover:scale-105 shadow-lg">
                 Book Instantly
               </button>
-              <a href="tel:+917418640616" className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-900 transition-all text-center">
-                Call +91 74186 40616
+              <a href="tel:+917810095200" className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-900 transition-all text-center">
+                Call +91 78100 95200
               </a>
             </div>
           </div>

@@ -109,7 +109,7 @@ const PrivacyPolicy = () => {
                 </p>
                 <div className="space-y-2 text-gray-700">
                   <p><strong>Phone:</strong> +91 78100 95200</p>
-                  <p><strong>Email:</strong> privacy@kovaidroptaxi.com</p>
+                  <p><strong>Email:</strong> kovaidroptaxi38@gmail.com</p>
                   <p><strong>Address:</strong> Coimbatore, Tamil Nadu, India</p>
                 </div>
               </div>

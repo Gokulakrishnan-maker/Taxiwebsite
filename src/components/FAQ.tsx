@@ -130,7 +130,7 @@ const FAQ = () => {
               Call +91 78100 95200
             </a>
             <a 
-              href="mailto:support@kovaidroptaxi.com" 
+              href="mailto:kovaidroptaxi38@gmail.com" 
               className="border-2 border-blue-600 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors"
             >
               Email Support

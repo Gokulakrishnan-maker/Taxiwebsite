@@ -33,7 +33,7 @@ const Contact = () => {
     {
       icon: Mail,
       title: 'Email Us',
-      details: 'info@kovaidroptaxi.com',
+     details: 'kovaidroptaxi38@gmail.com',
       description: 'For general inquiries'
     },
     {

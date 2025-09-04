@@ -20,7 +20,7 @@ const TermsOfService = () => {
               </h2>
               <div className="bg-blue-50 p-6 rounded-lg">
                 <p className="text-gray-700 mb-4">
-                  By using Kovai Drop Taxi services, you agree to these terms and conditions. 
+                  By using 1waytaxi services, you agree to these terms and conditions. 
                   Our taxi service operates under Tamil Nadu Transport Department regulations.
                 </p>
                 <ul className="list-disc list-inside text-gray-700 space-y-2">

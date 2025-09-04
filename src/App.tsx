@@ -30,28 +30,16 @@ function App() {
     <Router>
       <div className="min-h-screen bg-white">
         <Header />
-
-        {/* Premium Taxi Service Banner */}
-        <div className="text-center py-6 bg-gray-50">
-          <h1 className="text-3xl font-bold">
-            🚖 1waytaxi - Premium Taxi Service All Over Tamil Nadu
-          </h1>
-          <p className="mt-2 text-gray-600">
-            Book reliable local and outstation cabs across Coimbatore, Chennai, Madurai, Trichy, 
-            Salem and more. Transparent pricing. Available 24/7.
-          </p>
-        </div>
-
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/faq" element={<FAQ />} />
         </Routes>
-
         <Footer />
       </div>
     </Router>
+    
   );
 }
 

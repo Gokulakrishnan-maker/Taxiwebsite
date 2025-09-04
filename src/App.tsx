@@ -42,4 +42,18 @@ function App() {
   );
 }
 
+function App() {
+  return (
+    <div>
+      <header>
+        <h1>🚖 1waytaxi - Premium Taxi Service All Over Tamil Nadu</h1>
+        <p>
+          Book reliable local and outstation cabs across Coimbatore, Chennai, Madurai, Trichy, Salem and more. 
+          Transparent pricing. Available 24/7.
+        </p>
+      </header>
+    </div>
+  );
+}
+
 export default App;

@@ -105,7 +105,7 @@ const PrivacyPolicy = () => {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Contact Us</h2>
               <div className="bg-blue-50 p-6 rounded-lg">
                 <p className="text-gray-700 mb-4">
-                  For any privacy-related questions or concerns, please contact us:
+                  For any privacy-related questions or concerns about 1waytaxi, please contact us:
                 </p>
                 <div className="space-y-2 text-gray-700">
                   <p><strong>Phone:</strong> +91 78100 95200</p>

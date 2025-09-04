@@ -8,7 +8,7 @@ const Testimonials = () => {
      role: 'Business Executive',
      image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400', 
      rating: 5,
-     text: 'Kovai Drop Taxi has been my go-to taxi service for business trips. Always punctual, professional drivers, and clean vehicles. Highly recommended!'
+     text: '1waytaxi has been my go-to taxi service for business trips. Always punctual, professional drivers, and clean vehicles. Highly recommended!'
    },
 
     {
@@ -16,7 +16,7 @@ const Testimonials = () => {
      role: 'Frequent Traveler',
      image: 'https://images.pexels.com/photos/1704488/pexels-photo-1704488.jpeg?auto=compress&cs=tinysrgb&w=400',
      rating: 5,
-     text: 'Kovai Drop Taxi provides excellent service! The drivers are courteous and knowledgeable about the city. The booking system is seamless and pricing is very fair.'
+     text: '1waytaxi provides excellent service! The drivers are courteous and knowledgeable about the city. The booking system is seamless and pricing is very fair.'
     },
     
     {
@@ -24,7 +24,7 @@ const Testimonials = () => {
      role: 'Local Resident',
      image: 'https://images.pexels.com/photos/1704489/pexels-photo-1704489.jpeg?auto=compress&cs=tinysrgb&w=400',
      rating: 5,
-     text: 'Safe, reliable, and comfortable rides every time. I feel secure traveling with Kovai Drop Taxi, especially during late night trips.'
+     text: 'Safe, reliable, and comfortable rides every time. I feel secure traveling with 1waytaxi, especially during late night trips.'
     }
   ];
 
@@ -34,7 +34,7 @@ const Testimonials = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">What Our Customers Say</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Don't just take our word for it. Here's what our satisfied customers have to say about their Kovai Drop Taxi experience.
+            Don't just take our word for it. Here's what our satisfied customers have to say about their 1waytaxi experience.
           </p>
         </div>
 

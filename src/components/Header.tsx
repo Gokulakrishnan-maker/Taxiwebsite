@@ -11,7 +11,7 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           <Link to="/" className="flex items-center space-x-2">
             <Car className="h-8 w-8 text-blue-600" />
-            <span className="text-2xl font-bold text-gray-900">Kovai Drop Taxi</span>
+            <span className="text-2xl font-bold text-gray-900">1waytaxi</span>
           </Link>
           
           <nav className="hidden md:flex space-x-8">

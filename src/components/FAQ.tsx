@@ -10,7 +10,7 @@ const FAQ = () => {
       icon: Phone,
       questions: [
         {
-          question: "How can I book a taxi with Kovai Drop Taxi?",
+          question: "How can I book a taxi with 1waytaxi?",
           answer: "You can book through our website, call +91 78100 95200, or use our mobile app. We accept advance bookings and immediate pickup requests based on availability."
         },
         {
@@ -72,7 +72,7 @@ const FAQ = () => {
           <HelpCircle className="h-16 w-16 text-blue-600 mx-auto mb-4" />
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h1>
           <p className="text-xl text-gray-600">
-            Find answers to common questions about Kovai Drop Taxi services
+            Find answers to common questions about 1waytaxi services
           </p>
         </div>
 

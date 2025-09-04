@@ -142,28 +142,34 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-white">
             <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Kovai Drop Taxi - Premium Service in 
+              1waytaxi - Premium Service in 
               <span className="text-orange-400"> Coimbatore</span>
             </h1>
             <p className="text-xl mb-8 text-gray-200 leading-relaxed">
               Safe, reliable, and comfortable rides across Coimbatore and Tamil Nadu. Local and outstation trips with transparent pricing.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-orange-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-orange-600 transition-all transform hover:scale-105 shadow-lg">
+            <div className="flex flex-col sm:flex-row gap-6">
+              <button className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-10 py-4 rounded-xl text-lg font-bold hover:from-orange-600 hover:to-red-600 transition-all transform hover:scale-105 shadow-xl">
                 Book Instantly
               </button>
-              <a href="tel:+917810095200" className="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-900 transition-all text-center">
+              <a href="tel:+917810095200" className="border-2 border-white text-white px-10 py-4 rounded-xl text-lg font-bold hover:bg-white hover:text-blue-900 transition-all text-center backdrop-blur-sm">
                 Call +91 78100 95200
               </a>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-2xl p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">Book Your Ride in Coimbatore</h3>
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-10 border border-white/20">
+            <div className="text-center mb-8">
+              <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                Book Your Ride
+              </h3>
+              <p className="text-gray-600">Quick & Easy Booking</p>
+            </div>
             <form onSubmit={handleBooking} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-2 gap-6">
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-3 h-5 w-5 text-gray-400 z-10" />
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Pick-up Location</label>
+                  <MapPin className="absolute left-4 top-11 h-5 w-5 text-blue-500 z-10" />
                   <input
                     ref={fromInputRef}
                     type="text"
@@ -171,12 +177,13 @@ const Hero = () => {
                     placeholder="Pick-up location (e.g., RS Puram)"
                     value={bookingForm.from}
                     onChange={handleInputChange}
-                    className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="pl-12 w-full py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
                     required
                   />
                 </div>
                 <div className="relative">
-                  <MapPin className="absolute left-3 top-3 h-5 w-5 text-gray-400 z-10" />
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Drop-off Location</label>
+                  <MapPin className="absolute left-4 top-11 h-5 w-5 text-red-500 z-10" />
                   <input
                     ref={toInputRef}
                     type="text"
@@ -184,53 +191,58 @@ const Hero = () => {
                     placeholder="Drop-off location (e.g., Airport)"
                     value={bookingForm.to}
                     onChange={handleInputChange}
-                    className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="pl-12 w-full py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
                     required
                   />
                 </div>
               </div>
               
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid md:grid-cols-2 gap-6">
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Travel Date</label>
+                  <Calendar className="absolute left-4 top-11 h-5 w-5 text-green-500" />
                   <input
                     type="date"
                     name="date"
                     value={bookingForm.date}
                     onChange={handleInputChange}
-                    className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="pl-12 w-full py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
                     required
                   />
                 </div>
                 <div className="relative">
-                  <Clock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Travel Time</label>
+                  <Clock className="absolute left-4 top-11 h-5 w-5 text-purple-500" />
                   <input
                     type="time"
                     name="time"
                     value={bookingForm.time}
                     onChange={handleInputChange}
-                    className="pl-10 w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="pl-12 w-full py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
                     required
                   />
                 </div>
               </div>
 
-              <select
-                name="passengers"
-                value={bookingForm.passengers}
-                onChange={handleInputChange}
-                className="w-full py-3 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="1">1 Passenger</option>
-                <option value="2">2 Passengers</option>
-                <option value="3">3 Passengers</option>
-                <option value="4">4 Passengers</option>
-                <option value="5+">5+ Passengers</option>
-              </select>
+              <div className="relative">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Number of Passengers</label>
+                <select
+                  name="passengers"
+                  value={bookingForm.passengers}
+                  onChange={handleInputChange}
+                  className="w-full py-4 px-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm bg-white"
+                >
+                  <option value="1">1 Passenger</option>
+                  <option value="2">2 Passengers</option>
+                  <option value="3">3 Passengers</option>
+                  <option value="4">4 Passengers</option>
+                  <option value="5+">5+ Passengers</option>
+                </select>
+              </div>
 
               {fareEstimate && (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <p className="text-green-800 font-semibold">
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-6 shadow-sm">
+                  <p className="text-green-800 font-bold text-lg">
                     Estimated Fare: ₹{fareEstimate}
                   </p>
                   <p className="text-green-600 text-sm">
@@ -241,10 +253,10 @@ const Hero = () => {
 
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-all flex items-center justify-center space-x-2 group"
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-5 rounded-xl text-lg font-bold hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center justify-center space-x-3 group shadow-lg transform hover:scale-105"
               >
                 <span>Get Instant Quote</span>
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
               </button>
             </form>
           </div>

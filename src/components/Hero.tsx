@@ -144,7 +144,7 @@ const Hero = () => {
           <div className="text-white">
             <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               1waytaxi - Premium Service in 
-              <span className="text-orange-400"> Coimbatore</span>
+              <span className="text-orange-400"> All Over TamilNadu</span>
             </h1>
             <p className="text-xl mb-8 text-gray-200 leading-relaxed">
               Safe, reliable, and comfortable rides across Coimbatore and Tamil Nadu. Local and outstation trips with transparent pricing.

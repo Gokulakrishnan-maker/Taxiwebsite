@@ -130,6 +130,13 @@ const FAQ = () => {
               Call +91 78100 95200
             </a>
             <a 
+              href="https://wa.me/917810095200" 
+              className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center space-x-2"
+            >
+              <Send className="h-4 w-4" />
+              <span>WhatsApp</span>
+            </a>
+            <a 
               href="mailto:kovaidroptaxi38@gmail.com" 
               className="border-2 border-blue-600 text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 hover:text-white transition-colors flex items-center space-x-2"
             >

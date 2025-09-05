@@ -20,7 +20,7 @@ const Footer = () => {
               <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-blue-600 transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-blue-600 transition-colors">
+              <a href="https://wa.me/917810095200" className="bg-gray-800 p-3 rounded-full hover:bg-green-600 transition-colors">
                 <Send className="h-5 w-5" />
               </a>
               <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-blue-600 transition-colors">

@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import Fleet from './components/Fleet';
-import CoimbatoreDestinations from './components/CoimbatoreDestinations';
+import Tariff from './components/Tariff';
 import OutstationDestinations from './components/OutstationDestinations';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
@@ -18,7 +18,7 @@ const HomePage = () => (
     <Hero />
     <Services />
     <Fleet />
-    <CoimbatoreDestinations />
+    <Tariff />
     <OutstationDestinations />
     <Testimonials />
     <Contact />

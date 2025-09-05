@@ -5,6 +5,7 @@ import { loadGoogleMapsAPI } from '../utils/googleMaps';
 
 const Hero = () => {
   const [bookingForm, setBookingForm] = useState({
+    tripType: 'oneway',
     from: '',
     to: '',
     date: '',
@@ -166,6 +167,35 @@ const Hero = () => {
               <p className="text-gray-600">Quick & Easy Booking</p>
             </div>
             <form onSubmit={handleBooking} className="space-y-6">
+              {/* Trip Type Selection */}
+              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-200">
+                <label className="block text-sm font-semibold text-gray-700 mb-3">Trip Type</label>
+                <div className="flex space-x-4">
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="tripType"
+                      value="oneway"
+                      checked={bookingForm.tripType === 'oneway'}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                    />
+                    <span className="text-gray-700 font-medium">One Way</span>
+                  </label>
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="tripType"
+                      value="roundtrip"
+                      checked={bookingForm.tripType === 'roundtrip'}
+                      onChange={handleInputChange}
+                      className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                    />
+                    <span className="text-gray-700 font-medium">Round Trip</span>
+                  </label>
+                </div>
+              </div>
+
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="relative">
                   <label className="block text-sm font-semibold text-gray-700 mb-2">Pick-up Location</label>

@@ -170,32 +170,53 @@ const Hero = () => {
               <p className="text-gray-600">Quick & Easy Booking</p>
             </div>
             <form onSubmit={handleBooking} className="space-y-6">
-              {/* Trip Type Selection */}
-              <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl border border-blue-200">
+              {/* Modern Trip Type Selection */}
+              <div className="bg-white p-6 rounded-2xl border-2 border-gray-100 shadow-sm">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">Trip Type</label>
-                <div className="flex space-x-4">
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="tripType"
-                      value="oneway"
-                      checked={bookingForm.tripType === 'oneway'}
-                      onChange={handleInputChange}
-                      className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                    />
-                    <span className="text-gray-700 font-medium">One Way</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="tripType"
-                      value="roundtrip"
-                      checked={bookingForm.tripType === 'roundtrip'}
-                      onChange={handleInputChange}
-                      className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                    />
-                    <span className="text-gray-700 font-medium">Round Trip</span>
-                  </label>
+                <div className="relative bg-gray-100 p-1 rounded-xl flex">
+                  <div 
+                    className={`absolute top-1 bottom-1 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 shadow-lg transition-all duration-300 ease-in-out ${
+                      bookingForm.tripType === 'oneway' ? 'left-1 right-1/2' : 'left-1/2 right-1'
+                    }`}
+                  ></div>
+                  <button
+                    type="button"
+                    onClick={() => setBookingForm(prev => ({ ...prev, tripType: 'oneway' }))}
+                    className={`relative z-10 flex-1 py-3 px-6 text-center font-semibold rounded-lg transition-all duration-300 ${
+                      bookingForm.tripType === 'oneway'
+                        ? 'text-white'
+                        : 'text-gray-600 hover:text-gray-800'
+                    }`}
+                  >
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className={`w-2 h-2 rounded-full ${
+                        bookingForm.tripType === 'oneway' ? 'bg-white' : 'bg-blue-500'
+                      }`}></div>
+                      <span>One Way</span>
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBookingForm(prev => ({ ...prev, tripType: 'roundtrip' }))}
+                    className={`relative z-10 flex-1 py-3 px-6 text-center font-semibold rounded-lg transition-all duration-300 ${
+                      bookingForm.tripType === 'roundtrip'
+                        ? 'text-white'
+                        : 'text-gray-600 hover:text-gray-800'
+                    }`}
+                  >
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className={`w-2 h-2 rounded-full ${
+                        bookingForm.tripType === 'roundtrip' ? 'bg-white' : 'bg-blue-500'
+                      }`}></div>
+                      <span>Round Trip</span>
+                    </div>
+                  </button>
+                </div>
+                <div className="mt-3 text-xs text-gray-500 text-center">
+                  {bookingForm.tripType === 'oneway' 
+                    ? 'Perfect for airport transfers and one-way journeys' 
+                    : 'Ideal for sightseeing and return trips with better rates'
+                  }
                 </div>
               </div>
 

@@ -105,7 +105,7 @@ const OutstationDestinations = () => {
     },
     {
       name: 'Rameshwaram',
-      image: 'https://images.pexels.com/photos/3581371/pexels-photo-3581371.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuAHXKMueQqj8hJT_9c-3wEIQkeKAwNM84Mg&s',
       distance: '320 km',
       duration: '6 hours',
       description: 'Holy island with Ramanathaswamy Temple',

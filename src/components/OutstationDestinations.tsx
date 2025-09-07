@@ -5,7 +5,7 @@ const OutstationDestinations = () => {
   const destinations = [
     {
       name: 'Chennai',
-      image: 'https://images.pexels.com/photos/789750/pexels-photo-789750.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/tamil-nadu/chennai-marina-beach-tt.jpg',
       distance: '500 km',
       duration: '7-8 hours',
       description: 'Capital city with Marina Beach and IT corridor',
@@ -15,7 +15,7 @@ const OutstationDestinations = () => {
     },
     {
       name: 'Bangalore',
-      image: 'https://images.pexels.com/photos/1098365/pexels-photo-1098365.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/south-india/mysore-tt-02.jpg',
       distance: '360 km',
       duration: '6-7 hours',
       description: 'Silicon Valley of India with gardens and tech hubs',
@@ -25,7 +25,7 @@ const OutstationDestinations = () => {
     },
     {
       name: 'Ooty',
-      image: 'https://images.pexels.com/photos/1007426/pexels-photo-1007426.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/tamil-nadu/ooty-tt-02.jpg',
       distance: '85 km',
       duration: '2.5 hours',
       description: 'Queen of Hill Stations with tea gardens',
@@ -35,7 +35,7 @@ const OutstationDestinations = () => {
     },
     {
       name: 'Kodaikanal',
-      image: 'https://images.pexels.com/photos/1007427/pexels-photo-1007427.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/kerala-tusktravel-09.jpg',
       distance: '180 km',
       duration: '4 hours',
       description: 'Princess of Hill Stations with pristine lakes',
@@ -45,7 +45,7 @@ const OutstationDestinations = () => {
     },
     {
       name: 'Madurai',
-      image: 'https://images.pexels.com/photos/3581368/pexels-photo-3581368.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/southindia-tusktravel-01.jpg',
       distance: '220 km',
       duration: '4-5 hours',
       description: 'Temple city with Meenakshi Amman Temple',
@@ -55,7 +55,7 @@ const OutstationDestinations = () => {
     },
     {
       name: 'Kanyakumari',
-      image: 'https://images.pexels.com/photos/3581369/pexels-photo-3581369.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVYkyFjgbLCZ9CbI90sWef31in22ymqHp-KQ&s',
       distance: '450 km',
       duration: '8-9 hours',
       description: 'Southernmost tip with Thiruvalluvar Statue',
@@ -65,7 +65,7 @@ const OutstationDestinations = () => {
     },
     {
       name: 'Mysore',
-      image: 'https://images.pexels.com/photos/1098364/pexels-photo-1098364.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/karnataka/mysore-palace.jpg',
       distance: '280 km',
       duration: '5-6 hours',
       description: 'City of Palaces with rich heritage',
@@ -75,7 +75,7 @@ const OutstationDestinations = () => {
     },
     {
       name: 'Munnar',
-      image: 'https://images.pexels.com/photos/1007425/pexels-photo-1007425.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/images/south-india/munnar-tusktravel-01.jpg',
       distance: '160 km',
       duration: '4 hours',
       description: 'Kerala hill station with spice plantations',
@@ -85,7 +85,7 @@ const OutstationDestinations = () => {
     },
     {
       name: 'Pondicherry',
-      image: 'https://images.pexels.com/photos/3581370/pexels-photo-3581370.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH7zf6L8PtEN62r_Y2qeKJ4_4pj8pm77y2QA&s',
       distance: '380 km',
       duration: '6-7 hours',
       description: 'French colonial town with beaches',
@@ -95,7 +95,7 @@ const OutstationDestinations = () => {
     },
     {
       name: 'Tirupati',
-      image: 'https://images.pexels.com/photos/3581367/pexels-photo-3581367.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3P9vlUXlwaAtYAFWJH8bsPLUcfdwT9hTCFQ&s',
       distance: '420 km',
       duration: '7-8 hours',
       description: 'Sacred temple town with Tirumala Temple',

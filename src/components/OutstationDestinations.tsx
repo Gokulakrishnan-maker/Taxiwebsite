@@ -115,7 +115,7 @@ const OutstationDestinations = () => {
     },
     {
       name: 'Cochin (Kochi)',
-      image: 'https://images.pexels.com/photos/1007428/pexels-photo-1007428.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://www.tusktravel.com/img/kerala-tusk-01.jpg',
       distance: '190 km',
       duration: '4-5 hours',
       description: 'Queen of Arabian Sea with backwaters',

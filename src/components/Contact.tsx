@@ -56,8 +56,8 @@ Best regards,
     };
 
     const emailUrl = `mailto:1waytaxi.booking@gmail.com?subject=${encodeURIComponent(emailContent.subject)}&body=${encodeURIComponent(emailContent.body)}`;
-    const emailUrl = `mailto:kovaidroptaxi38@gmail.com?subject=${encodeURIComponent(emailContent.subject)}&body=${encodeURIComponent(emailContent.body)}`;
-    window.open(emailUrl, '_blank');
+    const correctedEmailUrl = `mailto:kovaidroptaxi38@gmail.com?subject=${encodeURIComponent(emailContent.subject)}&body=${encodeURIComponent(emailContent.body)}`;
+    window.open(correctedEmailUrl, '_blank');
     
     // WhatsApp notification for contact form
     const whatsappMessage = `🔔 *NEW CONTACT FORM ENQUIRY*

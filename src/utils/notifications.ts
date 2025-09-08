@@ -89,18 +89,18 @@ export const formatDetailedEmailContent = (booking: BookingEnquiry): { subject: 
     hour12: true
   });
   
-  const subject = `Website Enquiry Details - Booking ID: ${bookingId}`;
+  const subject = `CONFIRMED BOOKING - Website Enquiry Details - Booking ID: ${bookingId}`;
   
-  const body = `Website Enquiry Details
+  const body = `CONFIRMED BOOKING - Website Enquiry Details
 Booking ID#
 ${bookingId}
 
-Thanks for Choosing 1waytaxi
+Thanks for Choosing 1wayTaxi
 
-Booking Details
+CONFIRMED BOOKING DETAILS
 Booking ID: ${bookingId}
 Name: ${booking.customerName || 'Not Provided'}
-Email ID: ${booking.customerPhone ? 'Provided via Phone' : 'NA'}
+Email ID: NA
 Phone: ${booking.customerPhone || 'Not Provided'}
 Pickup Location: ${booking.from}
 Drop Location: ${booking.to}
@@ -109,8 +109,8 @@ Journey Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
 Travel Date & Time: ${booking.date} ${booking.time}
 Trip Distance: ${booking.tripDistance || 'To be calculated'}
 Trip Duration: ${booking.tripDuration || 'To be calculated (Approx)'}
-Extra per KM: ₹ 18
-Driver Allowance: INCLUDED
+Extra per KM: ₹ 14
+Driver Allowance: ₹ 400 (INCLUDED)
 Toll: EXTRA
 Total Trip Fare: ${booking.fareEstimate ? `₹ ${booking.fareEstimate}` : 'To be calculated'} (Driver Allowance Included)
 
@@ -120,12 +120,14 @@ For Question Contact: +91 78100 95200
 www.1waytaxi.com
 
 IP ADDRESS: ${getUserIP()}
-ENQUIRY TIME: ${currentDateTime}
+BOOKING CONFIRMED TIME: ${currentDateTime}
+
+STATUS: CONFIRMED - Customer has accepted the fare estimation and confirmed the booking.
 
 TOTAL
 ${booking.fareEstimate ? `₹ ${booking.fareEstimate}` : 'To be calculated'}
 
-Please contact the customer immediately to confirm booking details and provide accurate fare calculation.`;
+BOOKING CONFIRMED - Please arrange the vehicle and contact customer at ${booking.customerPhone} for pickup coordination.`;
 
   return { subject, body };
 };
@@ -180,20 +182,22 @@ export const sendBookingNotifications = (booking: BookingEnquiry): void => {
 // Show success message to customer
 export const showBookingConfirmation = (booking: BookingEnquiry): void => {
   const bookingId = booking.bookingId || generateBookingId();
-  const fareText = booking.fareEstimate ? `Estimated fare: ₹${booking.fareEstimate}` : 'Fare will be calculated based on actual distance';
   
-  alert(`🚖 Booking Enquiry Submitted Successfully!
+  alert(`🚖 Ride Booked Successfully
+
+Thanks for Choosing 1wayTaxi, reservation details have been sent to your email id & phone.
 
 Booking ID: ${bookingId}
+${booking.fareEstimate ? `Total Fare: ₹${booking.fareEstimate}` : 'Fare will be calculated based on actual distance'}
 
-${fareText}
-
-Our team has been notified and will contact you shortly at +91 78100 95200 to confirm your booking details.
+Our team will contact you shortly at ${booking.customerPhone} to confirm your booking details.
 
 Trip: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
 From: ${booking.from}
 To: ${booking.to}
 Date: ${booking.date} at ${booking.time}
 
-Thank you for choosing 1waytaxi!`);
+For any queries, call: +91 78100 95200
+
+Thank you for choosing 1wayTaxi!`);
 };

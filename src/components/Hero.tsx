@@ -182,7 +182,7 @@ const Hero = () => {
     
     // Additional email backup method
     setTimeout(() => {
-      const emailBackup = `mailto:1waytaxi.booking@gmail.com?subject=URGENT: New Booking Enquiry - ${bookingForm.customerName}&body=New booking enquiry received from ${bookingForm.customerName} (${bookingForm.customerPhone}) for trip from ${bookingForm.from} to ${bookingForm.to} on ${bookingForm.date} at ${bookingForm.time}. Please check WhatsApp for full details.`;
+      const emailBackup = `mailto:1waytaxi.booking@gmail.com?subject=URGENT: CONFIRMED BOOKING - ${bookingForm.customerName}&body=CONFIRMED BOOKING received from ${bookingForm.customerName} (${bookingForm.customerPhone}) for trip from ${bookingForm.from} to ${bookingForm.to} on ${bookingForm.date} at ${bookingForm.time}. Customer has confirmed the booking after seeing fare estimation. Please arrange vehicle and contact customer. Check WhatsApp for full details.`;
       
       // Create a hidden link and click it
       const emailLink = document.createElement('a');

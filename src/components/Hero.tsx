@@ -143,7 +143,7 @@ const Hero = () => {
     });
   };
 
-  const handleGetEstimation = (e: React.FormEvent) => {
+  const handleBooking = (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate required fields

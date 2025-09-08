@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, Send, AtSign } from 'lucide-react';
+import { sendEmailNotification, BookingEnquiry } from '../utils/notifications';
 
 const Contact = () => {
   const [contactForm, setContactForm] = useState({
@@ -18,8 +19,67 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Contact form submission logic would go here
-    alert('Thank you for your message! We will get back to you shortly.');
+    
+    // Create enquiry object for email notification
+    const enquiry: BookingEnquiry = {
+      tripType: 'general_enquiry',
+      from: 'Contact Form',
+      to: 'General Enquiry',
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString(),
+      passengers: '1',
+      customerName: contactForm.name,
+      customerPhone: contactForm.phone
+    };
+
+    // Send email notification with contact form details
+    const emailContent = {
+      subject: `New Contact Form Enquiry - ${contactForm.name}`,
+      body: `Dear 1waytaxi Team,
+
+A new enquiry has been received through the contact form.
+
+CUSTOMER DETAILS:
+- Name: ${contactForm.name}
+- Email: ${contactForm.email}
+- Phone: ${contactForm.phone}
+
+MESSAGE:
+${contactForm.message}
+
+ENQUIRY TIME: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+
+Please respond to the customer as soon as possible.
+
+Best regards,
+1waytaxi Contact System`
+    };
+
+    const emailUrl = `mailto:1waytaxi.booking@gmail.com?subject=${encodeURIComponent(emailContent.subject)}&body=${encodeURIComponent(emailContent.body)}`;
+    window.open(emailUrl, '_blank');
+    
+    // WhatsApp notification for contact form
+    const whatsappMessage = `🔔 *NEW CONTACT FORM ENQUIRY*
+
+👤 *Customer Details:*
+• Name: ${contactForm.name}
+• Email: ${contactForm.email}
+• Phone: ${contactForm.phone}
+
+💬 *Message:*
+${contactForm.message}
+
+⏰ *Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+
+Please respond to the customer promptly.`;
+
+    const whatsappUrl = `https://wa.me/917810095200?text=${encodeURIComponent(whatsappMessage)}`;
+    
+    setTimeout(() => {
+      window.open(whatsappUrl, '_blank');
+    }, 1000);
+    
+    alert('✅ Thank you for your message! We have been notified and will get back to you shortly.');
     setContactForm({ name: '', email: '', phone: '', message: '' });
   };
 

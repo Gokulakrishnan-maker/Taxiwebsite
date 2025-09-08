@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, Clock, MapPin, ArrowRight } from 'lucide-react';
 import { calculateFare } from '../utils/fareCalculator';
 import { loadGoogleMapsAPI } from '../utils/googleMaps';
+import { sendBookingNotifications, showBookingConfirmation, BookingEnquiry } from '../utils/notifications';
 
 const Hero = () => {
   const [bookingForm, setBookingForm] = useState({
@@ -125,8 +126,33 @@ const Hero = () => {
   const handleBooking = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const fareText = fareEstimate ? `Estimated fare: ₹${fareEstimate}` : 'Fare will be calculated based on actual distance';
-    alert(`Booking request submitted! ${fareText}. We will contact you shortly at +91 78100 95200.`);
+    // Create booking enquiry object
+    const bookingEnquiry: BookingEnquiry = {
+      tripType: bookingForm.tripType,
+      from: bookingForm.from,
+      to: bookingForm.to,
+      date: bookingForm.date,
+      time: bookingForm.time,
+      passengers: bookingForm.passengers,
+      fareEstimate: fareEstimate || undefined
+    };
+
+    // Send notifications to WhatsApp and Email
+    sendBookingNotifications(bookingEnquiry);
+    
+    // Show confirmation to customer
+    showBookingConfirmation(bookingEnquiry);
+    
+    // Reset form
+    setBookingForm({
+      tripType: 'oneway',
+      from: '',
+      to: '',
+      date: '',
+      time: '',
+      passengers: '1'
+    });
+    setFareEstimate(null);
   };
 
   return (

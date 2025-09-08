@@ -269,83 +269,64 @@ const Hero = () => {
             {!showVehicleSelection && !showEstimation && (
               <>
                 <div className="text-center mb-8">
-                  <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                  <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
                     Book Your Ride
                   </h3>
                   <p className="text-gray-600">Quick & Easy Booking</p>
                 </div>
-                <form onSubmit={handleGetEstimation} className="space-y-6">
+                <form onSubmit={handleGetEstimation} className="space-y-4">
               {/* Modern Trip Type Selection */}
-              <div className="bg-white p-6 rounded-2xl border-2 border-gray-100 shadow-sm">
-                <label className="block text-sm font-semibold text-gray-700 mb-3">Trip Type</label>
-                <div className="relative bg-gray-100 p-1 rounded-xl flex">
+              <div className="bg-white p-4 rounded-xl border border-gray-200">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Trip Type</label>
+                <div className="relative bg-gray-100 p-1 rounded-lg flex">
                   <div 
-                    className={`absolute top-1 bottom-1 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 shadow-lg transition-all duration-300 ease-in-out ${
+                    className={`absolute top-1 bottom-1 rounded-md bg-gradient-to-r from-blue-500 to-indigo-600 shadow-md transition-all duration-300 ease-in-out ${
                       bookingForm.tripType === 'oneway' ? 'left-1 right-1/2' : 'left-1/2 right-1'
                     }`}
                   ></div>
                   <button
                     type="button"
                     onClick={() => setBookingForm(prev => ({ ...prev, tripType: 'oneway' }))}
-                    className={`relative z-10 flex-1 py-3 px-6 text-center font-semibold rounded-lg transition-all duration-300 ${
+                    className={`relative z-10 flex-1 py-2 px-4 text-center font-medium rounded-md transition-all duration-300 ${
                       bookingForm.tripType === 'oneway'
                         ? 'text-white'
                         : 'text-gray-600 hover:text-gray-800'
                     }`}
                   >
-                    <div className="flex items-center justify-center space-x-2">
-                      <div className={`w-2 h-2 rounded-full ${
-                        bookingForm.tripType === 'oneway' ? 'bg-white' : 'bg-blue-500'
-                      }`}></div>
-                      <span>One Way</span>
-                    </div>
+                    One Way
                   </button>
                   <button
                     type="button"
                     onClick={() => setBookingForm(prev => ({ ...prev, tripType: 'roundtrip' }))}
-                    className={`relative z-10 flex-1 py-3 px-6 text-center font-semibold rounded-lg transition-all duration-300 ${
+                    className={`relative z-10 flex-1 py-2 px-4 text-center font-medium rounded-md transition-all duration-300 ${
                       bookingForm.tripType === 'roundtrip'
                         ? 'text-white'
                         : 'text-gray-600 hover:text-gray-800'
                     }`}
                   >
-                    <div className="flex items-center justify-center space-x-2">
-                      <div className={`w-2 h-2 rounded-full ${
-                        bookingForm.tripType === 'roundtrip' ? 'bg-white' : 'bg-blue-500'
-                      }`}></div>
-                      <span>Round Trip</span>
-                    </div>
+                    Round Trip
                   </button>
-                </div>
-                <div className="mt-3 text-xs text-gray-500 text-center">
-                  {bookingForm.tripType === 'oneway' 
-                    ? 'Perfect for airport transfers and one-way journeys' 
-                    : 'Ideal for sightseeing and return trips with better rates'
-                  }
                 </div>
               </div>
 
               {/* Customer Information Section */}
-              <div className="bg-blue-50 p-6 rounded-2xl border-2 border-blue-100 shadow-sm">
-                <h4 className="text-lg font-semibold text-blue-900 mb-4 flex items-center">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                  Customer Information
-                </h4>
-                <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                <h4 className="text-md font-medium text-blue-900 mb-3">Customer Information</h4>
+                <div className="grid grid-cols-2 gap-3">
                   <div className="relative">
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
                     <input
                       type="text"
                       name="customerName"
                       placeholder="Enter your full name"
                       value={bookingForm.customerName}
                       onChange={handleInputChange}
-                      className="w-full py-4 px-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
+                      className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
                       required
                     />
                   </div>
                   <div className="relative">
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number *</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number *</label>
                     <input
                       type="tel"
                       name="customerPhone"
@@ -353,34 +334,28 @@ const Hero = () => {
                       value={bookingForm.customerPhone}
                       onChange={handleInputChange}
                       pattern="[0-9]{10}"
-                      className="w-full py-4 px-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
+                      className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
                       required
                     />
-                    <div className="mt-1 text-xs text-gray-500">
-                      10-digit mobile number (e.g., 9876543210)
-                    </div>
                   </div>
-                  <div className="relative md:col-span-2">
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address (Optional)</label>
+                  <div className="relative col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email Address (Optional)</label>
                     <input
                       type="email"
                       name="customerEmail"
                       placeholder="Enter email address (optional)"
                       value={bookingForm.customerEmail}
                       onChange={handleInputChange}
-                      className="w-full py-4 px-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
+                      className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
                     />
-                    <div className="mt-1 text-xs text-gray-500">
-                      Email for booking confirmations and updates
-                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-2 gap-3">
                 <div className="relative">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Pick-up Location</label>
-                  <MapPin className="absolute left-4 top-11 h-5 w-5 text-blue-500 z-10" />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Pick-up Location</label>
+                  <MapPin className="absolute left-3 top-8 h-4 w-4 text-blue-500 z-10" />
                   <input
                     ref={fromInputRef}
                     type="text"
@@ -388,13 +363,13 @@ const Hero = () => {
                     placeholder="Pick-up location (e.g., RS Puram)"
                     value={bookingForm.from}
                     onChange={handleInputChange}
-                    className="pl-12 w-full py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
+                    className="pl-10 w-full py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
                     required
                   />
                 </div>
                 <div className="relative">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Drop-off Location</label>
-                  <MapPin className="absolute left-4 top-11 h-5 w-5 text-red-500 z-10" />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Drop-off Location</label>
+                  <MapPin className="absolute left-3 top-8 h-4 w-4 text-red-500 z-10" />
                   <input
                     ref={toInputRef}
                     type="text"
@@ -402,62 +377,62 @@ const Hero = () => {
                     placeholder="Drop-off location (e.g., Airport)"
                     value={bookingForm.to}
                     onChange={handleInputChange}
-                    className="pl-12 w-full py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
+                    className="pl-10 w-full py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
                     required
                   />
                 </div>
               </div>
               
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-3 gap-3">
                 <div className="relative">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Travel Date</label>
-                  <Calendar className="absolute left-4 top-11 h-5 w-5 text-green-500" />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Travel Date</label>
+                  <Calendar className="absolute left-3 top-8 h-4 w-4 text-green-500" />
                   <input
                     type="date"
                     name="date"
                     value={bookingForm.date}
                     onChange={handleInputChange}
-                    className="pl-12 w-full py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
+                    className="pl-10 w-full py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
                     required
                   />
                 </div>
                 <div className="relative">
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Travel Time</label>
-                  <Clock className="absolute left-4 top-11 h-5 w-5 text-purple-500" />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Travel Time</label>
+                  <Clock className="absolute left-3 top-8 h-4 w-4 text-purple-500" />
                   <input
                     type="time"
                     name="time"
                     value={bookingForm.time}
                     onChange={handleInputChange}
-                    className="pl-12 w-full py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
+                    className="pl-10 w-full py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all"
                     required
                   />
                 </div>
-              </div>
 
-              <div className="relative">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Number of Passengers</label>
-                <select
-                  name="passengers"
-                  value={bookingForm.passengers}
-                  onChange={handleInputChange}
-                  className="w-full py-4 px-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm bg-white"
-                >
-                  <option value="1">1 Passenger</option>
-                  <option value="2">2 Passengers</option>
-                  <option value="3">3 Passengers</option>
-                  <option value="4">4 Passengers</option>
-                  <option value="5+">5+ Passengers</option>
-                </select>
+                <div className="relative">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Passengers</label>
+                  <select
+                    name="passengers"
+                    value={bookingForm.passengers}
+                    onChange={handleInputChange}
+                    className="w-full py-2 px-3 border border-gray-300 rounded-lg focus:ring-1 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white"
+                  >
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5+">5+</option>
+                  </select>
+                </div>
               </div>
 
               {!showEstimation ? (
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-5 rounded-xl text-lg font-bold hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center justify-center space-x-3 group shadow-lg transform hover:scale-105"
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center justify-center space-x-2 group"
                 >
-                  <span>Book Now</span>
-                  <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
+                  <span>Get Estimation</span>
+                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               ) : null}
                 </form>
@@ -468,7 +443,7 @@ const Hero = () => {
             {showVehicleSelection && (
               <div className="space-y-6">
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Select Your Vehicle</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Select Your Vehicle</h3>
                   <p className="text-gray-600">Choose the perfect car for your journey</p>
                 </div>
                 
@@ -477,11 +452,11 @@ const Hero = () => {
                     <div 
                       key={index}
                       onClick={() => handleVehicleSelect(vehicle)}
-                      className="bg-white border-2 border-gray-200 rounded-xl p-6 text-center cursor-pointer hover:border-blue-500 hover:shadow-lg transition-all transform hover:scale-105"
+                      className="bg-white border border-gray-200 rounded-lg p-4 text-center cursor-pointer hover:border-blue-500 hover:shadow-md transition-all"
                     >
-                      <div className="text-4xl mb-3">{vehicle.image}</div>
-                      <h4 className="font-bold text-gray-900 mb-2">{vehicle.name}</h4>
-                      <p className="text-blue-600 font-bold text-lg">₹{vehicle.rate}/KM</p>
+                      <div className="text-3xl mb-2">{vehicle.image}</div>
+                      <h4 className="font-semibold text-gray-900 mb-1">{vehicle.name}</h4>
+                      <p className="text-blue-600 font-semibold">₹{vehicle.rate}/KM</p>
                     </div>
                   ))}
                 </div>
@@ -492,13 +467,13 @@ const Hero = () => {
             {showEstimation && tripDetails && (
               <div className="space-y-6">
                 <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
                     Trip estimation for {bookingForm.from.split(',')[0]} to {bookingForm.to.split(',')[0]}
                   </h3>
                 </div>
                 
-                <div className="text-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-8 rounded-2xl">
-                  <h2 className="text-4xl font-bold mb-6">Fare ₹{tripDetails.fare.toLocaleString()}</h2>
+                <div className="text-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-xl">
+                  <h2 className="text-3xl font-bold mb-4">Fare ₹{tripDetails.fare.toLocaleString()}</h2>
                   
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
@@ -516,7 +491,7 @@ const Hero = () => {
                   </div>
                 </div>
                 
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-center">
                   <p className="text-yellow-800 text-sm italic">
                     Note: Above estimation is exclusive of Toll Gate and State Permit Etc
                   </p>
@@ -524,7 +499,7 @@ const Hero = () => {
                 
                 <button
                   onClick={handleConfirmBooking}
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl text-lg font-bold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg"
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all"
                 >
                   Confirm Booking
                 </button>

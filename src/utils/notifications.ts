@@ -27,10 +27,11 @@ export interface BookingEnquiry {
   vehicleType?: string;
   tripDistance?: string;
   tripDuration?: string;
+  customerEmail?: string;
 }
 
-// Send booking confirmation email via backend
-export const sendBookingEmail = async (booking: BookingEnquiry): Promise<boolean> => {
+// Send booking enquiry email via backend
+export const sendBookingEnquiryEmail = async (booking: BookingEnquiry): Promise<boolean> => {
   try {
     const response = await fetch(`${API_BASE_URL}/send-booking-email`, {
       method: 'POST',
@@ -41,7 +42,7 @@ export const sendBookingEmail = async (booking: BookingEnquiry): Promise<boolean
         bookingId: booking.bookingId,
         customerName: booking.customerName,
         customerPhone: booking.customerPhone,
-        customerEmail: '', // Can be added to form later
+        customerEmail: booking.customerEmail || '',
         tripType: booking.tripType,
         from: booking.from,
         to: booking.to,
@@ -53,21 +54,66 @@ export const sendBookingEmail = async (booking: BookingEnquiry): Promise<boolean
         tripDuration: booking.tripDuration,
         fareEstimate: booking.fareEstimate,
         perKmRate: 18,
-        driverAllowance: 400
+        driverAllowance: 400,
+        status: 'ENQUIRY'
       })
     });
 
     const result = await response.json();
     
     if (result.success) {
-      console.log('✅ Booking email sent successfully via backend');
+      console.log('✅ Booking enquiry email sent successfully via backend');
       return true;
     } else {
-      console.error('❌ Backend email sending failed:', result.message);
+      console.error('❌ Backend enquiry email sending failed:', result.message);
       return false;
     }
   } catch (error) {
-    console.error('❌ Error sending booking email via backend:', error);
+    console.error('❌ Error sending booking enquiry email via backend:', error);
+    return false;
+  }
+};
+
+// Send booking confirmation email via backend
+export const sendBookingConfirmationEmail = async (booking: BookingEnquiry): Promise<boolean> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/send-booking-email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        bookingId: booking.bookingId,
+        customerName: booking.customerName,
+        customerPhone: booking.customerPhone,
+        customerEmail: booking.customerEmail || '',
+        tripType: booking.tripType,
+        from: booking.from,
+        to: booking.to,
+        date: booking.date,
+        time: booking.time,
+        passengers: booking.passengers,
+        vehicleType: booking.vehicleType || 'SEDAN',
+        tripDistance: booking.tripDistance,
+        tripDuration: booking.tripDuration,
+        fareEstimate: booking.fareEstimate,
+        perKmRate: 18,
+        driverAllowance: 400,
+        status: 'CONFIRMED'
+      })
+    });
+
+    const result = await response.json();
+    
+    if (result.success) {
+      console.log('✅ Booking confirmation email sent successfully via backend');
+      return true;
+    } else {
+      console.error('❌ Backend confirmation email sending failed:', result.message);
+      return false;
+    }
+  } catch (error) {
+    console.error('❌ Error sending booking confirmation email via backend:', error);
     return false;
   }
 };
@@ -103,9 +149,41 @@ export const sendContactEmail = async (contactData: {
   }
 };
 
-// Format booking details for WhatsApp message
-export const formatWhatsAppMessage = (booking: BookingEnquiry): string => {
-  const message = `🚖 *NEW BOOKING CONFIRMED - 1waytaxi*
+// Format booking enquiry for WhatsApp message
+export const formatWhatsAppEnquiryMessage = (booking: BookingEnquiry): string => {
+  const message = `🚖 *NEW BOOKING ENQUIRY - 1waytaxi*
+
+📋 *Trip Details:*
+• Booking ID: ${booking.bookingId}
+• Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
+• From: ${booking.from}
+• To: ${booking.to}
+• Date: ${booking.date}
+• Time: ${booking.time}
+• Passengers: ${booking.passengers}
+• Distance: ${booking.tripDistance}
+• Duration: ${booking.tripDuration}
+
+💰 *Fare Estimate:*
+• Total Fare: ₹${booking.fareEstimate}
+• Rate: ₹18/km + ₹400 driver allowance
+
+👤 *Customer Info:*
+• Name: ${booking.customerName}
+• Phone: ${booking.customerPhone}
+${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
+
+⏳ *STATUS: ENQUIRY RECEIVED*
+Customer is reviewing the fare estimate. Please standby for confirmation.
+
+⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
+
+  return encodeURIComponent(message);
+};
+
+// Format booking confirmation for WhatsApp message
+export const formatWhatsAppConfirmationMessage = (booking: BookingEnquiry): string => {
+  const message = `🚖 *BOOKING CONFIRMED - 1waytaxi*
 
 📋 *Trip Details:*
 • Booking ID: ${booking.bookingId}
@@ -125,6 +203,7 @@ export const formatWhatsAppMessage = (booking: BookingEnquiry): string => {
 👤 *Customer Info:*
 • Name: ${booking.customerName}
 • Phone: ${booking.customerPhone}
+${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
 ✅ *STATUS: CONFIRMED BOOKING*
 Please arrange vehicle and contact customer immediately.
@@ -134,28 +213,57 @@ Please arrange vehicle and contact customer immediately.
   return encodeURIComponent(message);
 };
 
-// Send WhatsApp notification
-export const sendWhatsAppNotification = (booking: BookingEnquiry): void => {
-  const message = formatWhatsAppMessage(booking);
+// Send WhatsApp enquiry notification
+export const sendWhatsAppEnquiryNotification = (booking: BookingEnquiry): void => {
+  const message = formatWhatsAppEnquiryMessage(booking);
   const whatsappUrl = `https://wa.me/917810095200?text=${message}`;
   
   // Open WhatsApp in new tab
   window.open(whatsappUrl, '_blank');
 };
 
-// Send both notifications (email via backend + WhatsApp)
-export const sendBookingNotifications = async (booking: BookingEnquiry): Promise<void> => {
-  // Send email via backend
-  const emailSent = await sendBookingEmail(booking);
+// Send WhatsApp confirmation notification
+export const sendWhatsAppConfirmationNotification = (booking: BookingEnquiry): void => {
+  const message = formatWhatsAppConfirmationMessage(booking);
+  const whatsappUrl = `https://wa.me/917810095200?text=${message}`;
   
-  // Send WhatsApp notification as backup
-  sendWhatsAppNotification(booking);
+  // Open WhatsApp in new tab
+  window.open(whatsappUrl, '_blank');
+};
+
+// Send enquiry notifications (email via backend + WhatsApp)
+export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): Promise<void> => {
+  console.log('📧 Sending booking enquiry notifications...');
+  
+  // Send enquiry email via backend
+  const emailSent = await sendBookingEnquiryEmail(booking);
+  
+  // Send WhatsApp enquiry notification
+  sendWhatsAppEnquiryNotification(booking);
   
   // Show status to user
   if (emailSent) {
-    console.log('✅ All notifications sent successfully');
+    console.log('✅ All enquiry notifications sent successfully');
   } else {
-    console.log('⚠️ Email failed, but WhatsApp notification sent');
+    console.log('⚠️ Enquiry email failed, but WhatsApp notification sent');
+  }
+};
+
+// Send confirmation notifications (email via backend + WhatsApp)
+export const sendBookingConfirmationNotifications = async (booking: BookingEnquiry): Promise<void> => {
+  console.log('📧 Sending booking confirmation notifications...');
+  
+  // Send confirmation email via backend
+  const emailSent = await sendBookingConfirmationEmail(booking);
+  
+  // Send WhatsApp confirmation notification
+  sendWhatsAppConfirmationNotification(booking);
+  
+  // Show status to user
+  if (emailSent) {
+    console.log('✅ All confirmation notifications sent successfully');
+  } else {
+    console.log('⚠️ Confirmation email failed, but WhatsApp notification sent');
   }
 };
 

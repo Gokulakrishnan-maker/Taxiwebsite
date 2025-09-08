@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, Clock, MapPin, ArrowRight } from 'lucide-react';
 import { calculateFare } from '../utils/fareCalculator';
 import { loadGoogleMapsAPI } from '../utils/googleMaps';
-import { sendBookingNotifications, showBookingConfirmation, BookingEnquiry, generateBookingId } from '../utils/notifications';
+import { sendBookingEnquiryNotifications, sendBookingConfirmationNotifications, showBookingConfirmation, BookingEnquiry, generateBookingId } from '../utils/notifications';
 
 const Hero = () => {
   const [bookingForm, setBookingForm] = useState({
     tripType: 'oneway',
     customerName: '',
     customerPhone: '',
+    customerEmail: '',
     from: '',
     to: '',
     date: '',
@@ -152,6 +153,34 @@ const Hero = () => {
       return;
     }
     
+    // Generate booking ID for enquiry
+    const enquiryBookingId = generateBookingId();
+    
+    // Create booking enquiry object
+    const bookingEnquiry: BookingEnquiry = {
+      tripType: bookingForm.tripType,
+      from: bookingForm.from,
+      to: bookingForm.to,
+      date: bookingForm.date,
+      time: bookingForm.time,
+      passengers: bookingForm.passengers,
+      fareEstimate: tripDetails?.fare || fareEstimate || undefined,
+      bookingId: enquiryBookingId,
+      vehicleType: 'SEDAN',
+      customerName: bookingForm.customerName,
+      customerPhone: bookingForm.customerPhone,
+      customerEmail: bookingForm.customerEmail,
+      tripDistance: tripDetails?.distance || 'To be calculated',
+      tripDuration: tripDetails?.duration || 'To be calculated'
+    };
+
+    // Send enquiry notifications
+    sendBookingEnquiryNotifications(bookingEnquiry).then(() => {
+      console.log('All booking enquiry notifications processed');
+    }).catch((error) => {
+      console.error('Error processing booking enquiry notifications:', error);
+    });
+    
     // Show estimation details
     setShowEstimation(true);
   };
@@ -173,20 +202,21 @@ const Hero = () => {
       vehicleType: 'SEDAN',
       customerName: bookingForm.customerName,
       customerPhone: bookingForm.customerPhone,
+      customerEmail: bookingForm.customerEmail,
       tripDistance: tripDetails?.distance || 'To be calculated',
       tripDuration: tripDetails?.duration || 'To be calculated'
     };
 
-    // Send notifications via backend and WhatsApp
-    sendBookingNotifications(bookingEnquiry).then(() => {
-      console.log('All booking notifications processed');
+    // Send confirmation notifications via backend and WhatsApp
+    sendBookingConfirmationNotifications(bookingEnquiry).then(() => {
+      console.log('All booking confirmation notifications processed');
     }).catch((error) => {
-      console.error('Error processing booking notifications:', error);
+      console.error('Error processing booking confirmation notifications:', error);
     });
     
     // Debug logging
     console.log('Booking enquiry:', bookingEnquiry);
-    console.log('Sending notifications...');
+    console.log('Sending confirmation notifications...');
     
     // Show confirmation to customer
     showBookingConfirmation(bookingEnquiry);
@@ -196,6 +226,7 @@ const Hero = () => {
       tripType: 'oneway',
       customerName: '',
       customerPhone: '',
+      customerEmail: '',
       from: '',
       to: '',
       date: '',
@@ -331,6 +362,20 @@ const Hero = () => {
                     />
                     <div className="mt-1 text-xs text-gray-500">
                       10-digit mobile number (e.g., 9876543210)
+                    </div>
+                  </div>
+                  <div className="relative md:col-span-2">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address (Optional)</label>
+                    <input
+                      type="email"
+                      name="customerEmail"
+                      placeholder="Enter email address (optional)"
+                      value={bookingForm.customerEmail}
+                      onChange={handleInputChange}
+                      className="w-full py-4 px-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
+                    />
+                    <div className="mt-1 text-xs text-gray-500">
+                      Email for booking confirmations and updates
                     </div>
                   </div>
                 </div>

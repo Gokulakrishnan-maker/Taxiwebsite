@@ -56,7 +56,8 @@ app.post('/api/send-booking-email', async (req, res) => {
       tripDuration,
       fareEstimate,
       perKmRate,
-      driverAllowance
+      driverAllowance,
+      status = 'CONFIRMED'
     } = req.body;
 
     const currentDateTime = new Date().toLocaleString('en-IN', { 
@@ -69,14 +70,16 @@ app.post('/api/send-booking-email', async (req, res) => {
       hour12: true
     });
 
-    const emailSubject = `CONFIRMED BOOKING - Website Enquiry Details - Booking ID: ${bookingId}`;
+    const isEnquiry = status === 'ENQUIRY';
+    const statusText = isEnquiry ? 'BOOKING ENQUIRY' : 'CONFIRMED BOOKING';
+    const emailSubject = `${statusText} - Website Details - Booking ID: ${bookingId}`;
     
-    const emailBody = `CONFIRMED BOOKING - Website Enquiry Details
+    const emailBody = `${statusText} - Website Details
 Booking ID: ${bookingId}
 
 Thanks for Choosing 1waytaxi
 
-CONFIRMED BOOKING DETAILS
+${statusText} DETAILS
 Booking ID: ${bookingId}
 Name: ${customerName}
 Email ID: ${customerEmail || 'Not Provided'}
@@ -99,13 +102,13 @@ For Customer Intimation: Toll Gate, Permit, Hill Station Charges Extra
 For Questions Contact: +91 78100 95200
 www.1waytaxi.com
 
-BOOKING CONFIRMED TIME: ${currentDateTime}
+${statusText} TIME: ${currentDateTime}
 
-STATUS: CONFIRMED - Customer has accepted the fare estimation and confirmed the booking.
+STATUS: ${isEnquiry ? 'ENQUIRY - Customer is reviewing the fare estimation.' : 'CONFIRMED - Customer has accepted the fare estimation and confirmed the booking.'}
 
 TOTAL: ₹${fareEstimate}
 
-BOOKING CONFIRMED - Please arrange the vehicle and contact customer at ${customerPhone} for pickup coordination.`;
+${isEnquiry ? 'ENQUIRY RECEIVED - Please standby for customer confirmation.' : 'BOOKING CONFIRMED - Please arrange the vehicle and contact customer at ' + customerPhone + ' for pickup coordination.'}`;
 
     // Email options
     const mailOptions = {
@@ -115,13 +118,13 @@ BOOKING CONFIRMED - Please arrange the vehicle and contact customer at ${custome
       text: emailBody,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
-          <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
-            <h1 style="margin: 0; font-size: 24px;">🚖 CONFIRMED BOOKING</h1>
+          <div style="background-color: ${isEnquiry ? '#f59e0b' : '#1e40af'}; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+            <h1 style="margin: 0; font-size: 24px;">🚖 ${statusText}</h1>
             <p style="margin: 5px 0 0 0; opacity: 0.9;">Website Enquiry Details</p>
           </div>
           
           <div style="background-color: white; padding: 30px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-            <div style="background-color: #10b981; color: white; padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 25px;">
+            <div style="background-color: ${isEnquiry ? '#f59e0b' : '#10b981'}; color: white; padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 25px;">
               <h2 style="margin: 0; font-size: 18px;">Booking ID: ${bookingId}</h2>
               <p style="margin: 5px 0 0 0; opacity: 0.9;">Thanks for Choosing 1waytaxi</p>
             </div>
@@ -164,13 +167,13 @@ BOOKING CONFIRMED - Please arrange the vehicle and contact customer at ${custome
               <p style="margin: 5px 0 0 0; color: #92400e;">Toll Gate, Permit, Hill Station Charges Extra</p>
             </div>
 
-            <div style="background-color: #10b981; color: white; padding: 20px; border-radius: 6px; text-align: center; margin-bottom: 20px;">
-              <h3 style="margin: 0 0 10px 0;">✅ STATUS: CONFIRMED</h3>
-              <p style="margin: 0; opacity: 0.9;">Please arrange vehicle and contact customer immediately</p>
+            <div style="background-color: ${isEnquiry ? '#f59e0b' : '#10b981'}; color: white; padding: 20px; border-radius: 6px; text-align: center; margin-bottom: 20px;">
+              <h3 style="margin: 0 0 10px 0;">${isEnquiry ? '⏳ STATUS: ENQUIRY' : '✅ STATUS: CONFIRMED'}</h3>
+              <p style="margin: 0; opacity: 0.9;">${isEnquiry ? 'Customer is reviewing fare estimate. Please standby.' : 'Please arrange vehicle and contact customer immediately'}</p>
             </div>
 
             <div style="text-align: center; color: #6b7280; font-size: 14px;">
-              <p>Booking Confirmed Time: ${currentDateTime}</p>
+              <p>${statusText} Time: ${currentDateTime}</p>
               <p>For Questions Contact: +91 78100 95200</p>
               <p>www.1waytaxi.com</p>
             </div>
@@ -181,11 +184,11 @@ BOOKING CONFIRMED - Please arrange the vehicle and contact customer at ${custome
 
     // Send email
     const info = await transporter.sendMail(mailOptions);
-    console.log('✅ Booking email sent successfully:', info.messageId);
+    console.log(`✅ ${statusText} email sent successfully:`, info.messageId);
 
     res.status(200).json({
       success: true,
-      message: 'Booking confirmation email sent successfully',
+      message: `${statusText} email sent successfully`,
       messageId: info.messageId
     });
 
@@ -193,7 +196,7 @@ BOOKING CONFIRMED - Please arrange the vehicle and contact customer at ${custome
     console.error('❌ Error sending booking email:', error);
     res.status(500).json({
       success: false,
-      message: 'Failed to send booking confirmation email',
+      message: 'Failed to send booking email',
       error: error.message
     });
   }

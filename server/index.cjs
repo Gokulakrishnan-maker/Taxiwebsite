@@ -36,6 +36,7 @@ const createTransporter = () => {
     rateDelta: 20000,
     rateLimit: 5
   };
+}
 const verifyEmailConfig = async () => {
   try {
     console.log('🔧 Verifying email configuration...');

@@ -206,9 +206,6 @@ Rate per KM: ₹${perKmRate}
 Driver Allowance: ₹${driverAllowance}
 Total Fare: ₹${fareEstimate}
 Additional: Toll charges extra
-
-${isEnquiry ? 'ENQUIRY STATUS: Customer is reviewing fare estimate' : 'CONFIRMED STATUS: Customer has confirmed the booking'}
-
 Booking Time: ${currentDateTime}
 Contact: +91 78100 95200`;
 

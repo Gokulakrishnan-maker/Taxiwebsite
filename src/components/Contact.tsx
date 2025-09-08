@@ -55,7 +55,7 @@ Best regards,
 Lak Oneway Taxi Contact System`
     };
 
-    const emailUrl = `mailto:lakonewaytaxi@gmail.com?subject=${encodeURIComponent(emailContent.subject)}&body=${encodeURIComponent(emailContent.body)}`;
+    const emailUrl = `mailto:1waytaxi.booking@gmail.com?subject=${encodeURIComponent(emailContent.subject)}&body=${encodeURIComponent(emailContent.body)}`;
     
     // Try multiple methods to ensure email is sent
     try {
@@ -95,7 +95,7 @@ Please respond to the customer promptly.`;
       window.open(whatsappUrl, '_blank');
     }, 1000);
     
-    alert('✅ Thank you for your message! Lak Oneway Taxi has been notified and will get back to you shortly.');
+    alert('✅ Thank you for your message! 1waytaxi has been notified and will get back to you shortly.');
     setContactForm({ name: '', email: '', phone: '', message: '' });
   };
 

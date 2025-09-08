@@ -7,6 +7,8 @@ import { sendBookingNotifications, showBookingConfirmation, BookingEnquiry, gene
 const Hero = () => {
   const [bookingForm, setBookingForm] = useState({
     tripType: 'oneway',
+    customerName: '',
+    customerPhone: '',
     from: '',
     to: '',
     date: '',
@@ -140,8 +142,8 @@ const Hero = () => {
       fareEstimate: fareEstimate || undefined,
       bookingId: bookingId,
       vehicleType: 'SEDAN',
-      customerName: 'Customer', // You can add name field to form if needed
-      customerPhone: '+91 XXXXXXXXXX' // You can add phone field to form if needed
+      customerName: bookingForm.customerName,
+      customerPhone: bookingForm.customerPhone
     };
 
     // Send notifications to WhatsApp and Email
@@ -153,6 +155,8 @@ const Hero = () => {
     // Reset form
     setBookingForm({
       tripType: 'oneway',
+      customerName: '',
+      customerPhone: '',
       from: '',
       to: '',
       date: '',
@@ -250,6 +254,44 @@ const Hero = () => {
                     ? 'Perfect for airport transfers and one-way journeys' 
                     : 'Ideal for sightseeing and return trips with better rates'
                   }
+                </div>
+              </div>
+
+              {/* Customer Information Section */}
+              <div className="bg-blue-50 p-6 rounded-2xl border-2 border-blue-100 shadow-sm">
+                <h4 className="text-lg font-semibold text-blue-900 mb-4 flex items-center">
+                  <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                  Customer Information
+                </h4>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="relative">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
+                    <input
+                      type="text"
+                      name="customerName"
+                      placeholder="Enter your full name"
+                      value={bookingForm.customerName}
+                      onChange={handleInputChange}
+                      className="w-full py-4 px-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
+                      required
+                    />
+                  </div>
+                  <div className="relative">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">Mobile Number *</label>
+                    <input
+                      type="tel"
+                      name="customerPhone"
+                      placeholder="Enter mobile number"
+                      value={bookingForm.customerPhone}
+                      onChange={handleInputChange}
+                      pattern="[0-9]{10}"
+                      className="w-full py-4 px-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm"
+                      required
+                    />
+                    <div className="mt-1 text-xs text-gray-500">
+                      10-digit mobile number (e.g., 9876543210)
+                    </div>
+                  </div>
                 </div>
               </div>
 

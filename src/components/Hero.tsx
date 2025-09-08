@@ -17,6 +17,14 @@ const Hero = () => {
   });
 
   const [fareEstimate, setFareEstimate] = useState<number | null>(null);
+  const [showEstimation, setShowEstimation] = useState(false);
+  const [tripDetails, setTripDetails] = useState<{
+    distance: string;
+    duration: string;
+    fare: number;
+    perKmRate: number;
+    driverAllowance: number;
+  } | null>(null);
   const [isGoogleMapsLoaded, setIsGoogleMapsLoaded] = useState(false);
   
   const fromInputRef = useRef<HTMLInputElement>(null);
@@ -105,11 +113,21 @@ const Hero = () => {
       }, (response, status) => {
         if (status === google.maps.DistanceMatrixStatus.OK && response) {
           const distance = response.rows[0].elements[0].distance;
+          const duration = response.rows[0].elements[0].duration;
           if (distance) {
             const distanceKm = distance.value / 1000;
             const isNightTime = new Date().getHours() >= 23 || new Date().getHours() <= 5;
             const fare = calculateFare(distanceKm, 'economy', isNightTime, true);
             setFareEstimate(fare.totalFare);
+            
+            // Set detailed trip information
+            setTripDetails({
+              distance: `${distanceKm.toFixed(0)} KM`,
+              duration: duration ? `${Math.round(duration.value / 60)} mins` : 'Calculating...',
+              fare: fare.totalFare,
+              perKmRate: 18,
+              driverAllowance: 400
+            });
           }
         }
       });
@@ -125,9 +143,20 @@ const Hero = () => {
     });
   };
 
-  const handleBooking = (e: React.FormEvent) => {
+  const handleGetEstimation = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validate required fields
+    if (!bookingForm.customerName || !bookingForm.customerPhone || !bookingForm.from || !bookingForm.to || !bookingForm.date || !bookingForm.time) {
+      alert('Please fill in all required fields to get trip estimation.');
+      return;
+    }
+    
+    // Show estimation details
+    setShowEstimation(true);
+  };
+
+  const handleConfirmBooking = () => {
     // Generate unique booking ID
     const bookingId = generateBookingId();
     
@@ -139,11 +168,13 @@ const Hero = () => {
       date: bookingForm.date,
       time: bookingForm.time,
       passengers: bookingForm.passengers,
-      fareEstimate: fareEstimate || undefined,
+      fareEstimate: tripDetails?.fare || fareEstimate || undefined,
       bookingId: bookingId,
       vehicleType: 'SEDAN',
       customerName: bookingForm.customerName,
-      customerPhone: bookingForm.customerPhone
+      customerPhone: bookingForm.customerPhone,
+      tripDistance: tripDetails?.distance || 'To be calculated',
+      tripDuration: tripDetails?.duration || 'To be calculated'
     };
 
     // Send notifications to WhatsApp and Email
@@ -177,6 +208,8 @@ const Hero = () => {
       passengers: '1'
     });
     setFareEstimate(null);
+    setShowEstimation(false);
+    setTripDetails(null);
   };
 
   return (
@@ -382,25 +415,86 @@ const Hero = () => {
                 </select>
               </div>
 
-              {fareEstimate && (
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-6 shadow-sm">
-                  <p className="text-green-800 font-bold text-lg">
-                    Estimated Fare: ₹{fareEstimate}
+              {!showEstimation ? (
+                <button
+                  type="submit"
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-5 rounded-xl text-lg font-bold hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center justify-center space-x-3 group shadow-lg transform hover:scale-105"
+                >
+                  <span>Book Now</span>
+                  <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
+                </button>
+              ) : null}
+            </form>
+
+            {/* Trip Estimation Details */}
+            {showEstimation && tripDetails && (
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-8 shadow-lg mt-6">
+                <h3 className="text-2xl font-bold text-green-800 mb-6 text-center">Trip Estimation Details</h3>
+                
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                  <div className="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 className="font-semibold text-gray-700 mb-2">Trip Information</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Distance:</span>
+                        <span className="font-semibold">{tripDetails.distance}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Duration:</span>
+                        <span className="font-semibold">{tripDetails.duration}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Vehicle Type:</span>
+                        <span className="font-semibold">SEDAN</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 className="font-semibold text-gray-700 mb-2">Fare Breakdown</h4>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Rate per KM:</span>
+                        <span className="font-semibold">₹{tripDetails.perKmRate}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Driver Allowance:</span>
+                        <span className="font-semibold">₹{tripDetails.driverAllowance}</span>
+                      </div>
+                      <div className="flex justify-between border-t pt-2">
+                        <span className="text-gray-600 font-semibold">Total Fare:</span>
+                        <span className="font-bold text-green-600">₹{tripDetails.fare}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                  <p className="text-yellow-800 text-sm font-medium">
+                    <strong>Additional Charges:</strong> Toll Gate, Permit, Hill Station Charges Extra
                   </p>
-                  <p className="text-green-600 text-sm">
+                  <p className="text-yellow-700 text-xs mt-1">
                     *Final fare may vary based on actual route and traffic conditions
                   </p>
                 </div>
-              )}
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-5 rounded-xl text-lg font-bold hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center justify-center space-x-3 group shadow-lg transform hover:scale-105"
-              >
-                <span>Book Now</span>
-                <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
-              </button>
-            </form>
+                
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <button
+                    onClick={handleConfirmBooking}
+                    className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 rounded-xl text-lg font-bold hover:from-green-700 hover:to-emerald-700 transition-all flex items-center justify-center space-x-3 group shadow-lg"
+                  >
+                    <span>Confirm Booking</span>
+                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                  <button
+                    onClick={() => setShowEstimation(false)}
+                    className="flex-1 border-2 border-gray-300 text-gray-700 py-4 rounded-xl text-lg font-bold hover:bg-gray-50 transition-all"
+                  >
+                    Modify Details
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

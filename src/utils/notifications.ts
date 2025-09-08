@@ -38,6 +38,8 @@ export interface BookingEnquiry {
   fareEstimate?: number;
   bookingId?: string;
   vehicleType?: string;
+  tripDistance?: string;
+  tripDuration?: string;
 }
 
 // Format booking details for WhatsApp message
@@ -105,8 +107,8 @@ Drop Location: ${booking.to}
 Vehicle Type: ${booking.vehicleType || 'SEDAN'}
 Journey Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
 Travel Date & Time: ${booking.date} ${booking.time}
-Trip Distance: To be calculated
-Trip Duration: To be calculated (Approx)
+Trip Distance: ${booking.tripDistance || 'To be calculated'}
+Trip Duration: ${booking.tripDuration || 'To be calculated (Approx)'}
 Extra per KM: ₹ 18
 Driver Allowance: INCLUDED
 Toll: EXTRA

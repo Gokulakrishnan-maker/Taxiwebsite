@@ -1,7 +1,7 @@
 // Notification utilities for booking enquiries
 
 // API base URL for backend
-const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:3001/api' : '/api';
+const API_BASE_URL = 'http://localhost:3001/api';
 
 // Generate unique booking ID
 export const generateBookingId = (): string => {
@@ -33,6 +33,8 @@ export interface BookingEnquiry {
 // Send booking enquiry email via backend
 export const sendBookingEnquiryEmail = async (booking: BookingEnquiry): Promise<boolean> => {
   try {
+    console.log('📧 Sending booking enquiry email via backend...');
+    
     const response = await fetch(`${API_BASE_URL}/send-booking-email`, {
       method: 'POST',
       headers: {
@@ -59,7 +61,10 @@ export const sendBookingEnquiryEmail = async (booking: BookingEnquiry): Promise<
       })
     });
 
+    console.log('📧 Backend response status:', response.status);
+    
     const result = await response.json();
+    console.log('📧 Backend response:', result);
     
     if (result.success) {
       console.log('✅ Booking enquiry email sent successfully via backend');
@@ -77,6 +82,8 @@ export const sendBookingEnquiryEmail = async (booking: BookingEnquiry): Promise<
 // Send booking confirmation email via backend
 export const sendBookingConfirmationEmail = async (booking: BookingEnquiry): Promise<boolean> => {
   try {
+    console.log('📧 Sending booking confirmation email via backend...');
+    
     const response = await fetch(`${API_BASE_URL}/send-booking-email`, {
       method: 'POST',
       headers: {
@@ -103,7 +110,10 @@ export const sendBookingConfirmationEmail = async (booking: BookingEnquiry): Pro
       })
     });
 
+    console.log('📧 Backend response status:', response.status);
+    
     const result = await response.json();
+    console.log('📧 Backend response:', result);
     
     if (result.success) {
       console.log('✅ Booking confirmation email sent successfully via backend');
@@ -126,6 +136,8 @@ export const sendContactEmail = async (contactData: {
   message: string;
 }): Promise<boolean> => {
   try {
+    console.log('📧 Sending contact email via backend...');
+    
     const response = await fetch(`${API_BASE_URL}/send-contact-email`, {
       method: 'POST',
       headers: {
@@ -134,7 +146,10 @@ export const sendContactEmail = async (contactData: {
       body: JSON.stringify(contactData)
     });
 
+    console.log('📧 Backend response status:', response.status);
+    
     const result = await response.json();
+    console.log('📧 Backend response:', result);
     
     if (result.success) {
       console.log('✅ Contact email sent successfully via backend');
@@ -234,6 +249,7 @@ export const sendWhatsAppConfirmationNotification = (booking: BookingEnquiry): v
 // Send enquiry notifications (email via backend + WhatsApp)
 export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): Promise<void> => {
   console.log('📧 Sending booking enquiry notifications...');
+  console.log('📋 Booking data:', booking);
   
   // Send enquiry email via backend
   const emailSent = await sendBookingEnquiryEmail(booking);
@@ -252,6 +268,7 @@ export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): 
 // Send confirmation notifications (email via backend + WhatsApp)
 export const sendBookingConfirmationNotifications = async (booking: BookingEnquiry): Promise<void> => {
   console.log('📧 Sending booking confirmation notifications...');
+  console.log('📋 Booking data:', booking);
   
   // Send confirmation email via backend
   const emailSent = await sendBookingConfirmationEmail(booking);

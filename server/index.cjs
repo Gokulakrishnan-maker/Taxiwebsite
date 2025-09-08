@@ -1,45 +1,100 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:3000'],
+  credentials: true
+}));
 app.use(express.json());
 
-// Create nodemailer transporter
+console.log('🚀 Starting 1waytaxi Email Server...');
+console.log('📧 Email User:', process.env.EMAIL_USER || 'NOT SET');
+console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? 'SET' : 'NOT SET');
+
+// Create nodemailer transporter with detailed configuration
 const transporter = nodemailer.createTransporter({
   service: 'gmail',
   host: 'smtp.gmail.com',
   port: 587,
-  secure: false,
+  secure: false, // Use TLS
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   },
   tls: {
     rejectUnauthorized: false
-  }
+  },
+  debug: true, // Enable debug logs
+  logger: true // Enable logger
 });
 
-// Verify email configuration
+// Verify email configuration on startup
 transporter.verify((error, success) => {
   if (error) {
     console.log('❌ Email configuration error:', error.message);
-    console.log('📧 Email User:', process.env.EMAIL_USER ? 'Set' : 'Not Set');
-    console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? 'Set' : 'Not Set');
+    console.log('📧 Please check your Gmail credentials in .env file');
+    console.log('🔧 Make sure you have:');
+    console.log('   1. Enabled 2-Factor Authentication');
+    console.log('   2. Generated App Password');
+    console.log('   3. Used correct email and app password');
   } else {
     console.log('✅ Email server is ready to send messages');
-    console.log('📧 Using email:', process.env.EMAIL_USER);
+    console.log('📧 Configured email:', process.env.EMAIL_USER);
+    console.log('📬 Emails will be sent to: 1waytaxi.booking@gmail.com');
   }
 });
 
-// Booking confirmation endpoint
+// Test email endpoint
+app.get('/api/test-email', async (req, res) => {
+  try {
+    console.log('🧪 Testing email configuration...');
+    
+    const testMailOptions = {
+      from: `1waytaxi System <${process.env.EMAIL_USER}>`,
+      to: '1waytaxi.booking@gmail.com',
+      subject: 'Test Email - 1waytaxi System',
+      text: 'This is a test email to verify the email system is working correctly.',
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2 style="color: #1e40af;">🚖 1waytaxi Email Test</h2>
+          <p>This is a test email to verify the email system is working correctly.</p>
+          <p><strong>Time:</strong> ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
+          <p style="color: #10b981;"><strong>✅ Email system is functioning properly!</strong></p>
+        </div>
+      `
+    };
+
+    const info = await transporter.sendMail(testMailOptions);
+    console.log('✅ Test email sent successfully:', info.messageId);
+    
+    res.status(200).json({
+      success: true,
+      message: 'Test email sent successfully',
+      messageId: info.messageId,
+      response: info.response
+    });
+
+  } catch (error) {
+    console.error('❌ Test email failed:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Test email failed',
+      error: error.message
+    });
+  }
+});
+
+// Booking email endpoint
 app.post('/api/send-booking-email', async (req, res) => {
   try {
+    console.log('📧 Received booking email request:', req.body);
+    
     const {
       bookingId,
       customerName,
@@ -60,6 +115,14 @@ app.post('/api/send-booking-email', async (req, res) => {
       status = 'CONFIRMED'
     } = req.body;
 
+    // Validate required fields
+    if (!bookingId || !customerName || !customerPhone || !from || !to) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing required booking information'
+      });
+    }
+
     const currentDateTime = new Date().toLocaleString('en-IN', { 
       timeZone: 'Asia/Kolkata',
       day: '2-digit',
@@ -72,61 +135,54 @@ app.post('/api/send-booking-email', async (req, res) => {
 
     const isEnquiry = status === 'ENQUIRY';
     const statusText = isEnquiry ? 'BOOKING ENQUIRY' : 'CONFIRMED BOOKING';
-    const emailSubject = `${statusText} - Website Details - Booking ID: ${bookingId}`;
+    const emailSubject = `${statusText} - 1waytaxi - Booking ID: ${bookingId}`;
     
-    const emailBody = `${statusText} - Website Details
-Booking ID: ${bookingId}
+    const emailBody = `${statusText} - 1waytaxi Website
 
-Thanks for Choosing 1waytaxi
-
-${statusText} DETAILS
 Booking ID: ${bookingId}
+Status: ${statusText}
+
+CUSTOMER DETAILS:
 Name: ${customerName}
-Email ID: ${customerEmail || 'Not Provided'}
 Phone: ${customerPhone}
-Pickup Location: ${from}
-Drop Location: ${to}
-Vehicle Type: ${vehicleType}
-Journey Type: ${tripType === 'oneway' ? 'One Way' : 'Round Trip'}
-Travel Date & Time: ${date} ${time}
+Email: ${customerEmail || 'Not Provided'}
+
+TRIP DETAILS:
+From: ${from}
+To: ${to}
+Date & Time: ${date} ${time}
+Trip Type: ${tripType === 'oneway' ? 'One Way' : 'Round Trip'}
+Vehicle: ${vehicleType}
 Passengers: ${passengers}
-Trip Distance: ${tripDistance}
-Trip Duration: ${tripDuration}
+Distance: ${tripDistance}
+Duration: ${tripDuration}
+
+FARE DETAILS:
 Rate per KM: ₹${perKmRate}
-Driver Allowance: ₹${driverAllowance} (INCLUDED)
-Toll: EXTRA
-Total Trip Fare: ₹${fareEstimate} (Driver Allowance Included)
+Driver Allowance: ₹${driverAllowance}
+Total Fare: ₹${fareEstimate}
+Additional: Toll charges extra
 
-For Customer Intimation: Toll Gate, Permit, Hill Station Charges Extra
+${isEnquiry ? 'ENQUIRY STATUS: Customer is reviewing fare estimate' : 'CONFIRMED STATUS: Customer has confirmed the booking'}
 
-For Questions Contact: +91 78100 95200
-www.1waytaxi.com
+Booking Time: ${currentDateTime}
+Contact: +91 78100 95200`;
 
-${statusText} TIME: ${currentDateTime}
-
-STATUS: ${isEnquiry ? 'ENQUIRY - Customer is reviewing the fare estimation.' : 'CONFIRMED - Customer has accepted the fare estimation and confirmed the booking.'}
-
-TOTAL: ₹${fareEstimate}
-
-${isEnquiry ? 'ENQUIRY RECEIVED - Please standby for customer confirmation.' : 'BOOKING CONFIRMED - Please arrange the vehicle and contact customer at ' + customerPhone + ' for pickup coordination.'}`;
-
-    // Email options
     const mailOptions = {
-      from: `1waytaxi Booking System <${process.env.EMAIL_USER}>`,
+      from: `1waytaxi Booking <${process.env.EMAIL_USER}>`,
       to: '1waytaxi.booking@gmail.com',
       subject: emailSubject,
       text: emailBody,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
-          <div style="background-color: ${isEnquiry ? '#f59e0b' : '#1e40af'}; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+          <div style="background-color: ${isEnquiry ? '#f59e0b' : '#10b981'}; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
             <h1 style="margin: 0; font-size: 24px;">🚖 ${statusText}</h1>
-            <p style="margin: 5px 0 0 0; opacity: 0.9;">Website Enquiry Details</p>
+            <p style="margin: 5px 0 0 0; opacity: 0.9;">1waytaxi Website Booking</p>
           </div>
           
           <div style="background-color: white; padding: 30px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-            <div style="background-color: ${isEnquiry ? '#f59e0b' : '#10b981'}; color: white; padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 25px;">
+            <div style="background-color: ${isEnquiry ? '#fbbf24' : '#34d399'}; color: white; padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 25px;">
               <h2 style="margin: 0; font-size: 18px;">Booking ID: ${bookingId}</h2>
-              <p style="margin: 5px 0 0 0; opacity: 0.9;">Thanks for Choosing 1waytaxi</p>
             </div>
 
             <div style="margin-bottom: 25px;">
@@ -144,7 +200,7 @@ ${isEnquiry ? 'ENQUIRY RECEIVED - Please standby for customer confirmation.' : '
                 <tr><td style="padding: 8px 0; font-weight: bold;">From:</td><td style="padding: 8px 0;">${from}</td></tr>
                 <tr><td style="padding: 8px 0; font-weight: bold;">To:</td><td style="padding: 8px 0;">${to}</td></tr>
                 <tr><td style="padding: 8px 0; font-weight: bold;">Date & Time:</td><td style="padding: 8px 0;">${date} ${time}</td></tr>
-                <tr><td style="padding: 8px 0; font-weight: bold;">Journey Type:</td><td style="padding: 8px 0;">${tripType === 'oneway' ? 'One Way' : 'Round Trip'}</td></tr>
+                <tr><td style="padding: 8px 0; font-weight: bold;">Trip Type:</td><td style="padding: 8px 0;">${tripType === 'oneway' ? 'One Way' : 'Round Trip'}</td></tr>
                 <tr><td style="padding: 8px 0; font-weight: bold;">Vehicle:</td><td style="padding: 8px 0;">${vehicleType}</td></tr>
                 <tr><td style="padding: 8px 0; font-weight: bold;">Passengers:</td><td style="padding: 8px 0;">${passengers}</td></tr>
                 <tr><td style="padding: 8px 0; font-weight: bold;">Distance:</td><td style="padding: 8px 0;">${tripDistance}</td></tr>
@@ -156,25 +212,20 @@ ${isEnquiry ? 'ENQUIRY RECEIVED - Please standby for customer confirmation.' : '
               <h3 style="color: #1e40af; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">💰 Fare Details</h3>
               <table style="width: 100%; border-collapse: collapse;">
                 <tr><td style="padding: 8px 0; font-weight: bold;">Rate per KM:</td><td style="padding: 8px 0;">₹${perKmRate}</td></tr>
-                <tr><td style="padding: 8px 0; font-weight: bold;">Driver Allowance:</td><td style="padding: 8px 0;">₹${driverAllowance} (INCLUDED)</td></tr>
+                <tr><td style="padding: 8px 0; font-weight: bold;">Driver Allowance:</td><td style="padding: 8px 0;">₹${driverAllowance}</td></tr>
                 <tr><td style="padding: 8px 0; font-weight: bold;">Toll Charges:</td><td style="padding: 8px 0;">EXTRA</td></tr>
                 <tr style="border-top: 2px solid #e5e7eb;"><td style="padding: 12px 0; font-weight: bold; font-size: 18px; color: #10b981;">Total Fare:</td><td style="padding: 12px 0; font-weight: bold; font-size: 18px; color: #10b981;">₹${fareEstimate}</td></tr>
               </table>
             </div>
 
-            <div style="background-color: #fef3c7; border: 1px solid #f59e0b; border-radius: 6px; padding: 15px; margin-bottom: 25px;">
-              <p style="margin: 0; color: #92400e; font-weight: bold;">⚠️ Additional Charges:</p>
-              <p style="margin: 5px 0 0 0; color: #92400e;">Toll Gate, Permit, Hill Station Charges Extra</p>
-            </div>
-
-            <div style="background-color: ${isEnquiry ? '#f59e0b' : '#10b981'}; color: white; padding: 20px; border-radius: 6px; text-align: center; margin-bottom: 20px;">
-              <h3 style="margin: 0 0 10px 0;">${isEnquiry ? '⏳ STATUS: ENQUIRY' : '✅ STATUS: CONFIRMED'}</h3>
-              <p style="margin: 0; opacity: 0.9;">${isEnquiry ? 'Customer is reviewing fare estimate. Please standby.' : 'Please arrange vehicle and contact customer immediately'}</p>
+            <div style="background-color: ${isEnquiry ? '#fef3c7' : '#d1fae5'}; border: 1px solid ${isEnquiry ? '#f59e0b' : '#10b981'}; border-radius: 6px; padding: 20px; text-align: center; margin-bottom: 20px;">
+              <h3 style="margin: 0 0 10px 0; color: ${isEnquiry ? '#92400e' : '#065f46'};">${isEnquiry ? '⏳ ENQUIRY STATUS' : '✅ CONFIRMED BOOKING'}</h3>
+              <p style="margin: 0; color: ${isEnquiry ? '#92400e' : '#065f46'};">${isEnquiry ? 'Customer is reviewing fare estimate. Please standby for confirmation.' : 'Customer has confirmed the booking. Please arrange vehicle and contact customer immediately.'}</p>
             </div>
 
             <div style="text-align: center; color: #6b7280; font-size: 14px;">
-              <p>${statusText} Time: ${currentDateTime}</p>
-              <p>For Questions Contact: +91 78100 95200</p>
+              <p>Booking Time: ${currentDateTime}</p>
+              <p>Contact: +91 78100 95200</p>
               <p>www.1waytaxi.com</p>
             </div>
           </div>
@@ -182,14 +233,18 @@ ${isEnquiry ? 'ENQUIRY RECEIVED - Please standby for customer confirmation.' : '
       `
     };
 
-    // Send email
+    console.log('📤 Sending email to:', mailOptions.to);
+    console.log('📧 Email subject:', mailOptions.subject);
+
     const info = await transporter.sendMail(mailOptions);
     console.log(`✅ ${statusText} email sent successfully:`, info.messageId);
+    console.log('📬 Email response:', info.response);
 
     res.status(200).json({
       success: true,
       message: `${statusText} email sent successfully`,
-      messageId: info.messageId
+      messageId: info.messageId,
+      response: info.response
     });
 
   } catch (error) {
@@ -197,7 +252,8 @@ ${isEnquiry ? 'ENQUIRY RECEIVED - Please standby for customer confirmation.' : '
     res.status(500).json({
       success: false,
       message: 'Failed to send booking email',
-      error: error.message
+      error: error.message,
+      stack: error.stack
     });
   }
 });
@@ -205,40 +261,50 @@ ${isEnquiry ? 'ENQUIRY RECEIVED - Please standby for customer confirmation.' : '
 // Contact form endpoint
 app.post('/api/send-contact-email', async (req, res) => {
   try {
+    console.log('📧 Received contact form request:', req.body);
+    
     const { name, email, phone, message } = req.body;
+
+    if (!name || !email || !phone || !message) {
+      return res.status(400).json({
+        success: false,
+        message: 'Missing required contact information'
+      });
+    }
 
     const currentDateTime = new Date().toLocaleString('en-IN', { 
       timeZone: 'Asia/Kolkata'
     });
 
-    const emailSubject = `New Contact Form Enquiry - ${name}`;
+    const emailSubject = `Contact Form Enquiry - ${name} - 1waytaxi`;
     
-    const emailBody = `New Contact Form Enquiry
+    const emailBody = `New Contact Form Enquiry - 1waytaxi
 
 Customer Details:
-- Name: ${name}
-- Email: ${email}
-- Phone: ${phone}
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
 
 Message:
 ${message}
 
 Enquiry Time: ${currentDateTime}
 
-Please respond to the customer as soon as possible.
+Please respond to the customer promptly.
 
-Best regards,
-1waytaxi Contact System`;
+Contact: +91 78100 95200
+www.1waytaxi.com`;
 
     const mailOptions = {
-      from: `${process.env.EMAIL_FROM_NAME} <${process.env.EMAIL_USER}>`,
+      from: `1waytaxi Contact <${process.env.EMAIL_USER}>`,
       to: '1waytaxi.booking@gmail.com',
       subject: emailSubject,
       text: emailBody,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">
           <div style="background-color: #1e40af; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
-            <h1 style="margin: 0; font-size: 24px;">📞 New Contact Enquiry</h1>
+            <h1 style="margin: 0; font-size: 24px;">📞 Contact Form Enquiry</h1>
+            <p style="margin: 5px 0 0 0; opacity: 0.9;">1waytaxi Website</p>
           </div>
           
           <div style="background-color: white; padding: 30px; border-radius: 0 0 8px 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
@@ -254,14 +320,21 @@ Best regards,
               <p style="margin: 0; line-height: 1.6;">${message}</p>
             </div>
 
-            <div style="text-align: center; color: #6b7280; font-size: 14px;">
+            <div style="background-color: #fef3c7; border: 1px solid #f59e0b; border-radius: 6px; padding: 15px; text-align: center;">
+              <p style="margin: 0; color: #92400e; font-weight: bold;">⚡ Please respond to the customer promptly</p>
+            </div>
+
+            <div style="text-align: center; color: #6b7280; font-size: 14px; margin-top: 20px;">
               <p>Enquiry Time: ${currentDateTime}</p>
-              <p style="color: #dc2626; font-weight: bold;">Please respond to the customer as soon as possible.</p>
+              <p>Contact: +91 78100 95200</p>
+              <p>www.1waytaxi.com</p>
             </div>
           </div>
         </div>
       `
     };
+
+    console.log('📤 Sending contact email to:', mailOptions.to);
 
     const info = await transporter.sendMail(mailOptions);
     console.log('✅ Contact email sent successfully:', info.messageId);
@@ -269,7 +342,8 @@ Best regards,
     res.status(200).json({
       success: true,
       message: 'Contact form email sent successfully',
-      messageId: info.messageId
+      messageId: info.messageId,
+      response: info.response
     });
 
   } catch (error) {
@@ -287,12 +361,25 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({
     success: true,
     message: '1waytaxi Email Server is running',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    emailConfigured: !!(process.env.EMAIL_USER && process.env.EMAIL_PASS)
   });
 });
 
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 1waytaxi Email Server running on port ${PORT}`);
-  console.log(`📧 Email notifications will be sent to: ${process.env.EMAIL_TO}`);
+  console.log(`🌐 Health check: http://localhost:${PORT}/api/health`);
+  console.log(`🧪 Test email: http://localhost:${PORT}/api/test-email`);
+  console.log(`📧 Emails will be sent to: 1waytaxi.booking@gmail.com`);
+  console.log('');
+  console.log('📋 Setup checklist:');
+  console.log('   ✅ Server started');
+  console.log(`   ${process.env.EMAIL_USER ? '✅' : '❌'} EMAIL_USER configured`);
+  console.log(`   ${process.env.EMAIL_PASS ? '✅' : '❌'} EMAIL_PASS configured`);
+  console.log('');
+  console.log('🔧 If emails are not working:');
+  console.log('   1. Check Gmail App Password in .env');
+  console.log('   2. Visit: http://localhost:3001/api/test-email');
+  console.log('   3. Check server logs for errors');
 });

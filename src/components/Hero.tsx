@@ -177,34 +177,16 @@ const Hero = () => {
       tripDuration: tripDetails?.duration || 'To be calculated'
     };
 
-    // Send notifications to WhatsApp and Email
-    sendBookingNotifications(bookingEnquiry);
+    // Send notifications via backend and WhatsApp
+    sendBookingNotifications(bookingEnquiry).then(() => {
+      console.log('All booking notifications processed');
+    }).catch((error) => {
+      console.error('Error processing booking notifications:', error);
+    });
     
     // Debug logging
     console.log('Booking enquiry:', bookingEnquiry);
     console.log('Sending notifications...');
-    
-    // Additional direct email attempt
-    setTimeout(() => {
-      const simpleEmailContent = `URGENT: CONFIRMED BOOKING
-
-Customer: ${bookingForm.customerName}
-Phone: ${bookingForm.customerPhone}
-From: ${bookingForm.from}
-To: ${bookingForm.to}
-Date: ${bookingForm.date} at ${bookingForm.time}
-Fare: ₹${tripDetails?.fare || 'TBD'}
-
-Please arrange vehicle and contact customer immediately.`;
-      
-      const simpleEmailUrl = `mailto:lakonewaytaxi@gmail.com?subject=CONFIRMED BOOKING - ${bookingForm.customerName}&body=${encodeURIComponent(simpleEmailContent)}`;
-      
-      try {
-        window.open(simpleEmailUrl, '_blank');
-      } catch (error) {
-        console.error('Email sending failed:', error);
-      }
-    }, 1500);
     
     // Show confirmation to customer
     showBookingConfirmation(bookingEnquiry);

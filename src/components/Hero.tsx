@@ -149,6 +149,19 @@ const Hero = () => {
     // Send notifications to WhatsApp and Email
     sendBookingNotifications(bookingEnquiry);
     
+    // Additional email backup method
+    setTimeout(() => {
+      const emailBackup = `mailto:1waytaxi.booking@gmail.com?subject=URGENT: New Booking Enquiry - ${bookingForm.customerName}&body=New booking enquiry received from ${bookingForm.customerName} (${bookingForm.customerPhone}) for trip from ${bookingForm.from} to ${bookingForm.to} on ${bookingForm.date} at ${bookingForm.time}. Please check WhatsApp for full details.`;
+      
+      // Create a hidden link and click it
+      const emailLink = document.createElement('a');
+      emailLink.href = emailBackup;
+      emailLink.style.display = 'none';
+      document.body.appendChild(emailLink);
+      emailLink.click();
+      document.body.removeChild(emailLink);
+    }, 3000);
+    
     // Show confirmation to customer
     showBookingConfirmation(bookingEnquiry);
     

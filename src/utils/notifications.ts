@@ -131,10 +131,37 @@ Please contact the customer immediately to confirm booking details and provide a
 // Send email notification
 export const sendEmailNotification = (booking: BookingEnquiry): void => {
   const { subject, body } = formatDetailedEmailContent(booking);
-  const emailUrl = `mailto:1waytaxi.booking@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   
-  // Open email client
-  window.open(emailUrl, '_blank');
+  // Try multiple methods to ensure email is sent
+  const emailAddress = '1waytaxi.booking@gmail.com';
+  const encodedSubject = encodeURIComponent(subject);
+  const encodedBody = encodeURIComponent(body);
+  
+  // Method 1: Standard mailto link
+  const emailUrl = `mailto:${emailAddress}?subject=${encodedSubject}&body=${encodedBody}`;
+  
+  // Method 2: Try to open email client
+  try {
+    window.location.href = emailUrl;
+  } catch (error) {
+    // Fallback: Open in new window
+    window.open(emailUrl, '_blank');
+  }
+  
+  // Method 3: Show user instructions if email doesn't open
+  setTimeout(() => {
+    const userConfirm = confirm(`📧 Email notification prepared for 1waytaxi.booking@gmail.com
+
+If your email client didn't open automatically, please:
+1. Copy this email: 1waytaxi.booking@gmail.com
+2. Send the booking details manually
+
+Click OK to try opening email again, or Cancel to continue.`);
+    
+    if (userConfirm) {
+      window.open(emailUrl, '_blank');
+    }
+  }, 2000);
 };
 
 // Send both notifications

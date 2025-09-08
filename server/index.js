@@ -1,7 +1,7 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -12,21 +12,28 @@ app.use(express.json());
 
 // Create nodemailer transporter
 const transporter = nodemailer.createTransporter({
-  host: process.env.EMAIL_HOST,
-  port: process.env.EMAIL_PORT,
-  secure: process.env.EMAIL_SECURE === 'true',
+  service: 'gmail',
+  host: 'smtp.gmail.com',
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
+  },
+  tls: {
+    rejectUnauthorized: false
   }
 });
 
 // Verify email configuration
 transporter.verify((error, success) => {
   if (error) {
-    console.log('❌ Email configuration error:', error);
+    console.log('❌ Email configuration error:', error.message);
+    console.log('📧 Email User:', process.env.EMAIL_USER ? 'Set' : 'Not Set');
+    console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? 'Set' : 'Not Set');
   } else {
     console.log('✅ Email server is ready to send messages');
+    console.log('📧 Using email:', process.env.EMAIL_USER);
   }
 });
 
@@ -102,8 +109,8 @@ BOOKING CONFIRMED - Please arrange the vehicle and contact customer at ${custome
 
     // Email options
     const mailOptions = {
-      from: `${process.env.EMAIL_FROM_NAME} <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_TO,
+      from: `1waytaxi Booking System <${process.env.EMAIL_USER}>`,
+      to: '1waytaxi.booking@gmail.com',
       subject: emailSubject,
       text: emailBody,
       html: `
@@ -222,7 +229,7 @@ Best regards,
 
     const mailOptions = {
       from: `${process.env.EMAIL_FROM_NAME} <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_TO,
+      to: '1waytaxi.booking@gmail.com',
       subject: emailSubject,
       text: emailBody,
       html: `

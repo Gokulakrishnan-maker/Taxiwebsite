@@ -335,7 +335,7 @@ const Hero = () => {
                 type="submit"
                 className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-5 rounded-xl text-lg font-bold hover:from-blue-700 hover:to-indigo-700 transition-all flex items-center justify-center space-x-3 group shadow-lg transform hover:scale-105"
               >
-                <span>Get Instant Quote</span>
+                <span>Book Now</span>
                 <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
               </button>
             </form>

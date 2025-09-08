@@ -35,7 +35,7 @@ const Contact = () => {
     // Send email notification with contact form details
     const emailContent = {
       subject: `New Contact Form Enquiry - ${contactForm.name}`,
-      body: `Dear 1waytaxi Team,
+      body: `Dear Lak Oneway Taxi Team,
 
 A new enquiry has been received through the contact form.
 
@@ -52,10 +52,10 @@ ENQUIRY TIME: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
 Please respond to the customer as soon as possible.
 
 Best regards,
-1waytaxi Contact System`
+Lak Oneway Taxi Contact System`
     };
 
-    const emailUrl = `mailto:1waytaxi.booking@gmail.com?subject=${encodeURIComponent(emailContent.subject)}&body=${encodeURIComponent(emailContent.body)}`;
+    const emailUrl = `mailto:lakonewaytaxi@gmail.com?subject=${encodeURIComponent(emailContent.subject)}&body=${encodeURIComponent(emailContent.body)}`;
     
     // Try multiple methods to ensure email is sent
     try {
@@ -95,7 +95,7 @@ Please respond to the customer promptly.`;
       window.open(whatsappUrl, '_blank');
     }, 1000);
     
-    alert('✅ Thank you for your message! We have been notified and will get back to you shortly.');
+    alert('✅ Thank you for your message! Lak Oneway Taxi has been notified and will get back to you shortly.');
     setContactForm({ name: '', email: '', phone: '', message: '' });
   };
 

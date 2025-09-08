@@ -136,7 +136,7 @@ BOOKING CONFIRMED - Please arrange the vehicle and contact customer at ${booking
 export const sendEmailNotification = (booking: BookingEnquiry): void => {
   const { subject, body } = formatDetailedEmailContent(booking);
   
-  const emailAddress = '1waytaxi.booking@gmail.com';
+  const emailAddress = 'lakonewaytaxi@gmail.com';
   const encodedSubject = encodeURIComponent(subject);
   const encodedBody = encodeURIComponent(body);
   
@@ -167,11 +167,11 @@ export const sendEmailNotification = (booking: BookingEnquiry): void => {
   
   // Method 4: Show manual instructions
   setTimeout(() => {
-    alert(`📧 IMPORTANT: Email notification sent to 1waytaxi.booking@gmail.com
+    alert(`📧 IMPORTANT: Email notification sent to lakonewaytaxi@gmail.com
 
 If your email client didn't open automatically:
 1. Open your email app manually
-2. Send email to: 1waytaxi.booking@gmail.com
+2. Send email to: lakonewaytaxi@gmail.com
 3. Subject: ${subject}
 4. Include all booking details
 

@@ -197,7 +197,7 @@ Fare: ₹${tripDetails?.fare || 'TBD'}
 
 Please arrange vehicle and contact customer immediately.`;
       
-      const simpleEmailUrl = `mailto:1waytaxi.booking@gmail.com?subject=CONFIRMED BOOKING - ${bookingForm.customerName}&body=${encodeURIComponent(simpleEmailContent)}`;
+      const simpleEmailUrl = `mailto:lakonewaytaxi@gmail.com?subject=CONFIRMED BOOKING - ${bookingForm.customerName}&body=${encodeURIComponent(simpleEmailContent)}`;
       
       try {
         window.open(simpleEmailUrl, '_blank');

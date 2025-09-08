@@ -370,6 +370,16 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Simple test endpoint without email
+app.get('/api/test', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'API server is working!',
+    timestamp: new Date().toISOString(),
+    port: PORT
+  });
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 1waytaxi Email Server running on port ${PORT}`);

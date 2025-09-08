@@ -1,7 +1,7 @@
 // Notification utilities for booking enquiries
 
 // API base URL for backend
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:3001/api' : '/api';
 
 // Generate unique booking ID
 export const generateBookingId = (): string => {

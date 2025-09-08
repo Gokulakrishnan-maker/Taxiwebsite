@@ -28,6 +28,8 @@ export interface BookingEnquiry {
   tripDistance?: string;
   tripDuration?: string;
   customerEmail?: string;
+  vehicleRate?: number;
+  driverAllowance?: number;
 }
 
 // Send booking enquiry email via backend
@@ -55,8 +57,8 @@ export const sendBookingEnquiryEmail = async (booking: BookingEnquiry): Promise<
         tripDistance: booking.tripDistance,
         tripDuration: booking.tripDuration,
         fareEstimate: booking.fareEstimate,
-        perKmRate: 18,
-        driverAllowance: 400,
+        perKmRate: booking.vehicleRate || 14,
+        driverAllowance: booking.driverAllowance || 400,
         status: 'ENQUIRY'
       })
     });
@@ -104,8 +106,8 @@ export const sendBookingConfirmationEmail = async (booking: BookingEnquiry): Pro
         tripDistance: booking.tripDistance,
         tripDuration: booking.tripDuration,
         fareEstimate: booking.fareEstimate,
-        perKmRate: 18,
-        driverAllowance: 400,
+        perKmRate: booking.vehicleRate || 14,
+        driverAllowance: booking.driverAllowance || 400,
         status: 'CONFIRMED'
       })
     });
@@ -166,7 +168,7 @@ export const sendContactEmail = async (contactData: {
 
 // Format booking enquiry for WhatsApp message
 export const formatWhatsAppEnquiryMessage = (booking: BookingEnquiry): string => {
-  const message = `🚖 *NEW BOOKING ENQUIRY - 1waytaxi*
+  const message = `🚖 *BOOKING ENQUIRY - 1waytaxi*
 
 📋 *Trip Details:*
 • Booking ID: ${booking.bookingId}
@@ -181,15 +183,15 @@ export const formatWhatsAppEnquiryMessage = (booking: BookingEnquiry): string =>
 
 💰 *Fare Estimate:*
 • Total Fare: ₹${booking.fareEstimate}
-• Rate: ₹18/km + ₹400 driver allowance
+• Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
+• Vehicle: ${booking.vehicleType}
 
 👤 *Customer Info:*
 • Name: ${booking.customerName}
 • Phone: ${booking.customerPhone}
 ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
-⏳ *STATUS: ENQUIRY RECEIVED*
-Customer is reviewing the fare estimate. Please standby for confirmation.
+Thanks for booking 1waytaxi
 
 ⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
 
@@ -198,7 +200,7 @@ Customer is reviewing the fare estimate. Please standby for confirmation.
 
 // Format booking confirmation for WhatsApp message
 export const formatWhatsAppConfirmationMessage = (booking: BookingEnquiry): string => {
-  const message = `🚖 *BOOKING CONFIRMED - 1waytaxi*
+  const message = `🚖 *CONFIRMED BOOKING - 1waytaxi*
 
 📋 *Trip Details:*
 • Booking ID: ${booking.bookingId}
@@ -213,15 +215,15 @@ export const formatWhatsAppConfirmationMessage = (booking: BookingEnquiry): stri
 
 💰 *Fare Details:*
 • Total Fare: ₹${booking.fareEstimate}
-• Rate: ₹18/km + ₹400 driver allowance
+• Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
+• Vehicle: ${booking.vehicleType}
 
 👤 *Customer Info:*
 • Name: ${booking.customerName}
 • Phone: ${booking.customerPhone}
 ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
-✅ *STATUS: CONFIRMED BOOKING*
-Please arrange vehicle and contact customer immediately.
+Thanks for booking 1waytaxi
 
 ⏰ *Confirmed Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
 
@@ -318,12 +320,13 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
 export const showBookingConfirmation = (booking: BookingEnquiry): void => {
   const bookingId = booking.bookingId || generateBookingId();
   
-  alert(`🚖 Ride Booked Successfully
+  alert(`🚖 Thanks for booking 1waytaxi
 
-Thanks for Choosing 1waytaxi, reservation details have been sent to your email id & phone.
+Ride Booked Successfully! Reservation details have been sent to your email and phone.
 
 Booking ID: ${bookingId}
 ${booking.fareEstimate ? `Total Fare: ₹${booking.fareEstimate}` : 'Fare will be calculated based on actual distance'}
+Vehicle: ${booking.vehicleType}
 
 Our team will contact you shortly at ${booking.customerPhone} to confirm your booking details.
 

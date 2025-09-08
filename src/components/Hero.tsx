@@ -17,14 +17,16 @@ const Hero = () => {
     passengers: '1'
   });
 
-  const [fareEstimate, setFareEstimate] = useState<number | null>(null);
+  const [selectedVehicle, setSelectedVehicle] = useState<string>('');
   const [showEstimation, setShowEstimation] = useState(false);
+  const [showVehicleSelection, setShowVehicleSelection] = useState(false);
   const [tripDetails, setTripDetails] = useState<{
     distance: string;
     duration: string;
     fare: number;
-    perKmRate: number;
+    selectedCar: string;
     driverAllowance: number;
+    vehicleRate: number;
   } | null>(null);
   const [isGoogleMapsLoaded, setIsGoogleMapsLoaded] = useState(false);
   
@@ -33,6 +35,12 @@ const Hero = () => {
   const fromAutocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const toAutocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
+  const vehicles = [
+    { name: 'SEDAN', rate: 14, image: '🚗' },
+    { name: 'ETIOS', rate: 14, image: '🚗' },
+    { name: 'SUV', rate: 19, image: '🚙' },
+    { name: 'INNOVA', rate: 20, image: '🚐' }
+  ];
   useEffect(() => {
     const initializeGoogleMaps = async () => {
       try {
@@ -96,46 +104,6 @@ const Hero = () => {
     }
   }, [isGoogleMapsLoaded]);
 
-  const calculateFareEstimate = async (destinationPlace: google.maps.places.PlaceResult) => {
-    if (!fromAutocompleteRef.current || !destinationPlace.geometry?.location) return;
-
-    const fromPlace = fromAutocompleteRef.current.getPlace();
-    if (!fromPlace.geometry?.location) return;
-
-    try {
-      const service = new google.maps.DistanceMatrixService();
-      service.getDistanceMatrix({
-        origins: [fromPlace.geometry.location],
-        destinations: [destinationPlace.geometry.location],
-        travelMode: google.maps.TravelMode.DRIVING,
-        unitSystem: google.maps.UnitSystem.METRIC,
-        avoidHighways: false,
-        avoidTolls: false
-      }, (response, status) => {
-        if (status === google.maps.DistanceMatrixStatus.OK && response) {
-          const distance = response.rows[0].elements[0].distance;
-          const duration = response.rows[0].elements[0].duration;
-          if (distance) {
-            const distanceKm = distance.value / 1000;
-            const isNightTime = new Date().getHours() >= 23 || new Date().getHours() <= 5;
-            const fare = calculateFare(distanceKm, 'economy', isNightTime, true);
-            setFareEstimate(fare.totalFare);
-            
-            // Set detailed trip information
-            setTripDetails({
-              distance: `${distanceKm.toFixed(0)} KM`,
-              duration: duration ? `${Math.round(duration.value / 60)} mins` : 'Calculating...',
-              fare: fare.totalFare,
-              perKmRate: 18,
-              driverAllowance: 400
-            });
-          }
-        }
-      });
-    } catch (error) {
-      console.error('Error calculating fare:', error);
-    }
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setBookingForm({
@@ -144,83 +112,107 @@ const Hero = () => {
     });
   };
 
-  const handleBooking = (e: React.FormEvent) => {
+  const handleGetEstimation = (e: React.FormEvent) => {
     e.preventDefault();
     
     // Validate required fields
     if (!bookingForm.customerName || !bookingForm.customerPhone || !bookingForm.from || !bookingForm.to || !bookingForm.date || !bookingForm.time) {
-      alert('Please fill in all required fields to get trip estimation.');
+      alert('Please fill in all required fields.');
       return;
     }
     
-    // Show estimation details
-    setShowEstimation(true);
+    // Show vehicle selection
+    setShowVehicleSelection(true);
+  };
+
+  const handleVehicleSelect = async (vehicle: any) => {
+    setSelectedVehicle(vehicle.name);
+    
+    // Calculate distance and fare
+    if (isGoogleMapsLoaded && fromAutocompleteRef.current && toAutocompleteRef.current) {
+      const fromPlace = fromAutocompleteRef.current.getPlace();
+      const toPlace = toAutocompleteRef.current.getPlace();
+      
+      if (fromPlace.geometry?.location && toPlace.geometry?.location) {
+        try {
+          const service = new google.maps.DistanceMatrixService();
+          service.getDistanceMatrix({
+            origins: [fromPlace.geometry.location],
+            destinations: [toPlace.geometry.location],
+            travelMode: google.maps.TravelMode.DRIVING,
+            unitSystem: google.maps.UnitSystem.METRIC,
+            avoidHighways: false,
+            avoidTolls: false
+          }, (response, status) => {
+            if (status === google.maps.DistanceMatrixStatus.OK && response) {
+              const distance = response.rows[0].elements[0].distance;
+              const duration = response.rows[0].elements[0].duration;
+              if (distance) {
+                const distanceKm = distance.value / 1000;
+                const fare = Math.round((distanceKm * vehicle.rate) + 400); // Vehicle rate + driver allowance
+                
+                setTripDetails({
+                  distance: `${Math.round(distanceKm)} KM`,
+                  duration: duration ? `${Math.round(duration.value / 3600)} hours ${Math.round((duration.value % 3600) / 60)} mins` : 'Calculating...',
+                  fare: fare,
+                  selectedCar: vehicle.name,
+                  driverAllowance: 400,
+                  vehicleRate: vehicle.rate
+                });
+                
+                setShowVehicleSelection(false);
+                setShowEstimation(true);
+              }
+            }
+          });
+        } catch (error) {
+          console.error('Error calculating fare:', error);
+        }
+      }
+    }
   };
 
   const handleConfirmBooking = () => {
-    // Generate booking ID for enquiry first
-    const enquiryBookingId = generateBookingId();
-    
-    // Create booking enquiry object for initial enquiry
-    const bookingEnquiry: BookingEnquiry = {
-      tripType: bookingForm.tripType,
-      from: bookingForm.from,
-      to: bookingForm.to,
-      date: bookingForm.date,
-      time: bookingForm.time,
-      passengers: bookingForm.passengers,
-      fareEstimate: tripDetails?.fare || fareEstimate || undefined,
-      bookingId: enquiryBookingId,
-      vehicleType: 'SEDAN',
-      customerName: bookingForm.customerName,
-      customerPhone: bookingForm.customerPhone,
-      customerEmail: bookingForm.customerEmail,
-      tripDistance: tripDetails?.distance || 'To be calculated',
-      tripDuration: tripDetails?.duration || 'To be calculated'
-    };
-
-    // Send enquiry notifications first
-    console.log('📧 Sending enquiry notifications...');
-    sendBookingEnquiryNotifications(bookingEnquiry).then(() => {
-      console.log('✅ Enquiry notifications sent successfully');
-      
-      // After enquiry notifications, send confirmation notifications
-      setTimeout(() => {
-        console.log('📧 Sending confirmation notifications...');
-        sendBookingConfirmationNotifications(bookingEnquiry).then(() => {
-          console.log('✅ Confirmation notifications sent successfully');
-        }).catch((error) => {
-          console.error('❌ Error sending confirmation notifications:', error);
-        });
-      }, 2000); // 2 second delay between enquiry and confirmation
-      
-    }).catch((error) => {
-      console.error('❌ Error sending enquiry notifications:', error);
-    });
-
     // Generate unique booking ID
     const bookingId = generateBookingId();
     
-    // Create booking confirmation object
-    const bookingConfirmation: BookingEnquiry = {
+    // Create booking object
+    const bookingData: BookingEnquiry = {
       tripType: bookingForm.tripType,
       from: bookingForm.from,
       to: bookingForm.to,
       date: bookingForm.date,
       time: bookingForm.time,
       passengers: bookingForm.passengers,
-      fareEstimate: tripDetails?.fare || fareEstimate || undefined,
+      fareEstimate: tripDetails?.fare,
       bookingId: bookingId,
-      vehicleType: 'SEDAN',
+      vehicleType: tripDetails?.selectedCar || selectedVehicle,
       customerName: bookingForm.customerName,
       customerPhone: bookingForm.customerPhone,
       customerEmail: bookingForm.customerEmail,
       tripDistance: tripDetails?.distance || 'To be calculated',
-      tripDuration: tripDetails?.duration || 'To be calculated'
+      tripDuration: tripDetails?.duration || 'To be calculated',
+      vehicleRate: tripDetails?.vehicleRate || 14,
+      driverAllowance: tripDetails?.driverAllowance || 400
     };
 
-    // Show confirmation to customer
-    showBookingConfirmation(bookingConfirmation);
+    // Send both enquiry and confirmation notifications
+    console.log('📧 Sending booking notifications...');
+    
+    // Send enquiry notification
+    sendBookingEnquiryNotifications(bookingData).then(() => {
+      console.log('✅ Enquiry notifications sent');
+    }).catch(console.error);
+    
+    // Send confirmation notification after 1 second
+    setTimeout(() => {
+      sendBookingConfirmationNotifications(bookingData).then(() => {
+        console.log('✅ Confirmation notifications sent');
+      }).catch(console.error);
+    }, 1000);
+
+    // Show success message to customer
+    showBookingConfirmation(bookingData);
     
     // Reset form
     setBookingForm({
@@ -234,8 +226,9 @@ const Hero = () => {
       time: '',
       passengers: '1'
     });
-    setFareEstimate(null);
+    setSelectedVehicle('');
     setShowEstimation(false);
+    setShowVehicleSelection(false);
     setTripDetails(null);
   };
 
@@ -273,13 +266,15 @@ const Hero = () => {
           </div>
 
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-10 border border-white/20">
-            <div className="text-center mb-8">
-              <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-                Book Your Ride
-              </h3>
-              <p className="text-gray-600">Quick & Easy Booking</p>
-            </div>
-            <form onSubmit={handleBooking} className="space-y-6">
+            {!showVehicleSelection && !showEstimation && (
+              <>
+                <div className="text-center mb-8">
+                  <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
+                    Book Your Ride
+                  </h3>
+                  <p className="text-gray-600">Quick & Easy Booking</p>
+                </div>
+                <form onSubmit={handleGetEstimation} className="space-y-6">
               {/* Modern Trip Type Selection */}
               <div className="bg-white p-6 rounded-2xl border-2 border-gray-100 shadow-sm">
                 <label className="block text-sm font-semibold text-gray-700 mb-3">Trip Type</label>
@@ -465,75 +460,74 @@ const Hero = () => {
                   <ArrowRight className="h-6 w-6 group-hover:translate-x-2 transition-transform" />
                 </button>
               ) : null}
-            </form>
+                </form>
+              </>
+            )}
 
-            {/* Trip Estimation Details */}
+            {/* Vehicle Selection */}
+            {showVehicleSelection && (
+              <div className="space-y-6">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Select Your Vehicle</h3>
+                  <p className="text-gray-600">Choose the perfect car for your journey</p>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  {vehicles.map((vehicle, index) => (
+                    <div 
+                      key={index}
+                      onClick={() => handleVehicleSelect(vehicle)}
+                      className="bg-white border-2 border-gray-200 rounded-xl p-6 text-center cursor-pointer hover:border-blue-500 hover:shadow-lg transition-all transform hover:scale-105"
+                    >
+                      <div className="text-4xl mb-3">{vehicle.image}</div>
+                      <h4 className="font-bold text-gray-900 mb-2">{vehicle.name}</h4>
+                      <p className="text-blue-600 font-bold text-lg">₹{vehicle.rate}/KM</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Trip Estimation */}
             {showEstimation && tripDetails && (
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl p-8 shadow-lg mt-6">
-                <h3 className="text-2xl font-bold text-green-800 mb-6 text-center">Trip Estimation Details</h3>
+              <div className="space-y-6">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                    Trip estimation for {bookingForm.from.split(',')[0]} to {bookingForm.to.split(',')[0]}
+                  </h3>
+                </div>
                 
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-gray-700 mb-2">Trip Information</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Distance:</span>
-                        <span className="font-semibold">{tripDetails.distance}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Duration:</span>
-                        <span className="font-semibold">{tripDetails.duration}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Vehicle Type:</span>
-                        <span className="font-semibold">SEDAN</span>
-                      </div>
-                    </div>
-                  </div>
+                <div className="text-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-8 rounded-2xl">
+                  <h2 className="text-4xl font-bold mb-6">Fare ₹{tripDetails.fare.toLocaleString()}</h2>
                   
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-semibold text-gray-700 mb-2">Fare Breakdown</h4>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Rate per KM:</span>
-                        <span className="font-semibold">₹{tripDetails.perKmRate}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Driver Allowance:</span>
-                        <span className="font-semibold">₹{tripDetails.driverAllowance}</span>
-                      </div>
-                      <div className="flex justify-between border-t pt-2">
-                        <span className="text-gray-600 font-semibold">Total Fare:</span>
-                        <span className="font-bold text-green-600">₹{tripDetails.fare}</span>
-                      </div>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <p className="opacity-90">Total Distance: <span className="font-bold">{tripDetails.distance}</span></p>
+                    </div>
+                    <div>
+                      <p className="opacity-90">Total Duration: <span className="font-bold">{tripDetails.duration}</span></p>
+                    </div>
+                    <div>
+                      <p className="opacity-90">Selected Car: <span className="font-bold">{tripDetails.selectedCar}</span></p>
+                    </div>
+                    <div>
+                      <p className="opacity-90">Driver Batta: <span className="font-bold">₹{tripDetails.driverAllowance}</span></p>
                     </div>
                   </div>
                 </div>
                 
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-                  <p className="text-yellow-800 text-sm font-medium">
-                    <strong>Additional Charges:</strong> Toll Gate, Permit, Hill Station Charges Extra
-                  </p>
-                  <p className="text-yellow-700 text-xs mt-1">
-                    *Final fare may vary based on actual route and traffic conditions
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-center">
+                  <p className="text-yellow-800 text-sm italic">
+                    Note: Above estimation is exclusive of Toll Gate and State Permit Etc
                   </p>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <button
-                    onClick={handleConfirmBooking}
-                    className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 rounded-xl text-lg font-bold hover:from-green-700 hover:to-emerald-700 transition-all flex items-center justify-center space-x-3 group shadow-lg"
-                  >
-                    <span>Confirm Booking</span>
-                    <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                  <button
-                    onClick={() => setShowEstimation(false)}
-                    className="flex-1 border-2 border-gray-300 text-gray-700 py-4 rounded-xl text-lg font-bold hover:bg-gray-50 transition-all"
-                  >
-                    Modify Details
-                  </button>
-                </div>
+                <button
+                  onClick={handleConfirmBooking}
+                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl text-lg font-bold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg"
+                >
+                  Confirm Booking
+                </button>
               </div>
             )}
           </div>

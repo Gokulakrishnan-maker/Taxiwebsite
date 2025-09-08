@@ -19,15 +19,10 @@ console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? 'SET' : 'NOT SET');
 
 // Create nodemailer transporter with detailed configuration
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false, // Use TLS
+  service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
-  },
-  tls: {
-    rejectUnauthorized: false
   },
   debug: true, // Enable debug logs
   logger: true // Enable logger

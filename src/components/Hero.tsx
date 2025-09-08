@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, Clock, MapPin, ArrowRight } from 'lucide-react';
 import { calculateFare } from '../utils/fareCalculator';
 import { loadGoogleMapsAPI } from '../utils/googleMaps';
-import { sendBookingNotifications, showBookingConfirmation, BookingEnquiry } from '../utils/notifications';
+import { sendBookingNotifications, showBookingConfirmation, BookingEnquiry, generateBookingId } from '../utils/notifications';
 
 const Hero = () => {
   const [bookingForm, setBookingForm] = useState({
@@ -126,6 +126,9 @@ const Hero = () => {
   const handleBooking = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Generate unique booking ID
+    const bookingId = generateBookingId();
+    
     // Create booking enquiry object
     const bookingEnquiry: BookingEnquiry = {
       tripType: bookingForm.tripType,
@@ -134,7 +137,11 @@ const Hero = () => {
       date: bookingForm.date,
       time: bookingForm.time,
       passengers: bookingForm.passengers,
-      fareEstimate: fareEstimate || undefined
+      fareEstimate: fareEstimate || undefined,
+      bookingId: bookingId,
+      vehicleType: 'SEDAN',
+      customerName: 'Customer', // You can add name field to form if needed
+      customerPhone: '+91 XXXXXXXXXX' // You can add phone field to form if needed
     };
 
     // Send notifications to WhatsApp and Email

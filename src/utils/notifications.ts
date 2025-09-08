@@ -233,6 +233,7 @@ export const sendWhatsAppEnquiryNotification = (booking: BookingEnquiry): void =
   const message = formatWhatsAppEnquiryMessage(booking);
   const whatsappUrl = `https://wa.me/917810095200?text=${message}`;
   
+  console.log('📱 Opening WhatsApp for enquiry notification...');
   // Open WhatsApp in new tab
   window.open(whatsappUrl, '_blank');
 };
@@ -242,45 +243,74 @@ export const sendWhatsAppConfirmationNotification = (booking: BookingEnquiry): v
   const message = formatWhatsAppConfirmationMessage(booking);
   const whatsappUrl = `https://wa.me/917810095200?text=${message}`;
   
+  console.log('📱 Opening WhatsApp for confirmation notification...');
   // Open WhatsApp in new tab
   window.open(whatsappUrl, '_blank');
 };
 
 // Send enquiry notifications (email via backend + WhatsApp)
 export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): Promise<void> => {
-  console.log('📧 Sending booking enquiry notifications...');
+  console.log('📧 Starting booking enquiry notifications...');
   console.log('📋 Booking data:', booking);
   
-  // Send enquiry email via backend
-  const emailSent = await sendBookingEnquiryEmail(booking);
-  
-  // Send WhatsApp enquiry notification
-  sendWhatsAppEnquiryNotification(booking);
-  
-  // Show status to user
-  if (emailSent) {
-    console.log('✅ All enquiry notifications sent successfully');
-  } else {
-    console.log('⚠️ Enquiry email failed, but WhatsApp notification sent');
+  try {
+    // Send enquiry email via backend
+    console.log('📧 Sending enquiry email...');
+    const emailSent = await sendBookingEnquiryEmail(booking);
+    
+    if (emailSent) {
+      console.log('✅ Enquiry email sent successfully');
+    } else {
+      console.log('⚠️ Enquiry email failed');
+    }
+    
+    // Send WhatsApp enquiry notification
+    console.log('📱 Sending WhatsApp enquiry notification...');
+    sendWhatsAppEnquiryNotification(booking);
+    
+    // Show status to user
+    if (emailSent) {
+      console.log('✅ All enquiry notifications sent successfully');
+    } else {
+      console.log('⚠️ Enquiry email failed, but WhatsApp notification sent');
+    }
+  } catch (error) {
+    console.error('❌ Error in enquiry notifications:', error);
+    // Still send WhatsApp even if email fails
+    sendWhatsAppEnquiryNotification(booking);
   }
 };
 
 // Send confirmation notifications (email via backend + WhatsApp)
 export const sendBookingConfirmationNotifications = async (booking: BookingEnquiry): Promise<void> => {
-  console.log('📧 Sending booking confirmation notifications...');
+  console.log('📧 Starting booking confirmation notifications...');
   console.log('📋 Booking data:', booking);
   
-  // Send confirmation email via backend
-  const emailSent = await sendBookingConfirmationEmail(booking);
-  
-  // Send WhatsApp confirmation notification
-  sendWhatsAppConfirmationNotification(booking);
-  
-  // Show status to user
-  if (emailSent) {
-    console.log('✅ All confirmation notifications sent successfully');
-  } else {
-    console.log('⚠️ Confirmation email failed, but WhatsApp notification sent');
+  try {
+    // Send confirmation email via backend
+    console.log('📧 Sending confirmation email...');
+    const emailSent = await sendBookingConfirmationEmail(booking);
+    
+    if (emailSent) {
+      console.log('✅ Confirmation email sent successfully');
+    } else {
+      console.log('⚠️ Confirmation email failed');
+    }
+    
+    // Send WhatsApp confirmation notification
+    console.log('📱 Sending WhatsApp confirmation notification...');
+    sendWhatsAppConfirmationNotification(booking);
+    
+    // Show status to user
+    if (emailSent) {
+      console.log('✅ All confirmation notifications sent successfully');
+    } else {
+      console.log('⚠️ Confirmation email failed, but WhatsApp notification sent');
+    }
+  } catch (error) {
+    console.error('❌ Error in confirmation notifications:', error);
+    // Still send WhatsApp even if email fails
+    sendWhatsAppConfirmationNotification(booking);
   }
 };
 

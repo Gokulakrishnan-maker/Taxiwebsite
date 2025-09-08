@@ -153,10 +153,15 @@ const Hero = () => {
       return;
     }
     
-    // Generate booking ID for enquiry
+    // Show estimation details
+    setShowEstimation(true);
+  };
+
+  const handleConfirmBooking = () => {
+    // Generate booking ID for enquiry first
     const enquiryBookingId = generateBookingId();
     
-    // Create booking enquiry object
+    // Create booking enquiry object for initial enquiry
     const bookingEnquiry: BookingEnquiry = {
       tripType: bookingForm.tripType,
       from: bookingForm.from,
@@ -174,23 +179,30 @@ const Hero = () => {
       tripDuration: tripDetails?.duration || 'To be calculated'
     };
 
-    // Send enquiry notifications
+    // Send enquiry notifications first
+    console.log('📧 Sending enquiry notifications...');
     sendBookingEnquiryNotifications(bookingEnquiry).then(() => {
-      console.log('All booking enquiry notifications processed');
+      console.log('✅ Enquiry notifications sent successfully');
+      
+      // After enquiry notifications, send confirmation notifications
+      setTimeout(() => {
+        console.log('📧 Sending confirmation notifications...');
+        sendBookingConfirmationNotifications(bookingEnquiry).then(() => {
+          console.log('✅ Confirmation notifications sent successfully');
+        }).catch((error) => {
+          console.error('❌ Error sending confirmation notifications:', error);
+        });
+      }, 2000); // 2 second delay between enquiry and confirmation
+      
     }).catch((error) => {
-      console.error('Error processing booking enquiry notifications:', error);
+      console.error('❌ Error sending enquiry notifications:', error);
     });
-    
-    // Show estimation details
-    setShowEstimation(true);
-  };
 
-  const handleConfirmBooking = () => {
     // Generate unique booking ID
     const bookingId = generateBookingId();
     
-    // Create booking enquiry object
-    const bookingEnquiry: BookingEnquiry = {
+    // Create booking confirmation object
+    const bookingConfirmation: BookingEnquiry = {
       tripType: bookingForm.tripType,
       from: bookingForm.from,
       to: bookingForm.to,
@@ -207,19 +219,8 @@ const Hero = () => {
       tripDuration: tripDetails?.duration || 'To be calculated'
     };
 
-    // Send confirmation notifications via backend and WhatsApp
-    sendBookingConfirmationNotifications(bookingEnquiry).then(() => {
-      console.log('All booking confirmation notifications processed');
-    }).catch((error) => {
-      console.error('Error processing booking confirmation notifications:', error);
-    });
-    
-    // Debug logging
-    console.log('Booking enquiry:', bookingEnquiry);
-    console.log('Sending confirmation notifications...');
-    
     // Show confirmation to customer
-    showBookingConfirmation(bookingEnquiry);
+    showBookingConfirmation(bookingConfirmation);
     
     // Reset form
     setBookingForm({

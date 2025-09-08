@@ -18,35 +18,75 @@ console.log('📧 Email User:', process.env.EMAIL_USER || 'NOT SET');
 console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? 'SET' : 'NOT SET');
 
 // Create nodemailer transporter with detailed configuration
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  debug: false,
-  logger: false
-});
+const createTransporter = () => {
+  const transporterOptions = {
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    },
+    tls: {
+      rejectUnauthorized: false
+    },
+    connectionTimeout: 60000,
+    greetingTimeout: 30000,
+    socketTimeout: 60000,
+    pool: true,
+    maxConnections: 1,
+    rateDelta: 20000,
+    rateLimit: 5
+  };
+const verifyEmailConfig = async () => {
+  try {
+    console.log('🔧 Verifying email configuration...');
+    console.log('📧 Email User:', process.env.EMAIL_USER || 'NOT SET');
+    console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? 'SET (16 chars)' : 'NOT SET');
+    
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.log('❌ Email credentials not configured in .env file');
+      return false;
+    }
 
-// Verify email configuration on startup
-transporter.verify((error, success) => {
-  if (error) {
-    console.log('❌ Email configuration error:', error.message);
-    console.log('📧 Please check your Gmail credentials in .env file');
-    console.log('🔧 Make sure you have:');
-    console.log('   1. Enabled 2-Factor Authentication');
-    console.log('   2. Generated App Password');
-    console.log('   3. Used correct email and app password');
-  } else {
+    await transporter.verify();
     console.log('✅ Email server is ready to send messages');
     console.log('📧 Configured email:', process.env.EMAIL_USER);
     console.log('📬 Emails will be sent to: 1waytaxi.booking@gmail.com');
+    return true;
+  } catch (error) {
+    console.log('❌ Email configuration error:', error.message);
+    console.log('');
+    console.log('🔧 Troubleshooting steps:');
+    console.log('   1. Check your Gmail credentials in .env file');
+    console.log('   2. Ensure 2-Factor Authentication is enabled on Gmail');
+    console.log('   3. Generate App Password (not regular password)');
+    console.log('   4. App Password should be 16 characters without spaces');
+    console.log('   5. Try restarting the server after changes');
+    console.log('');
+    console.log('📧 Current EMAIL_USER:', process.env.EMAIL_USER || 'NOT SET');
+    console.log('🔑 Current EMAIL_PASS length:', process.env.EMAIL_PASS ? process.env.EMAIL_PASS.length : 'NOT SET');
+    return false;
   }
+};
+
+// Verify email configuration with retry
+let emailConfigured = false;
+verifyEmailConfig().then(success => {
+  emailConfigured = success;
+}).catch(() => {
+  emailConfigured = false;
 });
 
 // Test email endpoint
 app.get('/api/test-email', async (req, res) => {
   try {
+    if (!emailConfigured) {
+      return res.status(500).json({
+        success: false,
+        message: 'Email not configured properly. Check server logs.',
+        configured: false
+      });
+    }
+
     console.log('🧪 Testing email configuration...');
     
     const testMailOptions = {
@@ -87,6 +127,15 @@ app.get('/api/test-email', async (req, res) => {
 // Booking email endpoint
 app.post('/api/send-booking-email', async (req, res) => {
   try {
+    if (!emailConfigured) {
+      console.log('⚠️ Email not configured, skipping email send');
+      return res.status(200).json({
+        success: false,
+        message: 'Email not configured, but request processed',
+        emailSent: false
+      });
+    }
+
     console.log('📧 Received booking email request:', req.body);
     
     const {
@@ -255,6 +304,15 @@ Contact: +91 78100 95200`;
 // Contact form endpoint
 app.post('/api/send-contact-email', async (req, res) => {
   try {
+    if (!emailConfigured) {
+      console.log('⚠️ Email not configured, skipping email send');
+      return res.status(200).json({
+        success: false,
+        message: 'Email not configured, but request processed',
+        emailSent: false
+      });
+    }
+
     console.log('📧 Received contact form request:', req.body);
     
     const { name, email, phone, message } = req.body;
@@ -356,7 +414,9 @@ app.get('/api/health', (req, res) => {
     success: true,
     message: '1waytaxi Email Server is running',
     timestamp: new Date().toISOString(),
-    emailConfigured: !!(process.env.EMAIL_USER && process.env.EMAIL_PASS)
+    emailConfigured: emailConfigured,
+    emailUser: process.env.EMAIL_USER || 'NOT SET',
+    emailPassLength: process.env.EMAIL_PASS ? process.env.EMAIL_PASS.length : 0
   });
 });
 
@@ -376,14 +436,4 @@ app.listen(PORT, () => {
   console.log(`🌐 Health check: http://localhost:${PORT}/api/health`);
   console.log(`🧪 Test email: http://localhost:${PORT}/api/test-email`);
   console.log(`📧 Emails will be sent to: 1waytaxi.booking@gmail.com`);
-  console.log('');
-  console.log('📋 Setup checklist:');
-  console.log('   ✅ Server started');
-  console.log(`   ${process.env.EMAIL_USER ? '✅' : '❌'} EMAIL_USER configured`);
-  console.log(`   ${process.env.EMAIL_PASS ? '✅' : '❌'} EMAIL_PASS configured`);
-  console.log('');
-  console.log('🔧 If emails are not working:');
-  console.log('   1. Check Gmail App Password in .env');
-  console.log('   2. Visit: http://localhost:3001/api/test-email');
-  console.log('   3. Check server logs for errors');
 });

@@ -180,18 +180,31 @@ const Hero = () => {
     // Send notifications to WhatsApp and Email
     sendBookingNotifications(bookingEnquiry);
     
-    // Additional email backup method
+    // Debug logging
+    console.log('Booking enquiry:', bookingEnquiry);
+    console.log('Sending notifications...');
+    
+    // Additional direct email attempt
     setTimeout(() => {
-      const emailBackup = `mailto:1waytaxi.booking@gmail.com?subject=URGENT: CONFIRMED BOOKING - ${bookingForm.customerName}&body=CONFIRMED BOOKING received from ${bookingForm.customerName} (${bookingForm.customerPhone}) for trip from ${bookingForm.from} to ${bookingForm.to} on ${bookingForm.date} at ${bookingForm.time}. Customer has confirmed the booking after seeing fare estimation. Please arrange vehicle and contact customer. Check WhatsApp for full details.`;
+      const simpleEmailContent = `URGENT: CONFIRMED BOOKING
+
+Customer: ${bookingForm.customerName}
+Phone: ${bookingForm.customerPhone}
+From: ${bookingForm.from}
+To: ${bookingForm.to}
+Date: ${bookingForm.date} at ${bookingForm.time}
+Fare: ₹${tripDetails?.fare || 'TBD'}
+
+Please arrange vehicle and contact customer immediately.`;
       
-      // Create a hidden link and click it
-      const emailLink = document.createElement('a');
-      emailLink.href = emailBackup;
-      emailLink.style.display = 'none';
-      document.body.appendChild(emailLink);
-      emailLink.click();
-      document.body.removeChild(emailLink);
-    }, 3000);
+      const simpleEmailUrl = `mailto:1waytaxi.booking@gmail.com?subject=CONFIRMED BOOKING - ${bookingForm.customerName}&body=${encodeURIComponent(simpleEmailContent)}`;
+      
+      try {
+        window.open(simpleEmailUrl, '_blank');
+      } catch (error) {
+        console.error('Email sending failed:', error);
+      }
+    }, 1500);
     
     // Show confirmation to customer
     showBookingConfirmation(bookingEnquiry);

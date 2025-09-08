@@ -136,35 +136,47 @@ BOOKING CONFIRMED - Please arrange the vehicle and contact customer at ${booking
 export const sendEmailNotification = (booking: BookingEnquiry): void => {
   const { subject, body } = formatDetailedEmailContent(booking);
   
-  // Try multiple methods to ensure email is sent
   const emailAddress = '1waytaxi.booking@gmail.com';
   const encodedSubject = encodeURIComponent(subject);
   const encodedBody = encodeURIComponent(body);
   
-  // Method 1: Standard mailto link
   const emailUrl = `mailto:${emailAddress}?subject=${encodedSubject}&body=${encodedBody}`;
   
-  // Method 2: Try to open email client
-  try {
-    window.location.href = emailUrl;
-  } catch (error) {
-    // Fallback: Open in new window
-    window.open(emailUrl, '_blank');
-  }
+  // Create multiple email attempts
+  console.log('Attempting to send email notification...');
+  console.log('Email URL:', emailUrl);
   
-  // Method 3: Show user instructions if email doesn't open
+  // Method 1: Direct window location
+  window.location.href = emailUrl;
+  
+  // Method 2: Backup with new window
   setTimeout(() => {
-    const userConfirm = confirm(`📧 Email notification prepared for 1waytaxi.booking@gmail.com
+    window.open(emailUrl, '_blank');
+  }, 500);
+  
+  // Method 3: Create and click hidden link
+  setTimeout(() => {
+    const emailLink = document.createElement('a');
+    emailLink.href = emailUrl;
+    emailLink.style.display = 'none';
+    emailLink.target = '_blank';
+    document.body.appendChild(emailLink);
+    emailLink.click();
+    document.body.removeChild(emailLink);
+  }, 1000);
+  
+  // Method 4: Show manual instructions
+  setTimeout(() => {
+    alert(`📧 IMPORTANT: Email notification sent to 1waytaxi.booking@gmail.com
 
-If your email client didn't open automatically, please:
-1. Copy this email: 1waytaxi.booking@gmail.com
-2. Send the booking details manually
+If your email client didn't open automatically:
+1. Open your email app manually
+2. Send email to: 1waytaxi.booking@gmail.com
+3. Subject: ${subject}
+4. Include all booking details
 
-Click OK to try opening email again, or Cancel to continue.`);
-    
-    if (userConfirm) {
-      window.open(emailUrl, '_blank');
-    }
+Booking ID: ${booking.bookingId}
+Customer: ${booking.customerName} (${booking.customerPhone})`);
   }, 2000);
 };
 

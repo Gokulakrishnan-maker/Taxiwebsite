@@ -33,7 +33,7 @@ const Contact = () => {
     {
       icon: AtSign,
       title: 'Email Us',
-     details: 'kovaidroptaxi38@gmail.com',
+     details: '1waytaxi.booking@gmail.com',
       description: 'For general inquiries'
     },
     {

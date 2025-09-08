@@ -83,7 +83,7 @@ Best regards,
 // Send email notification
 export const sendEmailNotification = (booking: BookingEnquiry): void => {
   const { subject, body } = formatEmailContent(booking);
-  const emailUrl = `mailto:kovaidroptaxi38@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const emailUrl = `mailto:1waytaxi.booking@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   
   // Open email client
   window.open(emailUrl, '_blank');

@@ -68,6 +68,7 @@ const verifyEmailConfig = async () => {
     return false;
   }
 };
+
 // Verify email configuration with retry
 let emailConfigured = false;
 verifyEmailConfig().then(success => {

@@ -127,7 +127,7 @@ const FAQ = () => {
               href="tel:+917810095200" 
               className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
-              Call +91 78100 95200
+              Call +91 7810095200
             </a>
             <a 
               href="https://wa.me/917810095200" 

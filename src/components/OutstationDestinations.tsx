@@ -206,7 +206,7 @@ const OutstationDestinations = () => {
                 href="tel:+917810095200" 
                 className="bg-white text-orange-600 px-10 py-4 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-lg transform hover:scale-105"
               >
-                Call +91 78100 95200
+                Call +91 7810095200
               </a>
               <a 
                 href="https://wa.me/917810095200" 

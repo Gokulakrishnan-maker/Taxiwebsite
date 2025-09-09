@@ -108,7 +108,7 @@ const PrivacyPolicy = () => {
                   For any privacy-related questions or concerns about 1waytaxi, please contact us:
                 </p>
                 <div className="space-y-2 text-gray-700">
-                  <p><strong>Phone:</strong> +91 78100 95200</p>
+                  <p><strong>Phone:</strong> +91 7810095200</p>
                   <p><strong>Email:</strong> 1waytaxi.booking@gmail.com</p>
                   <p><strong>Address:</strong> Coimbatore, Tamil Nadu, India</p>
                 </div>

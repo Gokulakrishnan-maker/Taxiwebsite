@@ -411,7 +411,8 @@ const Hero = () => {
                       </div>
                     </div>
                   </div>
-                <div className="grid grid-cols-4 gap-2 mb-4">
+
+                  <div className="grid grid-cols-4 gap-2 mb-4">
                     {vehicles.map((vehicle, index) => (
                       <div 
                         key={index}
@@ -425,6 +426,7 @@ const Hero = () => {
                         <div className="text-white text-xs font-semibold">{vehicle.name}</div>
                       </div>
                     ))}
+                  </div>
                 </form>
 
                 <button

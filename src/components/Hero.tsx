@@ -291,7 +291,7 @@ const Hero = () => {
                 WhatsApp Us
               </a>
               <a href="tel:+917810095200" className="border-2 border-white text-white px-10 py-4 rounded-xl text-lg font-bold hover:bg-white hover:text-blue-900 transition-all text-center backdrop-blur-sm">
-                Call +91 78100 95200
+                Call +91 7810095200
               </a>
             </div>
           </div>

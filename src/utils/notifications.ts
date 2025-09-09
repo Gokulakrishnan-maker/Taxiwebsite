@@ -244,7 +244,7 @@ export const sendWhatsAppEnquiryNotification = async (booking: BookingEnquiry): 
   try {
     // This would integrate with WhatsApp Business API in production
     // For now, we'll just log that the notification was prepared
-    console.log('✅ WhatsApp enquiry notification sent directly to +91 78100 95200');
+    console.log('✅ WhatsApp enquiry notification sent directly to +91 7810095200');
   } catch (error) {
     console.error('❌ Error sending WhatsApp enquiry notification:', error);
   }
@@ -261,7 +261,7 @@ export const sendWhatsAppConfirmationNotification = async (booking: BookingEnqui
   try {
     // This would integrate with WhatsApp Business API in production
     // For now, we'll just log that the notification was prepared
-    console.log('✅ WhatsApp confirmation notification sent directly to +91 78100 95200');
+    console.log('✅ WhatsApp confirmation notification sent directly to +91 7810095200');
   } catch (error) {
     console.error('❌ Error sending WhatsApp confirmation notification:', error);
   }

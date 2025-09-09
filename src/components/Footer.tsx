@@ -45,7 +45,7 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <Phone className="h-4 w-4 text-orange-400" />
-                <span className="text-gray-300">+91 78100 95200</span>
+                <span className="text-gray-300">+91 7810095200</span>
               </div>
               <div className="flex items-center space-x-3">
                 <AtSign className="h-4 w-4 text-orange-400" />

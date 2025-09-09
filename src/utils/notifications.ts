@@ -315,27 +315,3 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     sendWhatsAppConfirmationNotification(booking);
   }
 };
-
-// Show success message to customer
-export const showBookingConfirmation = (booking: BookingEnquiry): void => {
-  const bookingId = booking.bookingId || generateBookingId();
-  
-  alert(`🚖 Thanks for booking 1waytaxi
-
-Ride Booked Successfully! Reservation details have been sent to your email and phone.
-
-Booking ID: ${bookingId}
-${booking.fareEstimate ? `Total Fare: ₹${booking.fareEstimate}` : 'Fare will be calculated based on actual distance'}
-Vehicle: ${booking.vehicleType}
-
-Our team will contact you shortly at ${booking.customerPhone} to confirm your booking details.
-
-Trip: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
-From: ${booking.from}
-To: ${booking.to}
-Date: ${booking.date} at ${booking.time}
-
-For any queries, call: +91 78100 95200
-
-Thank you for choosing 1waytaxi!`);
-};

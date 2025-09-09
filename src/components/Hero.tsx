@@ -128,6 +128,9 @@ const Hero = () => {
   const handleVehicleSelect = async (vehicle: any) => {
     setSelectedVehicle(vehicle.name);
     
+    // Generate booking ID for enquiry
+    const bookingId = generateBookingId();
+    
     // Calculate distance and fare
     if (isGoogleMapsLoaded && fromAutocompleteRef.current && toAutocompleteRef.current) {
       const fromPlace = fromAutocompleteRef.current.getPlace();
@@ -160,6 +163,32 @@ const Hero = () => {
                   vehicleRate: vehicle.rate
                 });
                 
+                // Auto-send enquiry notifications when estimation is shown
+                const enquiryData: BookingEnquiry = {
+                  tripType: bookingForm.tripType,
+                  from: bookingForm.from,
+                  to: bookingForm.to,
+                  date: bookingForm.date,
+                  time: bookingForm.time,
+                  passengers: bookingForm.passengers,
+                  fareEstimate: fare,
+                  bookingId: bookingId,
+                  vehicleType: vehicle.name,
+                  customerName: bookingForm.customerName,
+                  customerPhone: bookingForm.customerPhone,
+                  customerEmail: bookingForm.customerEmail,
+                  tripDistance: `${Math.round(distanceKm)} KM`,
+                  tripDuration: duration ? `${Math.round(duration.value / 3600)} hours ${Math.round((duration.value % 3600) / 60)} mins` : 'Calculating...',
+                  vehicleRate: vehicle.rate,
+                  driverAllowance: 400
+                };
+
+                // Send enquiry notifications automatically (no popup)
+                console.log('📧 Auto-sending enquiry notifications...');
+                sendBookingEnquiryNotifications(enquiryData).then(() => {
+                  console.log('✅ Enquiry notifications sent automatically');
+                }).catch(console.error);
+                
                 setShowVehicleSelection(false);
                 setShowEstimation(true);
               }
@@ -173,10 +202,7 @@ const Hero = () => {
   };
 
   const handleConfirmBooking = () => {
-    // Generate unique booking ID
-    const bookingId = generateBookingId();
-    
-    // Create booking object
+    // Create confirmation booking object
     const bookingData: BookingEnquiry = {
       tripType: bookingForm.tripType,
       from: bookingForm.from,
@@ -185,7 +211,7 @@ const Hero = () => {
       time: bookingForm.time,
       passengers: bookingForm.passengers,
       fareEstimate: tripDetails?.fare,
-      bookingId: bookingId,
+      bookingId: generateBookingId(),
       vehicleType: tripDetails?.selectedCar || selectedVehicle,
       customerName: bookingForm.customerName,
       customerPhone: bookingForm.customerPhone,
@@ -196,23 +222,14 @@ const Hero = () => {
       driverAllowance: tripDetails?.driverAllowance || 400
     };
 
-    // Send both enquiry and confirmation notifications
-    console.log('📧 Sending booking notifications...');
-    
-    // Send enquiry notification
-    sendBookingEnquiryNotifications(bookingData).then(() => {
-      console.log('✅ Enquiry notifications sent');
+    // Send confirmation notifications automatically (no popup)
+    console.log('📧 Auto-sending confirmation notifications...');
+    sendBookingConfirmationNotifications(bookingData).then(() => {
+      console.log('✅ Confirmation notifications sent automatically');
     }).catch(console.error);
-    
-    // Send confirmation notification after 1 second
-    setTimeout(() => {
-      sendBookingConfirmationNotifications(bookingData).then(() => {
-        console.log('✅ Confirmation notifications sent');
-      }).catch(console.error);
-    }, 1000);
 
-    // Show success message to customer
-    showBookingConfirmation(bookingData);
+    // Show simple success message (no detailed popup)
+    alert('✅ Booking confirmed! You will receive confirmation details via email and WhatsApp. Thank you for choosing 1waytaxi!');
     
     // Reset form
     setBookingForm({

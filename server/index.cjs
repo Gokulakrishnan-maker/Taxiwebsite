@@ -18,7 +18,7 @@ console.log('📧 Email User:', process.env.EMAIL_USER || 'NOT SET');
 console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? 'SET' : 'NOT SET');
 
 // Create nodemailer transporter
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: process.env.EMAIL_USER,

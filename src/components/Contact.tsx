@@ -66,7 +66,7 @@ Please respond to the customer promptly.`;
     {
       icon: AtSign,
       title: 'Email Us',
-     details: 'lakonewaytaxi@gmail.com',
+      details: '1waytaxi.booking@gmail.com',
       description: 'For general inquiries'
     },
     {

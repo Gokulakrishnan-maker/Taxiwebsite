@@ -229,7 +229,7 @@ const Hero = () => {
 
     // Send confirmation email automatically
     console.log('📧 Auto-sending confirmation notifications...');
-    sendBookingConfirmationEmail(bookingData).then(() => {
+    sendBookingConfirmationNotifications(bookingData).then(() => {
       console.log('✅ Confirmation notifications sent automatically');
     }).catch(console.error);
 

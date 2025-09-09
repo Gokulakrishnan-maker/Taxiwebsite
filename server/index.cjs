@@ -92,7 +92,7 @@ app.get('/api/test-email', async (req, res) => {
     
     const testMailOptions = {
       from: `1waytaxi System <${process.env.EMAIL_USER}>`,
-      to: '1waytaxi.booking@gmail.com',
+      to: 'lakonewaytaxi@gmail.com',
       subject: 'Test Email - 1waytaxi System',
       text: 'This is a test email to verify the email system is working correctly.',
       html: `
@@ -211,7 +211,7 @@ Contact: +91 78100 95200`;
 
     const mailOptions = {
       from: `1waytaxi Booking <${process.env.EMAIL_USER}>`,
-      to: '1waytaxi.booking@gmail.com',
+      to: 'lakonewaytaxi@gmail.com',
       subject: emailSubject,
       text: emailBody,
       html: `
@@ -347,7 +347,7 @@ www.1waytaxi.com`;
 
     const mailOptions = {
       from: `1waytaxi Contact <${process.env.EMAIL_USER}>`,
-      to: '1waytaxi.booking@gmail.com',
+      to: 'lakonewaytaxi@gmail.com',
       subject: emailSubject,
       text: emailBody,
       html: `
@@ -433,5 +433,5 @@ app.listen(PORT, () => {
   console.log(`🚀 1waytaxi Email Server running on port ${PORT}`);
   console.log(`🌐 Health check: http://localhost:${PORT}/api/health`);
   console.log(`🧪 Test email: http://localhost:${PORT}/api/test-email`);
-  console.log(`📧 Emails will be sent to: 1waytaxi.booking@gmail.com`);
+  console.log(`📧 Emails will be sent to: lakonewaytaxi@gmail.com`);
 });

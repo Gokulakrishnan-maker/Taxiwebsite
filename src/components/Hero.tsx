@@ -289,14 +289,14 @@ const Hero = () => {
           <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-3xl shadow-2xl p-8 border border-white/20">
             {!showEstimation && !showSuccessMessage && (
               <>
-                <div className="text-center mb-6">
+                <div className="text-center mb-8">
                   <h3 className="text-2xl font-bold text-white">Book Your One Way Taxi</h3>
                 </div>
                 
-                <form onSubmit={handleGetEstimation} className="space-y-6">
+                <div className="space-y-6">
                   {/* Pickup Address */}
                   <div>
-                    <label className="block text-white font-semibold mb-2 text-sm">Pickup Address</label>
+                    <label className="block text-white font-semibold mb-3">Pickup Address</label>
                     <div className="relative">
                       <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                       <input
@@ -306,7 +306,7 @@ const Hero = () => {
                         placeholder="Pickup Location"
                         value={bookingForm.from}
                         onChange={handleInputChange}
-                        className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                        className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none"
                         required
                       />
                     </div>
@@ -314,7 +314,7 @@ const Hero = () => {
 
                   {/* Drop Address */}
                   <div>
-                    <label className="block text-white font-semibold mb-2 text-sm">Drop Address</label>
+                    <label className="block text-white font-semibold mb-3">Drop Address</label>
                     <div className="relative">
                       <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-red-400" />
                       <input
@@ -324,16 +324,16 @@ const Hero = () => {
                         placeholder="Drop Location"
                         value={bookingForm.to}
                         onChange={handleInputChange}
-                        className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                        className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none"
                         required
                       />
                     </div>
                   </div>
 
                   {/* Name and Mobile */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-white font-semibold mb-2 text-sm">Full Name</label>
+                      <label className="block text-white font-semibold mb-3">Full Name</label>
                       <div className="relative">
                         <User className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                         <input
@@ -342,13 +342,13 @@ const Hero = () => {
                           placeholder="Full Name"
                           value={bookingForm.customerName}
                           onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                          className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none"
                           required
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="block text-white font-semibold mb-2 text-sm">Mobile Number</label>
+                      <label className="block text-white font-semibold mb-3">Mobile Number</label>
                       <div className="relative">
                         <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                         <input
@@ -357,7 +357,7 @@ const Hero = () => {
                           placeholder="Mobile Number"
                           value={bookingForm.customerPhone}
                           onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                          className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none"
                           required
                         />
                       </div>
@@ -366,7 +366,7 @@ const Hero = () => {
 
                   {/* Email */}
                   <div>
-                    <label className="block text-white font-semibold mb-2 text-sm">Email(optional)</label>
+                    <label className="block text-white font-semibold mb-3">Email(optional)</label>
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                       <input
@@ -375,15 +375,15 @@ const Hero = () => {
                         placeholder="Email"
                         value={bookingForm.customerEmail}
                         onChange={handleInputChange}
-                        className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                        className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none"
                       />
                     </div>
                   </div>
 
                   {/* Date and Time */}
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-white font-semibold mb-2 text-sm">Pickup Date</label>
+                      <label className="block text-white font-semibold mb-3">Pickup Date</label>
                       <div className="relative">
                         <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                         <input
@@ -391,13 +391,13 @@ const Hero = () => {
                           name="date"
                           value={bookingForm.date}
                           onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                          className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-400 focus:outline-none"
                           required
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="block text-white font-semibold mb-2 text-sm">Pickup Time</label>
+                      <label className="block text-white font-semibold mb-3">Pickup Time</label>
                       <div className="relative">
                         <Clock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                         <input
@@ -405,36 +405,37 @@ const Hero = () => {
                           name="time"
                           value={bookingForm.time}
                           onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                          className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-400 focus:outline-none"
                           required
                         />
                       </div>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-4 gap-2 mb-4">
+                  {/* Vehicle Selection */}
+                  <div className="grid grid-cols-4 gap-3 mb-6">
                     {vehicles.map((vehicle, index) => (
                       <div 
                         key={index}
-                        className={`bg-white/10 backdrop-blur-sm border-2 rounded-lg p-3 text-center cursor-pointer transition-all hover:bg-white/20 ${
+                        className={`bg-white/10 backdrop-blur-sm border-2 rounded-lg p-4 text-center cursor-pointer transition-all hover:bg-white/20 ${
                           selectedVehicle === vehicle.name ? 'border-orange-400 bg-orange-400/20' : 'border-white/30'
                         }`}
                         onClick={() => setSelectedVehicle(vehicle.name)}
                       >
-                        <div className="text-2xl mb-1">{vehicle.image}</div>
-                        <div className="text-white font-bold text-xs mb-1">{vehicle.rate}₹/KM</div>
-                        <div className="text-white text-xs font-semibold">{vehicle.name}</div>
+                        <div className="text-3xl mb-2">{vehicle.image}</div>
+                        <div className="text-white font-bold text-sm mb-1">{vehicle.rate}₹/KM</div>
+                        <div className="text-white text-sm font-semibold">{vehicle.name}</div>
                       </div>
                     ))}
                   </div>
-                </form>
+                </div>
 
                 <button
                   onClick={handleGetEstimation}
                   disabled={!selectedVehicle}
-                  className={`w-full py-3 rounded-lg text-lg font-bold transition-all ${
+                  className={`w-full py-4 rounded-lg text-lg font-bold transition-all ${
                     selectedVehicle 
-                      ? 'bg-yellow-500 text-black hover:bg-yellow-600' 
+                      ? 'bg-yellow-500 text-black hover:bg-yellow-600 shadow-lg' 
                       : 'bg-gray-400 text-gray-600 cursor-not-allowed'
                   }`}
                 >

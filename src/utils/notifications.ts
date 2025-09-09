@@ -200,7 +200,9 @@ Thanks for booking 1waytaxi
 
 // Format booking confirmation for WhatsApp message
 export const formatWhatsAppConfirmationMessage = (booking: BookingEnquiry): string => {
-  const message = `🚖 *CONFIRMED BOOKING - 1waytaxi*
+  const message = `🚖 *BOOKING CONFIRMATION - 1waytaxi*
+
+Thanks for booking 1waytaxi! 🙏
 
 📋 *Trip Details:*
 • Booking ID: ${booking.bookingId}
@@ -223,7 +225,8 @@ export const formatWhatsAppConfirmationMessage = (booking: BookingEnquiry): stri
 • Phone: ${booking.customerPhone}
 ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
-Thanks for booking 1waytaxi
+📞 *Contact:* +91 78100 95200
+🌐 *Website:* www.1waytaxi.com
 
 ⏰ *Confirmed Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
 

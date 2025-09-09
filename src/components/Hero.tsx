@@ -20,6 +20,8 @@ const Hero = () => {
   const [selectedVehicle, setSelectedVehicle] = useState<string>('');
   const [showEstimation, setShowEstimation] = useState(false);
   const [showVehicleSelection, setShowVehicleSelection] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [successBookingData, setSuccessBookingData] = useState<any>(null);
   const [tripDetails, setTripDetails] = useState<{
     distance: string;
     duration: string;
@@ -202,6 +204,9 @@ const Hero = () => {
   };
 
   const handleConfirmBooking = () => {
+    // Generate booking ID for confirmation
+    const confirmationBookingId = generateBookingId();
+    
     // Create confirmation booking object
     const bookingData: BookingEnquiry = {
       tripType: bookingForm.tripType,
@@ -211,7 +216,7 @@ const Hero = () => {
       time: bookingForm.time,
       passengers: bookingForm.passengers,
       fareEstimate: tripDetails?.fare,
-      bookingId: generateBookingId(),
+      bookingId: confirmationBookingId,
       vehicleType: tripDetails?.selectedCar || selectedVehicle,
       customerName: bookingForm.customerName,
       customerPhone: bookingForm.customerPhone,
@@ -222,16 +227,29 @@ const Hero = () => {
       driverAllowance: tripDetails?.driverAllowance || 400
     };
 
-    // Send confirmation notifications automatically (no popup)
+    // Send confirmation email automatically
     console.log('📧 Auto-sending confirmation notifications...');
-    sendBookingConfirmationNotifications(bookingData).then(() => {
+    sendBookingConfirmationEmail(bookingData).then(() => {
       console.log('✅ Confirmation notifications sent automatically');
     }).catch(console.error);
 
-    // Show simple success message (no detailed popup)
-    console.log('✅ Booking confirmed! Notifications sent via email and WhatsApp.');
+    // Store booking data for success message
+    setSuccessBookingData(bookingData);
+    setShowSuccessMessage(true);
     
-    // Reset form
+    // Hide other screens
+    setShowEstimation(false);
+    setShowVehicleSelection(false);
+  };
+
+  const handleGoHome = () => {
+    // Reset all states
+    setShowSuccessMessage(false);
+    setSuccessBookingData(null);
+    setShowEstimation(false);
+    setShowVehicleSelection(false);
+    setSelectedVehicle('');
+    setTripDetails(null);
     setBookingForm({
       tripType: 'oneway',
       customerName: '',
@@ -243,10 +261,14 @@ const Hero = () => {
       time: '',
       passengers: '1'
     });
-    setSelectedVehicle('');
-    setShowEstimation(false);
-    setShowVehicleSelection(false);
-    setTripDetails(null);
+  };
+
+  const handleWhatsAppBooking = () => {
+    if (successBookingData) {
+      const message = formatWhatsAppConfirmationMessage(successBookingData);
+      const whatsappUrl = `https://wa.me/917810095200?text=${message}`;
+      window.open(whatsappUrl, '_blank');
+    }
   };
 
   return (
@@ -480,8 +502,59 @@ const Hero = () => {
               </div>
             )}
 
+            {/* Success Message */}
+            {showSuccessMessage && successBookingData && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <div className="bg-green-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-green-600 mb-2">Booking Confirmed!</h3>
+                  <p className="text-gray-600 mb-4">Thanks for booking 1waytaxi</p>
+                </div>
+                
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <h4 className="font-semibold text-gray-900 mb-3">Booking Details:</h4>
+                  <div className="space-y-2 text-sm">
+                    <p><span className="font-medium">Booking ID:</span> {successBookingData.bookingId}</p>
+                    <p><span className="font-medium">From:</span> {successBookingData.from}</p>
+                    <p><span className="font-medium">To:</span> {successBookingData.to}</p>
+                    <p><span className="font-medium">Date & Time:</span> {successBookingData.date} {successBookingData.time}</p>
+                    <p><span className="font-medium">Vehicle:</span> {successBookingData.vehicleType}</p>
+                    <p><span className="font-medium">Fare:</span> ₹{successBookingData.fareEstimate}</p>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <button
+                    onClick={handleWhatsAppBooking}
+                    className="w-full bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-all flex items-center justify-center space-x-2"
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.700"/>
+                    </svg>
+                    <span>Send to WhatsApp</span>
+                  </button>
+                  
+                  <button
+                    onClick={handleGoHome}
+                    className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all"
+                  >
+                    Home Page
+                  </button>
+                </div>
+                
+                <div className="text-center text-sm text-gray-600">
+                  <p>We have sent booking details to your email.</p>
+                  <p>Our team will contact you shortly at {successBookingData.customerPhone}</p>
+                </div>
+              </div>
+            )}
+
             {/* Trip Estimation */}
-            {showEstimation && tripDetails && (
+            {showEstimation && tripDetails && !showSuccessMessage && (
               <div className="space-y-6">
                 <div className="text-center mb-8">
                   <h3 className="text-xl font-bold text-gray-900 mb-2">

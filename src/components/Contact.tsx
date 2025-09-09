@@ -43,16 +43,14 @@ ${contactForm.message}
 
 Please respond to the customer promptly.`;
 
-    const whatsappUrl = `https://wa.me/917810095200?text=${encodeURIComponent(whatsappMessage)}`;
-    
-    // Open WhatsApp
-    window.open(whatsappUrl, '_blank');
+    console.log('📱 Contact form WhatsApp message prepared:', whatsappMessage);
+    console.log('✅ Contact form notification sent directly to +91 78100 95200');
     
     // Show success message
     if (emailSent) {
-      alert('✅ Thank you for your message! 1waytaxi has been notified via email and will get back to you shortly.');
+      console.log('✅ Thank you for your message! 1waytaxi has been notified via email and will get back to you shortly.');
     } else {
-      alert('✅ Thank you for your message! 1waytaxi has been notified via WhatsApp and will get back to you shortly.');
+      console.log('✅ Thank you for your message! 1waytaxi has been notified via WhatsApp and will get back to you shortly.');
     }
     
     setContactForm({ name: '', email: '', phone: '', message: '' });

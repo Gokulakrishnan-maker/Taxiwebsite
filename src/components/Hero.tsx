@@ -229,7 +229,7 @@ const Hero = () => {
     }).catch(console.error);
 
     // Show simple success message (no detailed popup)
-    alert('✅ Booking confirmed! You will receive confirmation details via email and WhatsApp. Thank you for choosing 1waytaxi!');
+    console.log('✅ Booking confirmed! Notifications sent via email and WhatsApp.');
     
     // Reset form
     setBookingForm({

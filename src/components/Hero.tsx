@@ -184,8 +184,14 @@ const Hero = () => {
     e.preventDefault();
     
     if (!bookingForm.customerName || !bookingForm.customerPhone || !bookingForm.from || !bookingForm.to || !bookingForm.date || !bookingForm.time) {
-      alert('Please fill in all required fields.');
+      console.log('Please fill in all required fields and select a vehicle.');
       return;
+    }
+
+    // Find selected vehicle details
+    const selectedVehicleData = vehicles.find(v => v.name === selectedVehicle);
+    if (selectedVehicleData) {
+      handleVehicleSelect(selectedVehicleData);
     }
   };
 
@@ -405,24 +411,33 @@ const Hero = () => {
                       </div>
                     </div>
                   </div>
-
-                  {/* Vehicle Selection */}
-                  <div className="grid grid-cols-4 gap-2">
+                <div className="grid grid-cols-4 gap-2 mb-4">
                     {vehicles.map((vehicle, index) => (
                       <div 
                         key={index}
-                        onClick={() => handleVehicleSelect(vehicle)}
                         className={`bg-white/10 backdrop-blur-sm border-2 rounded-lg p-3 text-center cursor-pointer transition-all hover:bg-white/20 ${
                           selectedVehicle === vehicle.name ? 'border-orange-400 bg-orange-400/20' : 'border-white/30'
                         }`}
+                        onClick={() => setSelectedVehicle(vehicle.name)}
                       >
                         <div className="text-2xl mb-1">{vehicle.image}</div>
                         <div className="text-white font-bold text-xs mb-1">{vehicle.rate}₹/KM</div>
                         <div className="text-white text-xs font-semibold">{vehicle.name}</div>
                       </div>
                     ))}
-                  </div>
                 </form>
+
+                <button
+                  onClick={handleGetEstimation}
+                  disabled={!selectedVehicle}
+                  className={`w-full py-3 rounded-lg text-lg font-bold transition-all ${
+                    selectedVehicle 
+                      ? 'bg-yellow-500 text-black hover:bg-yellow-600' 
+                      : 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                  }`}
+                >
+                  Get Estimation
+                </button>
               </>
             )}
 

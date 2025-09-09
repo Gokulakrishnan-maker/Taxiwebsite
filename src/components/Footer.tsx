@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Car, Phone, Mail, MapPin, Facebook, Send, Instagram, AtSign } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Send, Instagram, AtSign } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -9,7 +9,6 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center space-x-2 mb-6">
-              <Car className="h-8 w-8 text-orange-400" />
               <span className="text-2xl font-bold">1waytaxi</span>
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed max-w-md">

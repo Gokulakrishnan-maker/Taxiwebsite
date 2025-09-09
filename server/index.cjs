@@ -17,26 +17,26 @@ console.log('🚀 Starting 1waytaxi Email Server...');
 console.log('📧 Email User:', process.env.EMAIL_USER || 'NOT SET');
 console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? 'SET' : 'NOT SET');
 
-// Create nodemailer transporter with detailed configuration
-const createTransporter = () => {
-  const transporterOptions = {
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    },
-    tls: {
-      rejectUnauthorized: false
-    },
-    connectionTimeout: 60000,
-    greetingTimeout: 30000,
-    socketTimeout: 60000,
-    pool: true,
-    maxConnections: 1,
-    rateDelta: 20000,
-    rateLimit: 5
-  };
-}
+// Create nodemailer transporter
+const transporter = nodemailer.createTransporter({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  },
+  tls: {
+    rejectUnauthorized: false
+  },
+  connectionTimeout: 60000,
+  greetingTimeout: 30000,
+  socketTimeout: 60000,
+  pool: true,
+  maxConnections: 1,
+  rateDelta: 20000,
+  rateLimit: 5
+});
+
+// Verify email configuration
 const verifyEmailConfig = async () => {
   try {
     console.log('🔧 Verifying email configuration...');
@@ -68,7 +68,6 @@ const verifyEmailConfig = async () => {
     return false;
   }
 };
-
 // Verify email configuration with retry
 let emailConfigured = false;
 verifyEmailConfig().then(success => {

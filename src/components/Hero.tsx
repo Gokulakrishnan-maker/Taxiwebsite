@@ -225,12 +225,12 @@ const Hero = () => {
     // Auto-send WhatsApp confirmation to client
     console.log('📱 Auto-sending WhatsApp confirmation to client...');
     const message = formatWhatsAppConfirmationMessage(bookingData);
-    const clientWhatsappUrl = `https://wa.me/${bookingForm.customerPhone.replace(/[^0-9]/g, '')}?text=${message}`;
+    const clientWhatsappUrl = `https://wa.me/917810095200?text=${message}`;
     
     // Open WhatsApp to client automatically
     setTimeout(() => {
       window.open(clientWhatsappUrl, '_blank');
-      console.log('✅ WhatsApp confirmation sent to client automatically');
+      console.log('✅ WhatsApp confirmation sent to 7810095200 automatically');
     }, 1000);
     setSuccessBookingData(bookingData);
     setShowSuccessMessage(true);

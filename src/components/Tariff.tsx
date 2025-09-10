@@ -147,31 +147,6 @@ const Tariff = () => {
           </div>
         </div>
 
-        <div className="mt-12 text-center">
-          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-xl p-10 text-white">
-            <h3 className="text-3xl font-bold mb-4">Need a Custom Quote?</h3>
-            <p className="text-xl mb-8 opacity-90">
-              Contact us for personalized pricing based on your specific travel requirements
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <a 
-                href="tel:+917810095200" 
-                className="bg-white text-blue-600 px-10 py-4 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-lg transform hover:scale-105"
-              >
-                📞 Call +91 7810095200
-              </a>
-              <a 
-                href="https://wa.me/917810095200" 
-                className="bg-green-600 text-white px-10 py-4 rounded-xl font-bold hover:bg-green-700 transition-colors shadow-lg transform hover:scale-105"
-              >
-                WhatsApp Quote
-              </a>
-              <button className="border-2 border-white text-white px-10 py-4 rounded-xl font-bold hover:bg-white hover:text-blue-600 transition-colors backdrop-blur-sm">
-                Get Quote Now
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

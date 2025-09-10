@@ -10,12 +10,6 @@ const Contact = () => {
       description: '24/7 booking and support'
     },
     {
-      icon: Phone,
-      title: 'WhatsApp Us',
-      details: '+91 7810095200',
-      description: 'Quick chat support'
-    },
-    {
       icon: AtSign,
       title: 'Email Us',
       details: '1waytaxi.booking@gmail.com',
@@ -41,7 +35,7 @@ const Contact = () => {
 
         <div className="max-w-4xl mx-auto">
           <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Contact Information</h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {contactInfo.map((info, index) => (
               <div key={index} className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow">
                 <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">

@@ -95,7 +95,7 @@ const OutstationDestinations = () => {
     },
     {
       name: 'Salem',
-      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Yercaud_hill_station.jpg/640px-Yercaud_hill_station.jpg',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVPal-LjTPjgheGw6SAFyoGNxZE4t3bLUtmw&s',
       distance: '165 km',
       duration: '3 hours',
       description: 'A vibrant city in Tamil Nadu, known for hills, steel, and mangoes.',

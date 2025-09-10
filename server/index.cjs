@@ -217,7 +217,6 @@ Contact: +91 78100 95200`;
     const mailOptions = {
       from: `1waytaxi Booking <${process.env.EMAIL_USER}>`,
       to: '1waytaxi.booking@gmail.com',
-      cc: customerEmail && customerEmail.trim() ? customerEmail : undefined,
       subject: emailSubject,
       text: emailBody,
       html: `

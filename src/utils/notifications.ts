@@ -434,14 +434,10 @@ export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): 
     console.log('📱 Sending WhatsApp enquiry notification...');
     await sendWhatsAppEnquiryNotification(booking);
     
-    // Send WhatsApp enquiry notification to customer
-    console.log('📱 Sending WhatsApp enquiry notification to customer...');
-    await sendCustomerWhatsAppEnquiryNotification(booking);
-    
     // Show status to user
     if (emailSent) {
       console.log('✅ All enquiry notifications sent successfully');
-     console.log('📧 Customer will receive email confirmation if provided');
+      console.log('📧 1waytaxi team has been notified via email and WhatsApp');
     } else {
       console.log('⚠️ Enquiry email failed, but WhatsApp notification sent');
     }
@@ -449,7 +445,6 @@ export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): 
     console.error('❌ Error in enquiry notifications:', error);
     // Still send WhatsApp even if email fails
     await sendWhatsAppEnquiryNotification(booking);
-    await sendCustomerWhatsAppEnquiryNotification(booking);
   }
 };
 

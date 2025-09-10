@@ -328,9 +328,9 @@ const Hero = () => {
 
                 console.log('📧📱 Auto-sending enquiry notifications (Email + WhatsApp)...');
                 sendBookingEnquiryNotifications(enquiryData).then(() => {
-                  console.log('✅ Enquiry notifications sent automatically (Email + WhatsApp)');
+                  console.log('✅ Enquiry sent to 1waytaxi team via Email + WhatsApp');
                   // Show user feedback
-                  alert('📧📱 Booking enquiry sent! 1waytaxi has been notified via Email and WhatsApp. You will receive confirmation shortly.');
+                  alert('📧📱 Booking enquiry sent! 1waytaxi team has been notified and will contact you shortly.');
                 }).catch(console.error);
                 
                 setShowEstimation(true);

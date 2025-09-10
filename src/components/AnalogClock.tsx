@@ -13,9 +13,10 @@ const AnalogClock: React.FC<AnalogClockProps> = ({
   placeholder = "Select Time",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedHour, setSelectedHour] = useState(5);
-  const [selectedMinute, setSelectedMinute] = useState(30);
+  const [selectedHour, setSelectedHour] = useState<number | null>(null);
+  const [selectedMinute, setSelectedMinute] = useState(0);
   const [isAM, setIsAM] = useState(true);
+  const [isSelectingHour, setIsSelectingHour] = useState(true); // 🔹 Step toggle
 
   useEffect(() => {
     if (value) {
@@ -24,6 +25,7 @@ const AnalogClock: React.FC<AnalogClockProps> = ({
       setSelectedHour(hours);
       setSelectedMinute(minutes);
       setIsAM(period === "AM");
+      setIsSelectingHour(true);
     }
   }, [value]);
 
@@ -37,26 +39,42 @@ const AnalogClock: React.FC<AnalogClockProps> = ({
     const angle = Math.atan2(y, x) * (180 / Math.PI) + 90;
     const normalizedAngle = angle < 0 ? angle + 360 : angle;
 
-    const minute = Math.round(normalizedAngle / 6) % 60;
-    setSelectedMinute(minute);
+    if (isSelectingHour) {
+      // Round to nearest hour
+      let hour = Math.round(normalizedAngle / 30);
+      if (hour === 0) hour = 12;
+      setSelectedHour(hour);
+      setIsSelectingHour(false); // 🔹 Move to minutes after selecting hour
+    } else {
+      // Round to nearest 5 minutes
+      const minute = Math.round(normalizedAngle / 6) % 60;
+      setSelectedMinute(minute);
+    }
   };
 
-  const getMinuteHandStyle = () => {
-    const angle = (selectedMinute / 60) * 360 - 90;
+  const getHandStyle = () => {
+    const angle = isSelectingHour
+      ? ((selectedHour ?? 12) / 12) * 360 - 90
+      : (selectedMinute / 60) * 360 - 90;
+
     return {
       transform: `rotate(${angle}deg)`,
       transformOrigin: "0% 50%",
       position: "absolute" as const,
       top: "50%",
       left: "50%",
-      width: "110px",
+      width: isSelectingHour ? "80px" : "110px",
       height: "2px",
       backgroundColor: "#03A9F4",
     };
   };
 
   const handleTimeSelect = () => {
-    const timeString = `${selectedHour.toString().padStart(2, "0")}:${selectedMinute
+    if (selectedHour === null) return;
+
+    const timeString = `${selectedHour
+      .toString()
+      .padStart(2, "0")}:${selectedMinute
       .toString()
       .padStart(2, "0")} ${isAM ? "AM" : "PM"}`;
     onChange(timeString);
@@ -80,14 +98,25 @@ const AnalogClock: React.FC<AnalogClockProps> = ({
       {isOpen && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl shadow-xl max-w-sm w-full">
-            
             {/* Digital Time Header */}
             <div className="bg-sky-500 text-white p-4 flex items-center justify-center space-x-2 text-5xl font-bold">
-              <span>{selectedHour}</span>
+              <button
+                className={`${
+                  isSelectingHour ? "text-black" : ""
+                } px-1 rounded`}
+                onClick={() => setIsSelectingHour(true)}
+              >
+                {selectedHour ?? "--"}
+              </button>
               <span>:</span>
-              <span className="border-2 border-white rounded px-2">
+              <button
+                className={`border-2 border-white rounded px-2 ${
+                  !isSelectingHour ? "text-black" : ""
+                }`}
+                onClick={() => setIsSelectingHour(false)}
+              >
                 {selectedMinute.toString().padStart(2, "0")}
-              </span>
+              </button>
               <div className="flex flex-col ml-3 text-base font-semibold">
                 <button
                   onClick={() => setIsAM(true)}
@@ -104,43 +133,51 @@ const AnalogClock: React.FC<AnalogClockProps> = ({
               </div>
             </div>
 
-            {/* Analog Minute Clock */}
+            {/* Analog Clock */}
             <div className="p-8 flex justify-center">
               <div
                 className="relative w-64 h-64 bg-gray-100 rounded-full cursor-pointer"
                 onClick={handleClockClick}
               >
-                {/* Minute numbers (00,05,...55) */}
-                {[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].map((m) => {
-                  const angle = (m / 60) * 360 - 90;
-                  const x = Math.cos((angle * Math.PI) / 180) * 110 + 128;
-                  const y = Math.sin((angle * Math.PI) / 180) * 110 + 128;
-                  return (
-                    <div
-                      key={m}
-                      className="absolute text-sm font-semibold text-gray-700 transform -translate-x-1/2 -translate-y-1/2"
-                      style={{ left: x, top: y }}
-                    >
-                      {m.toString().padStart(2, "0")}
-                    </div>
-                  );
-                })}
+                {isSelectingHour
+                  ? // Hour numbers (1–12)
+                    Array.from({ length: 12 }, (_, i) => {
+                      const hour = i + 1;
+                      const angle = (hour / 12) * 360 - 90;
+                      const x =
+                        Math.cos((angle * Math.PI) / 180) * 90 + 128;
+                      const y =
+                        Math.sin((angle * Math.PI) / 180) * 90 + 128;
+                      return (
+                        <div
+                          key={hour}
+                          className="absolute text-lg font-semibold text-gray-700 transform -translate-x-1/2 -translate-y-1/2"
+                          style={{ left: x, top: y }}
+                        >
+                          {hour}
+                        </div>
+                      );
+                    })
+                  : // Minute numbers (00,05,...55)
+                    [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].map((m) => {
+                      const angle = (m / 60) * 360 - 90;
+                      const x =
+                        Math.cos((angle * Math.PI) / 180) * 110 + 128;
+                      const y =
+                        Math.sin((angle * Math.PI) / 180) * 110 + 128;
+                      return (
+                        <div
+                          key={m}
+                          className="absolute text-sm font-semibold text-gray-700 transform -translate-x-1/2 -translate-y-1/2"
+                          style={{ left: x, top: y }}
+                        >
+                          {m.toString().padStart(2, "0")}
+                        </div>
+                      );
+                    })}
 
-                {/* Minute Hand */}
-                <div style={getMinuteHandStyle()} />
-
-                {/* Circle at end of hand */}
-                <div
-                  className="absolute w-5 h-5 border-2 border-sky-500 rounded-full bg-white"
-                  style={{
-                    top: `calc(50% + ${Math.sin(
-                      (selectedMinute / 60) * 2 * Math.PI
-                    ) * 110}px - 10px)`,
-                    left: `calc(50% + ${Math.cos(
-                      (selectedMinute / 60) * 2 * Math.PI
-                    ) * 110}px - 10px)`,
-                  }}
-                />
+                {/* Clock Hand */}
+                <div style={getHandStyle()} />
 
                 {/* Center Dot */}
                 <div className="absolute top-1/2 left-1/2 w-4 h-4 bg-sky-500 rounded-full transform -translate-x-1/2 -translate-y-1/2"></div>

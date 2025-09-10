@@ -394,12 +394,6 @@ const Hero = () => {
                         onChange={(time) => setBookingForm(prev => ({ ...prev, time }))}
                         placeholder="Select Pickup Time"
                       />
-                    </div>
-                  </div>
-
-                  {/* Vehicle Selection */}
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
-                    {vehicles.map((vehicle, index) => (
                       <div 
                         key={index}
                         className={`bg-white/10 backdrop-blur-sm border-2 rounded-lg p-3 text-center cursor-pointer transition-all hover:bg-white/20 ${

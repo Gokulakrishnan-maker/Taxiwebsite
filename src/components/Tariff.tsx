@@ -164,7 +164,7 @@ const Tariff = () => {
                 href="https://wa.me/917810095200" 
                 className="bg-green-600 text-white px-10 py-4 rounded-xl font-bold hover:bg-green-700 transition-colors shadow-lg transform hover:scale-105"
               >
-                💬 WhatsApp Quote
+                WhatsApp Quote
               </a>
               <button className="border-2 border-white text-white px-10 py-4 rounded-xl font-bold hover:bg-white hover:text-blue-600 transition-colors backdrop-blur-sm">
                 Get Quote Now

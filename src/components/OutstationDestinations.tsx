@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Clock, Star, ArrowRight, Plane, Mountain, Building, Waves, Phone, MessageCircle } from 'lucide-react';
+import { MapPin, Clock, Star, ArrowRight, Plane, Mountain, Building, Waves, Phone } from 'lucide-react';
 
 const OutstationDestinations = () => {
   const destinations = [

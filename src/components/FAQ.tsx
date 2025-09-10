@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp, Phone, Clock, MapPin, AtSign, MessageCircle } from 'lucide-react';
+import { HelpCircle, ChevronDown, ChevronUp, Phone, Clock, MapPin, AtSign } from 'lucide-react';
 
 const FAQ = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);

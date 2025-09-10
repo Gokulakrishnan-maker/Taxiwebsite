@@ -4,6 +4,113 @@ import { calculateFare } from '../utils/fareCalculator';
 import { loadGoogleMapsAPI } from '../utils/googleMaps';
 import { sendBookingEnquiryNotifications, sendBookingConfirmationNotifications, BookingEnquiry, generateBookingId, formatWhatsAppConfirmationMessage } from '../utils/notifications';
 
+// Analog Clock Component
+const AnalogClock = ({ selectedTime, onTimeChange }: { selectedTime: string, onTimeChange: (time: string) => void }) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragType, setDragType] = useState<'hour' | 'minute' | null>(null);
+  
+  const parseTime = (timeStr: string) => {
+    if (!timeStr) return { hours: 12, minutes: 0 };
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    return { hours: hours || 12, minutes: minutes || 0 };
+  };
+  
+  const { hours, minutes } = parseTime(selectedTime);
+  
+  const hourAngle = (hours % 12) * 30 + (minutes * 0.5) - 90;
+  const minuteAngle = minutes * 6 - 90;
+  
+  const handleClockClick = (e: React.MouseEvent<SVGElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const x = e.clientX - centerX;
+    const y = e.clientY - centerY;
+    const angle = Math.atan2(y, x) * 180 / Math.PI + 90;
+    const normalizedAngle = (angle + 360) % 360;
+    
+    const distance = Math.sqrt(x * x + y * y);
+    
+    if (distance < 40) { // Hour hand
+      const newHour = Math.round(normalizedAngle / 30) % 12;
+      const displayHour = newHour === 0 ? 12 : newHour;
+      onTimeChange(`${displayHour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`);
+    } else if (distance < 60) { // Minute hand
+      const newMinute = Math.round(normalizedAngle / 6) % 60;
+      onTimeChange(`${hours.toString().padStart(2, '0')}:${newMinute.toString().padStart(2, '0')}`);
+    }
+  };
+  
+  return (
+    <div className="flex flex-col items-center space-y-2">
+      <svg 
+        width="120" 
+        height="120" 
+        className="cursor-pointer"
+        onClick={handleClockClick}
+      >
+        {/* Clock face */}
+        <circle cx="60" cy="60" r="55" fill="white" stroke="#e5e7eb" strokeWidth="2"/>
+        
+        {/* Hour markers */}
+        {[...Array(12)].map((_, i) => {
+          const angle = i * 30 - 90;
+          const x1 = 60 + 45 * Math.cos(angle * Math.PI / 180);
+          const y1 = 60 + 45 * Math.sin(angle * Math.PI / 180);
+          const x2 = 60 + 50 * Math.cos(angle * Math.PI / 180);
+          const y2 = 60 + 50 * Math.sin(angle * Math.PI / 180);
+          return (
+            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#374151" strokeWidth="2"/>
+          );
+        })}
+        
+        {/* Hour numbers */}
+        {[...Array(12)].map((_, i) => {
+          const hour = i === 0 ? 12 : i;
+          const angle = i * 30 - 90;
+          const x = 60 + 35 * Math.cos(angle * Math.PI / 180);
+          const y = 60 + 35 * Math.sin(angle * Math.PI / 180);
+          return (
+            <text key={i} x={x} y={y + 4} textAnchor="middle" className="text-xs font-semibold fill-gray-700">
+              {hour}
+            </text>
+          );
+        })}
+        
+        {/* Hour hand */}
+        <line 
+          x1="60" 
+          y1="60" 
+          x2={60 + 30 * Math.cos(hourAngle * Math.PI / 180)} 
+          y2={60 + 30 * Math.sin(hourAngle * Math.PI / 180)} 
+          stroke="#1f2937" 
+          strokeWidth="4" 
+          strokeLinecap="round"
+        />
+        
+        {/* Minute hand */}
+        <line 
+          x1="60" 
+          y1="60" 
+          x2={60 + 45 * Math.cos(minuteAngle * Math.PI / 180)} 
+          y2={60 + 45 * Math.sin(minuteAngle * Math.PI / 180)} 
+          stroke="#3b82f6" 
+          strokeWidth="3" 
+          strokeLinecap="round"
+        />
+        
+        {/* Center dot */}
+        <circle cx="60" cy="60" r="4" fill="#1f2937"/>
+      </svg>
+      
+      <div className="text-center">
+        <div className="text-white font-bold text-lg">{selectedTime || '12:00'}</div>
+        <div className="text-blue-200 text-xs">Click to set time</div>
+      </div>
+    </div>
+  );
+};
+
 const Hero = () => {
   const [bookingForm, setBookingForm] = useState({
     customerName: '',
@@ -264,30 +371,47 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 min-h-screen flex items-center">
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-gray-50 to-blue-50"></div>
+    <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-500"></div>
+      <div className="absolute inset-0 bg-gradient-to-tr from-orange-400 via-pink-500 to-red-500 opacity-70"></div>
+      
+      {/* Animated Shapes */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-yellow-300/20 rounded-full blur-3xl animate-bounce"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-green-400/15 rounded-full blur-2xl animate-ping"></div>
+      </div>
+      
+      {/* Floating Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-20 w-4 h-4 bg-white/30 rounded-full animate-float"></div>
+        <div className="absolute top-40 right-32 w-6 h-6 bg-yellow-300/40 rounded-full animate-float-delayed"></div>
+        <div className="absolute bottom-32 left-1/4 w-3 h-3 bg-pink-300/50 rounded-full animate-float"></div>
+        <div className="absolute bottom-20 right-20 w-5 h-5 bg-blue-300/40 rounded-full animate-float-delayed"></div>
+      </div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="text-gray-900">
+          <div className="text-white">
             <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               1waytaxi - Premium Service in 
-              <span className="text-blue-600"> All Over TamilNadu</span>
+              <span className="text-yellow-300 drop-shadow-lg"> All Over TamilNadu</span>
             </h1>
-            <p className="text-xl mb-8 text-gray-700 leading-relaxed">
+            <p className="text-xl mb-8 text-white/90 leading-relaxed drop-shadow-md">
               Safe, reliable, and comfortable rides across Coimbatore and Tamil Nadu. Local and outstation trips with transparent pricing.
             </p>
             <div className="flex flex-col sm:flex-row gap-6">
-              <a href="https://wa.me/917810095200" className="bg-gradient-to-r from-green-500 to-green-600 text-white px-10 py-4 rounded-xl text-lg font-bold hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-105 shadow-xl text-center">
+              <a href="https://wa.me/917810095200" className="bg-gradient-to-r from-green-500 to-green-600 text-white px-10 py-4 rounded-xl text-lg font-bold hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-105 shadow-2xl text-center backdrop-blur-sm">
                 WhatsApp Us
               </a>
-              <a href="tel:+917810095200" className="border-2 border-blue-600 text-blue-600 px-10 py-4 rounded-xl text-lg font-bold hover:bg-blue-600 hover:text-white transition-all text-center">
+              <a href="tel:+917810095200" className="border-2 border-white text-white px-10 py-4 rounded-xl text-lg font-bold hover:bg-white hover:text-purple-600 transition-all text-center backdrop-blur-sm">
                 Call +91 7810095200
               </a>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl shadow-2xl p-6 border border-white/20 max-w-md mx-auto">
+          <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-6 border border-white/20 max-w-md mx-auto">
             {!showEstimation && !showSuccessMessage && (
               <>
                 
@@ -396,17 +520,10 @@ const Hero = () => {
                     </div>
                     <div>
                       <label className="block text-white font-semibold mb-2 text-sm">Pickup Time</label>
-                      <div className="relative">
-                        <Clock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
-                        <input
-                          type="time"
-                          name="time"
-                          value={bookingForm.time}
-                          onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
-                          required
-                        />
-                      </div>
+                      <AnalogClock 
+                        selectedTime={bookingForm.time}
+                        onTimeChange={(time) => setBookingForm(prev => ({ ...prev, time }))}
+                      />
                     </div>
                   </div>
 
@@ -428,17 +545,19 @@ const Hero = () => {
                   </div>
                 </div>
 
-                <button
-                  onClick={handleGetEstimation}
-                  disabled={!selectedVehicle}
-                  className={`w-full py-3 rounded-lg font-bold transition-all ${
-                    selectedVehicle 
-                      ? 'bg-yellow-500 text-black hover:bg-yellow-600 shadow-lg' 
-                      : 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                  }`}
-                >
-                  Get Estimation
-                </button>
+                <div className="mt-6">
+                  <button
+                    onClick={handleGetEstimation}
+                    disabled={!selectedVehicle}
+                    className={`w-full py-4 rounded-xl font-bold text-lg transition-all transform ${
+                      selectedVehicle 
+                        ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-black hover:from-yellow-500 hover:to-orange-600 shadow-2xl hover:scale-105' 
+                        : 'bg-gray-500/50 text-gray-300 cursor-not-allowed'
+                    }`}
+                  >
+                    Get Estimation
+                  </button>
+                </div>
               </>
             )}
 

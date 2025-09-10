@@ -448,10 +448,7 @@ const Hero = () => {
               1waytaxi - Book Service in 
               <span className="text-yellow-300 drop-shadow-lg"> All Over TamilNadu</span>
             </h1>
-            <p className="text-xl mb-8 text-yellow-400 leading-relaxed drop-shadow-md">
-              Safe, reliable, and comfortable rides across all districts in Tamil Nadu. outstation trips with transparent pricing.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6">
+           <div className="flex flex-col sm:flex-row gap-6">
               <a href="https://wa.me/917810095200" className="bg-gradient-to-r from-green-500 to-green-600 text-white px-10 py-4 rounded-xl text-lg font-bold hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-105 shadow-2xl text-center backdrop-blur-sm">
                 WhatsApp Us
               </a>

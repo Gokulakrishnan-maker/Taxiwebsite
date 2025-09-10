@@ -28,9 +28,8 @@ const Header = () => {
             </div>
             <a 
               href="https://wa.me/917810095200" 
-              className="flex items-center space-x-2 text-green-600 bg-green-50 px-3 py-2 rounded-lg hover:bg-green-100 transition-colors"
+              className="text-green-600 bg-green-50 px-3 py-2 rounded-lg hover:bg-green-100 transition-colors"
             >
-              <MessageCircle className="h-4 w-4" />
               <span className="font-semibold">WhatsApp</span>
             </a>
             <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors">
@@ -60,9 +59,8 @@ const Header = () => {
               </div>
               <a 
                 href="https://wa.me/917810095200" 
-                className="flex items-center space-x-2 text-green-600 bg-green-50 px-3 py-2 rounded-lg hover:bg-green-100 transition-colors"
+                className="text-green-600 bg-green-50 px-3 py-2 rounded-lg hover:bg-green-100 transition-colors"
               >
-                <MessageCircle className="h-4 w-4" />
                 <span className="font-semibold">WhatsApp</span>
               </a>
               <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors w-full">

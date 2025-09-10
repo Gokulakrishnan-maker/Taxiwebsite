@@ -64,7 +64,7 @@ Please respond to the customer promptly.`;
       description: '24/7 booking and support'
     },
     {
-      icon: MessageCircle,
+      icon: Phone,
       title: 'WhatsApp Us',
       details: '+91 7810095200',
       description: 'Quick chat support'

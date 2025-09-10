@@ -20,7 +20,7 @@ const Footer = () => {
                 <Facebook className="h-5 w-5" />
               </a>
               <a href="https://wa.me/917810095200" className="bg-gray-800 p-3 rounded-full hover:bg-green-600 transition-colors">
-                <MessageCircle className="h-5 w-5" />
+                <span className="h-5 w-5 flex items-center justify-center text-sm font-bold">W</span>
               </a>
               <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-blue-600 transition-colors">
                 <Instagram className="h-5 w-5" />
@@ -47,7 +47,6 @@ const Footer = () => {
                 <a href="tel:+917810095200" className="text-gray-300 hover:text-orange-400 transition-colors">+91 7810095200</a>
               </div>
               <div className="flex items-center space-x-3">
-                <MessageCircle className="h-4 w-4 text-orange-400" />
                 <a href="https://wa.me/917810095200" className="text-gray-300 hover:text-orange-400 transition-colors">WhatsApp Us</a>
               </div>
               <div className="flex items-center space-x-3">

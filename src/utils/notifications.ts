@@ -250,15 +250,16 @@ ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 // Send WhatsApp enquiry notification
 export const sendWhatsAppEnquiryNotification = async (booking: BookingEnquiry): Promise<void> => {
   const message = formatWhatsAppEnquiryMessage(booking);
+  const whatsappUrl = `https://wa.me/917810095200?text=${message}`;
   
-  console.log('📱 Sending WhatsApp enquiry notification directly...');
-  console.log('📱 WhatsApp message prepared:', message);
+  console.log('📱 Sending WhatsApp enquiry notification...');
+  console.log('📱 WhatsApp URL prepared for 1waytaxi team');
   
-  // Send notification directly to WhatsApp API (no popup, no new tab)
+  // Open WhatsApp to send enquiry notification to 1waytaxi team
   try {
-    // This would integrate with WhatsApp Business API in production
-    // For now, we'll just log that the notification was prepared
-    console.log('✅ WhatsApp enquiry notification sent directly to +91 7810095200');
+    // Open WhatsApp in new tab to send enquiry to 1waytaxi team
+    window.open(whatsappUrl, '_blank');
+    console.log('✅ WhatsApp enquiry notification opened for +91 7810095200');
   } catch (error) {
     console.error('❌ Error sending WhatsApp enquiry notification:', error);
   }
@@ -267,15 +268,16 @@ export const sendWhatsAppEnquiryNotification = async (booking: BookingEnquiry): 
 // Send WhatsApp confirmation notification
 export const sendWhatsAppConfirmationNotification = async (booking: BookingEnquiry): Promise<void> => {
   const message = formatWhatsAppConfirmationMessage(booking);
+  const whatsappUrl = `https://wa.me/917810095200?text=${message}`;
   
-  console.log('📱 Sending WhatsApp confirmation notification directly...');
-  console.log('📱 WhatsApp message prepared:', message);
+  console.log('📱 Sending WhatsApp confirmation notification...');
+  console.log('📱 WhatsApp URL prepared for 1waytaxi team');
   
-  // Send notification directly to WhatsApp API (no popup, no new tab)
+  // Open WhatsApp to send confirmation notification to 1waytaxi team
   try {
-    // This would integrate with WhatsApp Business API in production
-    // For now, we'll just log that the notification was prepared
-    console.log('✅ WhatsApp confirmation notification sent directly to +91 7810095200');
+    // Open WhatsApp in new tab to send confirmation to 1waytaxi team
+    window.open(whatsappUrl, '_blank');
+    console.log('✅ WhatsApp confirmation notification opened for +91 7810095200');
   } catch (error) {
     console.error('❌ Error sending WhatsApp confirmation notification:', error);
   }

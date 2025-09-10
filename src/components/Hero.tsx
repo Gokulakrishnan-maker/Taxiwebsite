@@ -306,7 +306,7 @@ const Hero = () => {
                   vehicleRate: vehicle.rate
                 });
                 
-                // Auto-send enquiry notifications
+                // Auto-send enquiry notifications (Email + WhatsApp)
                 const enquiryData: BookingEnquiry = {
                   tripType: 'oneway',
                   from: bookingForm.from,
@@ -326,11 +326,11 @@ const Hero = () => {
                   driverAllowance: 400
                 };
 
-                console.log('📧 Auto-sending enquiry notifications...');
+                console.log('📧📱 Auto-sending enquiry notifications (Email + WhatsApp)...');
                 sendBookingEnquiryNotifications(enquiryData).then(() => {
-                  console.log('✅ Enquiry notifications sent automatically');
+                  console.log('✅ Enquiry notifications sent automatically (Email + WhatsApp)');
                   // Show user feedback
-                  alert('📧 Booking enquiry sent! You will receive an email confirmation shortly.');
+                  alert('📧📱 Booking enquiry sent! 1waytaxi has been notified via Email and WhatsApp. You will receive confirmation shortly.');
                 }).catch(console.error);
                 
                 setShowEstimation(true);

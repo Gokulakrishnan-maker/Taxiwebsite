@@ -8,17 +8,35 @@ import { sendBookingEnquiryNotifications, sendBookingConfirmationNotifications, 
 const AnalogClock = ({ selectedTime, onTimeChange }: { selectedTime: string, onTimeChange: (time: string) => void }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragType, setDragType] = useState<'hour' | 'minute' | null>(null);
+  const [period, setPeriod] = useState<'AM' | 'PM'>('AM');
   
   const parseTime = (timeStr: string) => {
-    if (!timeStr) return { hours: 12, minutes: 0 };
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    return { hours: hours || 12, minutes: minutes || 0 };
+    if (!timeStr) return { hours: 12, minutes: 0, period: 'AM' };
+    const [time, timePeriod] = timeStr.split(' ');
+    const [hours, minutes] = time.split(':').map(Number);
+    return { 
+      hours: hours || 12, 
+      minutes: minutes || 0,
+      period: timePeriod || 'AM'
+    };
   };
   
-  const { hours, minutes } = parseTime(selectedTime);
+  const { hours, minutes, period: currentPeriod } = parseTime(selectedTime);
+  
+  // Update period state when selectedTime changes
+  React.useEffect(() => {
+    if (selectedTime) {
+      const parsed = parseTime(selectedTime);
+      setPeriod(parsed.period as 'AM' | 'PM');
+    }
+  }, [selectedTime]);
   
   const hourAngle = (hours % 12) * 30 + (minutes * 0.5) - 90;
   const minuteAngle = minutes * 6 - 90;
+  
+  const formatTime = (hour: number, minute: number, timePeriod: 'AM' | 'PM') => {
+    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')} ${timePeriod}`;
+  };
   
   const handleClockClick = (e: React.MouseEvent<SVGElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -34,11 +52,17 @@ const AnalogClock = ({ selectedTime, onTimeChange }: { selectedTime: string, onT
     if (distance < 40) { // Hour hand
       const newHour = Math.round(normalizedAngle / 30) % 12;
       const displayHour = newHour === 0 ? 12 : newHour;
-      onTimeChange(`${displayHour.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`);
+      onTimeChange(formatTime(displayHour, minutes, period));
     } else if (distance < 60) { // Minute hand
       const newMinute = Math.round(normalizedAngle / 6) % 60;
-      onTimeChange(`${hours.toString().padStart(2, '0')}:${newMinute.toString().padStart(2, '0')}`);
+      onTimeChange(formatTime(hours, newMinute, period));
     }
+  };
+  
+  const handlePeriodToggle = () => {
+    const newPeriod = period === 'AM' ? 'PM' : 'AM';
+    setPeriod(newPeriod);
+    onTimeChange(formatTime(hours, minutes, newPeriod));
   };
   
   return (
@@ -104,8 +128,32 @@ const AnalogClock = ({ selectedTime, onTimeChange }: { selectedTime: string, onT
       </svg>
       
       <div className="text-center">
-        <div className="text-white font-bold text-lg">{selectedTime || '12:00'}</div>
+        <div className="text-white font-bold text-lg">{selectedTime || '12:00 AM'}</div>
         <div className="text-blue-200 text-xs">Click to set time</div>
+      </div>
+      
+      {/* AM/PM Toggle */}
+      <div className="flex bg-white/20 rounded-lg p-1 mt-2">
+        <button
+          onClick={handlePeriodToggle}
+          className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${
+            period === 'AM' 
+              ? 'bg-blue-500 text-white shadow-md' 
+              : 'text-white/70 hover:text-white'
+          }`}
+        >
+          AM
+        </button>
+        <button
+          onClick={handlePeriodToggle}
+          className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${
+            period === 'PM' 
+              ? 'bg-blue-500 text-white shadow-md' 
+              : 'text-white/70 hover:text-white'
+          }`}
+        >
+          PM
+        </button>
       </div>
     </div>
   );

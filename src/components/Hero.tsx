@@ -265,32 +265,23 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 min-h-screen flex items-center">
-      <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div 
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('https://images.pexels.com/photos/210019/pexels-photo-210019.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop')"
-        }}
-      ></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-gray-50 to-blue-50"></div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="text-white">
+          <div className="text-gray-900">
             <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               1waytaxi - Premium Service in 
-              <span className="text-orange-400"> All Over TamilNadu</span>
+              <span className="text-blue-600"> All Over TamilNadu</span>
             </h1>
-            <p className="text-xl mb-8 text-gray-200 leading-relaxed">
+            <p className="text-xl mb-8 text-gray-700 leading-relaxed">
               Safe, reliable, and comfortable rides across Coimbatore and Tamil Nadu. Local and outstation trips with transparent pricing.
             </p>
             <div className="flex flex-col sm:flex-row gap-6">
-              <button className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-10 py-4 rounded-xl text-lg font-bold hover:from-orange-600 hover:to-red-600 transition-all transform hover:scale-105 shadow-xl">
-                Book Instantly
-              </button>
               <a href="https://wa.me/917810095200" className="bg-gradient-to-r from-green-500 to-green-600 text-white px-10 py-4 rounded-xl text-lg font-bold hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-105 shadow-xl text-center">
                 WhatsApp Us
               </a>
-              <a href="tel:+917810095200" className="border-2 border-white text-white px-10 py-4 rounded-xl text-lg font-bold hover:bg-white hover:text-blue-900 transition-all text-center backdrop-blur-sm">
+              <a href="tel:+917810095200" className="border-2 border-blue-600 text-blue-600 px-10 py-4 rounded-xl text-lg font-bold hover:bg-blue-600 hover:text-white transition-all text-center">
                 Call +91 7810095200
               </a>
             </div>
@@ -299,9 +290,6 @@ const Hero = () => {
           <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-3xl shadow-2xl p-8 border border-white/20">
             {!showEstimation && !showSuccessMessage && (
               <>
-                <div className="text-center mb-8">
-                  <h3 className="text-2xl font-bold text-white">Book Your One Way Taxi</h3>
-                </div>
                 
                 <div className="space-y-6">
                   {/* Pickup Address */}

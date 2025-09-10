@@ -254,7 +254,8 @@ const Hero = () => {
           const customerMessage = formatCustomerWhatsAppConfirmationMessage(bookingData);
           const customerPhone = bookingData.customerPhone!.replace(/\D/g, '');
           const formattedPhone = customerPhone.startsWith('91') ? customerPhone : `91${customerPhone}`;
-          const customerWhatsAppUrl = `https://wa.me/${formattedPhone}?text=${customerMessage}`;
+          const customerWhatsAppUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(customerMessage)}`;
+
           
           window.open(customerWhatsAppUrl, '_blank');
           console.log('✅ Customer WhatsApp tab opened for:', formattedPhone);

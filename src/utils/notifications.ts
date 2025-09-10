@@ -363,3 +363,5 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     // Still send WhatsApp even if email fails
     await sendWhatsAppConfirmationNotification(booking);
   }
+
+}

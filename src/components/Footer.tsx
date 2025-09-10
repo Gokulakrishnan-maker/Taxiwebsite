@@ -47,7 +47,8 @@ const Footer = () => {
                 <a href="tel:+917810095200" className="text-gray-300 hover:text-orange-400 transition-colors">+91 7810095200</a>
               </div>
               <div className="flex items-center space-x-3">
-                <a href="https://wa.me/917810095200" className="text-gray-300 hover:text-orange-400 transition-colors">WhatsApp Us</a>
+                <MessageCircle className="h-4 w-4 text-green-500" />
+                <a href="https://wa.me/917810095200" target="_blank" rel="noopener noreferrer"className="text-gray-300 hover:text-orange-400 transition-colors">WhatsApp Us</a>
               </div>
               <div className="flex items-center space-x-3">
                 <AtSign className="h-4 w-4 text-orange-400" />

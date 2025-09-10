@@ -12,6 +12,7 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ value, onChange, placeholder 
   const [selectedHour, setSelectedHour] = useState(12);
   const [selectedMinute, setSelectedMinute] = useState(0);
   const [isAM, setIsAM] = useState(true);
+  const [isDragging, setIsDragging] = useState<'hour' | 'minute' | null>(null);
 
   useEffect(() => {
     if (value) {
@@ -49,6 +50,61 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ value, onChange, placeholder 
     };
   };
 
+  const handleClockClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const x = event.clientX - centerX;
+    const y = event.clientY - centerY;
+    
+    const angle = Math.atan2(y, x) * (180 / Math.PI) + 90;
+    const normalizedAngle = angle < 0 ? angle + 360 : angle;
+    
+    const distance = Math.sqrt(x * x + y * y);
+    
+    if (distance < 40) return; // Too close to center
+    
+    if (distance < 70) {
+      // Hour hand area
+      const hour = Math.round(normalizedAngle / 30);
+      setSelectedHour(hour === 0 ? 12 : hour);
+    } else if (distance < 90) {
+      // Minute hand area
+      const minute = Math.round(normalizedAngle / 6) % 60;
+      setSelectedMinute(minute);
+    }
+  };
+
+  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>, hand: 'hour' | 'minute') => {
+    event.preventDefault();
+    setIsDragging(hand);
+  };
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    
+    const rect = event.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const x = event.clientX - centerX;
+    const y = event.clientY - centerY;
+    
+    const angle = Math.atan2(y, x) * (180 / Math.PI) + 90;
+    const normalizedAngle = angle < 0 ? angle + 360 : angle;
+    
+    if (isDragging === 'hour') {
+      const hour = Math.round(normalizedAngle / 30);
+      setSelectedHour(hour === 0 ? 12 : hour);
+    } else if (isDragging === 'minute') {
+      const minute = Math.round(normalizedAngle / 6) % 60;
+      setSelectedMinute(minute);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(null);
+  };
+
   return (
     <div className="relative">
       <div
@@ -77,6 +133,11 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ value, onChange, placeholder 
             {/* Analog Clock Display */}
             <div className="flex justify-center mb-6">
               <div className="relative w-48 h-48 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-full border-8 border-white shadow-lg">
+                className="relative w-48 h-48 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-full border-8 border-white shadow-lg cursor-pointer select-none"
+                onClick={handleClockClick}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
                 {/* Clock Numbers */}
                 {[12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((num, index) => {
                   const angle = (index * 30) - 90;
@@ -95,63 +156,31 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ value, onChange, placeholder 
 
                 {/* Hour Hand */}
                 <div
+                  className="absolute top-1/2 left-1/2 bg-gray-800 h-2 rounded-full origin-left z-10 cursor-grab active:cursor-grabbing"
                   className="absolute top-1/2 left-1/2 bg-gray-800 h-1 rounded-full origin-left z-10"
                   style={getClockHandStyle(selectedHour + selectedMinute / 60, 12, 50)}
+                  onMouseDown={(e) => handleMouseDown(e, 'hour')}
                 />
 
                 {/* Minute Hand */}
                 <div
+                  className="absolute top-1/2 left-1/2 bg-blue-600 h-1 rounded-full origin-left z-20 cursor-grab active:cursor-grabbing"
                   className="absolute top-1/2 left-1/2 bg-blue-600 h-0.5 rounded-full origin-left z-20"
                   style={getClockHandStyle(selectedMinute, 60, 70)}
+                  onMouseDown={(e) => handleMouseDown(e, 'minute')}
                 />
 
                 {/* Center Dot */}
                 <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30"></div>
+                
+                {/* Instruction Text */}
+                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs text-gray-500 text-center whitespace-nowrap">
+                  Click or drag hands to set time
+                </div>
               </div>
             </div>
 
-            {/* Time Controls */}
-            <div className="space-y-4">
-              {/* Hour Selection */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Hour</label>
-                <div className="grid grid-cols-6 gap-2">
-                  {[12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((hour) => (
-                    <button
-                      key={hour}
-                      onClick={() => setSelectedHour(hour)}
-                      className={`p-2 rounded-lg text-sm font-semibold transition-all ${
-                        selectedHour === hour
-                          ? 'bg-blue-600 text-white shadow-md'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
-                      {hour}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Minute Selection */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Minute</label>
-                <div className="grid grid-cols-6 gap-2">
-                  {[0, 15, 30, 45].map((minute) => (
-                    <button
-                      key={minute}
-                      onClick={() => setSelectedMinute(minute)}
-                      className={`p-2 rounded-lg text-sm font-semibold transition-all ${
-                        selectedMinute === minute
-                          ? 'bg-blue-600 text-white shadow-md'
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                      }`}
-                    >
-                      {minute.toString().padStart(2, '0')}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
+            <div className="space-y-4 mt-8">
               {/* AM/PM Toggle */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">Period</label>

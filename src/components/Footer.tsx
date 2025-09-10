@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Facebook, Instagram, AtSign } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Instagram, AtSign, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
   return (

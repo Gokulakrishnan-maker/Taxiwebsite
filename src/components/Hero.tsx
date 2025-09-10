@@ -238,14 +238,29 @@ const Hero = () => {
       console.log('✅ Business confirmation notifications sent');
     }).catch(console.error);
     
-    // Send customer WhatsApp confirmation (opens WhatsApp tab)
+    // Send customer WhatsApp confirmation with proper timing
     if (bookingData.customerPhone) {
-      console.log('📱 Opening customer WhatsApp confirmation...');
-      sendCustomerWhatsAppConfirmationNotification(bookingData).then(() => {
-        console.log('✅ Customer WhatsApp tab opened');
-      }).catch((error) => {
-        console.error('❌ Customer WhatsApp failed:', error);
-      });
+      console.log('📱 Sending customer WhatsApp confirmation...');
+      
+      // First send business WhatsApp (immediate)
+      setTimeout(() => {
+        const businessMessage = formatWhatsAppConfirmationMessage(bookingData);
+        const businessWhatsAppUrl = `https://wa.me/917810095200?text=${businessMessage}`;
+        window.open(businessWhatsAppUrl, '_blank');
+        console.log('✅ Business WhatsApp tab opened');
+        
+        // Then send customer WhatsApp (after 1 second)
+        setTimeout(() => {
+          const customerMessage = formatCustomerWhatsAppConfirmationMessage(bookingData);
+          const customerPhone = bookingData.customerPhone!.replace(/\D/g, '');
+          const formattedPhone = customerPhone.startsWith('91') ? customerPhone : `91${customerPhone}`;
+          const customerWhatsAppUrl = `https://wa.me/${formattedPhone}?text=${customerMessage}`;
+          
+          window.open(customerWhatsAppUrl, '_blank');
+          console.log('✅ Customer WhatsApp tab opened for:', formattedPhone);
+          console.log('📱 Customer will receive booking confirmation on WhatsApp');
+        }, 1000);
+      }, 500);
     } else {
       console.log('⚠️ No customer phone provided for WhatsApp');
     }
@@ -537,7 +552,8 @@ const Hero = () => {
                 <div className="text-center text-xs text-gray-300 mt-4">
                   <p>Our team will contact you shortly at {successBookingData.customerPhone}</p>
                   <p className="text-green-400 font-semibold mt-2">✅ 1waytaxi team has been notified!</p>
-                  <p className="text-yellow-300 mt-1">📱 WhatsApp tabs opened for confirmation</p>
+                  <p className="text-yellow-300 mt-1">📱 WhatsApp confirmation sent to you and our team</p>
+                  <p className="text-blue-300 mt-1">💬 Check your WhatsApp for booking confirmation!</p>
                 </div>
               </div>
             )}

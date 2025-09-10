@@ -13,13 +13,13 @@ const Contact = () => {
       icon: AtSign,
       title: 'Email Us',
       details: '1waytaxi.booking@gmail.com',
-      description: 'For general inquiries'
+      description: 'For general Enquiries'
     },
     {
       icon: MapPin,
       title: 'Service Area',
       details: 'All major cities in Tamil Nadu',
-      description: 'Local & outstation trips'
+      description: 'All outstation trips'
     }
   ];
 

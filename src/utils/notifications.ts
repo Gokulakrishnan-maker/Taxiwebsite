@@ -532,7 +532,7 @@ export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): 
     // Show status to user
     if (emailSent || telegramSent) {
       console.log('✅ Enquiry notifications sent successfully');
-      console.log('📧📱 1waytaxi team has been notified via email, WhatsApp, and Telegram');
+      console.log('📧📱 1waytaxi team has been notified via Email, WhatsApp, and Telegram');
     } else {
       console.log('⚠️ Some notifications failed, but WhatsApp notification sent');
     }
@@ -586,7 +586,7 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     // Show status to user
     if (emailSent || telegramSent) {
       console.log('✅ Confirmation notifications sent successfully');
-      console.log('📧📱 Business team notified via email, WhatsApp, and Telegram');
+      console.log('📧📱 1waytaxi team notified via Email, WhatsApp, and Telegram');
     } else {
       console.log('⚠️ Some notifications failed, but WhatsApp notification sent');
     }

@@ -184,12 +184,12 @@ app.post('/api/send-booking-email', async (req, res) => {
 
     const isEnquiry = status === 'ENQUIRY';
     const statusText = isEnquiry ? 'BOOKING ENQUIRY' : 'CONFIRMED BOOKING';
-    const emailSubject = `${statusText} - 1waytaxi - Booking ID: ${bookingId}`;
+    const emailSubject = `${statusText} - 1waytaxi - ID: ${bookingId} - ${customerName}`;
     
     const emailBody = `${statusText} - 1waytaxi Website
 
 Booking ID: ${bookingId}
-Status: ${statusText}
+Customer: ${customerName} (${customerPhone})
 
 CUSTOMER DETAILS:
 Name: ${customerName}

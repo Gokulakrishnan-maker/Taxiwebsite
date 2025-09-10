@@ -385,26 +385,8 @@ export const sendWhatsAppConfirmationNotification = async (booking: BookingEnqui
 
 // Send WhatsApp confirmation notification to customer
 export const sendCustomerWhatsAppConfirmationNotification = async (booking: BookingEnquiry): Promise<void> => {
-  if (!booking.customerPhone) {
-    console.log('⚠️ No customer phone number provided for WhatsApp notification');
-    return;
-  }
-
-  const message = formatCustomerWhatsAppConfirmationMessage(booking);
-  const customerPhone = booking.customerPhone.replace(/\D/g, ''); // Remove non-digits
-  const formattedPhone = customerPhone.startsWith('91') ? customerPhone : `91${customerPhone}`;
-  const whatsappUrl = `https://wa.me/${formattedPhone}?text=${message}`;
-  
-  console.log('📱 Sending WhatsApp confirmation notification to customer...');
-  console.log('📱 Customer phone:', formattedPhone);
-  
-  try {
-    // Open WhatsApp to send confirmation to customer
-    window.open(whatsappUrl, '_blank');
-    console.log('✅ WhatsApp confirmation notification opened for customer:', formattedPhone);
-  } catch (error) {
-    console.error('❌ Error sending customer WhatsApp confirmation notification:', error);
-  }
+  console.log('📱 Customer WhatsApp confirmation disabled - only business notifications sent');
+  return;
 };
 // Send enquiry notifications (email via backend + WhatsApp)
 export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): Promise<void> => {
@@ -476,14 +458,10 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     console.log('📱 Sending WhatsApp confirmation notification...');
     await sendWhatsAppConfirmationNotification(booking);
     
-    // Send WhatsApp confirmation notification to customer
-    console.log('📱 Sending WhatsApp confirmation notification to customer...');
-    await sendCustomerWhatsAppConfirmationNotification(booking);
-    
     // Show status to user
     if (emailSent) {
       console.log('✅ All confirmation notifications sent successfully');
-     console.log('📧 Customer will receive email confirmation if provided');
+      console.log('📧 Business team notified via email and WhatsApp');
     } else {
       console.log('⚠️ Confirmation email failed, but WhatsApp notification sent');
     }
@@ -491,7 +469,6 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     console.error('❌ Error in confirmation notifications:', error);
     // Still send WhatsApp even if email fails
     await sendWhatsAppConfirmationNotification(booking);
-    await sendCustomerWhatsAppConfirmationNotification(booking);
   }
 
 }

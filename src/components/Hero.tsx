@@ -385,19 +385,9 @@ const Hero = () => {
     sendBookingConfirmationNotifications(bookingData).then(() => {
       console.log('✅ Confirmation notifications sent automatically');
       // Show user feedback
-      alert('📧 Booking confirmed! You will receive an email confirmation shortly.');
+      alert('📧 Booking confirmed! 1waytaxi team has been notified and will contact you shortly.');
     }).catch(console.error);
 
-    // Auto-send WhatsApp confirmation to client
-    console.log('📱 Auto-sending WhatsApp confirmation to client...');
-    const message = formatWhatsAppConfirmationMessage(bookingData);
-    const clientWhatsappUrl = `https://wa.me/917810095200?text=${message}`;
-    
-    // Open WhatsApp to client automatically
-    setTimeout(() => {
-      window.open(clientWhatsappUrl, '_blank');
-      console.log('✅ WhatsApp confirmation sent to 7810095200 automatically');
-    }, 1000);
     setSuccessBookingData(bookingData);
     setShowSuccessMessage(true);
     setShowEstimation(false);
@@ -727,9 +717,8 @@ const Hero = () => {
                 </div>
                 
                 <div className="text-center text-xs text-gray-300 mt-4">
-                  <p>We have sent booking details to your email.</p>
                   <p>Our team will contact you shortly at {successBookingData.customerPhone}</p>
-                  <p className="text-green-400 font-semibold mt-2">✅ WhatsApp confirmation sent automatically!</p>
+                  <p className="text-green-400 font-semibold mt-2">✅ 1waytaxi team has been notified!</p>
                 </div>
               </div>
             )}

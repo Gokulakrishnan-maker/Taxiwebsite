@@ -22,11 +22,7 @@ const Tariff = () => {
     <section id="pricing" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <Calculator className="h-16 w-16 text-blue-600 mx-auto mb-4" />
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Transparent Pricing</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Clear and competitive rates for all your travel needs. No hidden charges, complete transparency.
-          </p>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">Tariff Details</h2>
         </div>
 
         {/* Tab Navigation */}

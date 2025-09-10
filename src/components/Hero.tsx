@@ -10,161 +10,6 @@ import {
   formatWhatsAppConfirmationMessage 
 } from '../utils/notifications';
 
-// Analog Clock Component
-const AnalogClock = ({ selectedTime, onTimeChange }: { selectedTime: string, onTimeChange: (time: string) => void }) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragType, setDragType] = useState<'hour' | 'minute' | null>(null);
-  const [period, setPeriod] = useState<'AM' | 'PM'>('AM');
-  
-  const parseTime = (timeStr: string) => {
-    if (!timeStr) return { hours: 12, minutes: 0, period: 'AM' };
-    const [time, timePeriod] = timeStr.split(' ');
-    const [hours, minutes] = time.split(':').map(Number);
-    return { 
-      hours: hours || 12, 
-      minutes: minutes || 0,
-      period: timePeriod || 'AM'
-    };
-  };
-  
-  const { hours, minutes, period: currentPeriod } = parseTime(selectedTime);
-  
-  // Update period state when selectedTime changes
-  React.useEffect(() => {
-    if (selectedTime) {
-      const parsed = parseTime(selectedTime);
-      setPeriod(parsed.period as 'AM' | 'PM');
-    }
-  }, [selectedTime]);
-  
-  const hourAngle = (hours % 12) * 30 + (minutes * 0.5) - 90;
-  const minuteAngle = minutes * 6 - 90;
-  
-  const formatTime = (hour: number, minute: number, timePeriod: 'AM' | 'PM') => {
-    return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')} ${timePeriod}`;
-  };
-  
-  const handleClockClick = (e: React.MouseEvent<SVGElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const x = e.clientX - centerX;
-    const y = e.clientY - centerY;
-    const angle = Math.atan2(y, x) * 180 / Math.PI + 90;
-    const normalizedAngle = (angle + 360) % 360;
-    
-    const distance = Math.sqrt(x * x + y * y);
-    
-    if (distance < 40) { // Hour hand
-      const newHour = Math.round(normalizedAngle / 30) % 12;
-      const displayHour = newHour === 0 ? 12 : newHour;
-      onTimeChange(formatTime(displayHour, minutes, period));
-    } else if (distance < 60) { // Minute hand
-      const newMinute = Math.round(normalizedAngle / 6) % 60;
-      onTimeChange(formatTime(hours, newMinute, period));
-    }
-  };
-  
-  const handlePeriodToggle = () => {
-    const newPeriod = period === 'AM' ? 'PM' : 'AM';
-    setPeriod(newPeriod);
-    onTimeChange(formatTime(hours, minutes, newPeriod));
-  };
-  
-  return (
-    <div className="flex flex-col items-center space-y-2">
-      <svg 
-        width="120" 
-        height="120" 
-        className="cursor-pointer"
-        onClick={handleClockClick}
-      >
-        {/* Clock face */}
-        <circle cx="60" cy="60" r="55" fill="white" stroke="#e5e7eb" strokeWidth="2"/>
-        
-        {/* Hour markers */}
-        {[...Array(12)].map((_, i) => {
-          const angle = i * 30 - 90;
-          const x1 = 60 + 45 * Math.cos(angle * Math.PI / 180);
-          const y1 = 60 + 45 * Math.sin(angle * Math.PI / 180);
-          const x2 = 60 + 50 * Math.cos(angle * Math.PI / 180);
-          const y2 = 60 + 50 * Math.sin(angle * Math.PI / 180);
-          return (
-            <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#374151" strokeWidth="2"/>
-          );
-        })}
-        
-        {/* Hour numbers */}
-        {[...Array(12)].map((_, i) => {
-          const hour = i === 0 ? 12 : i;
-          const angle = i * 30 - 90;
-          const x = 60 + 35 * Math.cos(angle * Math.PI / 180);
-          const y = 60 + 35 * Math.sin(angle * Math.PI / 180);
-          return (
-            <text key={i} x={x} y={y + 4} textAnchor="middle" className="text-xs font-semibold fill-gray-700">
-              {hour}
-            </text>
-          );
-        })}
-        
-        {/* Hour hand */}
-        <line 
-          x1="60" 
-          y1="60" 
-          x2={60 + 30 * Math.cos(hourAngle * Math.PI / 180)} 
-          y2={60 + 30 * Math.sin(hourAngle * Math.PI / 180)} 
-          stroke="#1f2937" 
-          strokeWidth="4" 
-          strokeLinecap="round"
-        />
-        
-        {/* Minute hand */}
-        <line 
-          x1="60" 
-          y1="60" 
-          x2={60 + 45 * Math.cos(minuteAngle * Math.PI / 180)} 
-          y2={60 + 45 * Math.sin(minuteAngle * Math.PI / 180)} 
-          stroke="#3b82f6" 
-          strokeWidth="3" 
-          strokeLinecap="round"
-        />
-        
-        {/* Center dot */}
-        <circle cx="60" cy="60" r="4" fill="#1f2937"/>
-      </svg>
-      
-      <div className="text-center">
-        <div className="text-white font-bold text-lg">{selectedTime || '12:00 AM'}</div>
-        <div className="text-blue-200 text-xs">Click to set time</div>
-      </div>
-      
-      {/* AM/PM Toggle */}
-      <div className="flex bg-white/20 rounded-lg p-1 mt-2">
-        <button
-          onClick={handlePeriodToggle}
-          className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${
-            period === 'AM' 
-              ? 'bg-blue-500 text-white shadow-md' 
-              : 'text-white/70 hover:text-white'
-          }`}
-        >
-          AM
-        </button>
-        <button
-          onClick={handlePeriodToggle}
-          className={`px-4 py-2 rounded-md font-semibold text-sm transition-all ${
-            period === 'PM' 
-              ? 'bg-blue-500 text-white shadow-md' 
-              : 'text-white/70 hover:text-white'
-          }`}
-        >
-          PM
-        </button>
-      </div>
-    </div>
-  );
-};
-
 const Hero = () => {
   const [bookingForm, setBookingForm] = useState({
     customerName: '',
@@ -181,7 +26,6 @@ const Hero = () => {
   const [showEstimation, setShowEstimation] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [successBookingData, setSuccessBookingData] = useState<any>(null);
-  const [showAnalogClock, setShowAnalogClock] = useState(false);
   const [tripDetails, setTripDetails] = useState<{
     distance: string;
     duration: string;
@@ -397,7 +241,6 @@ const Hero = () => {
     setShowSuccessMessage(false);
     setSuccessBookingData(null);
     setShowEstimation(false);
-    setShowAnalogClock(false);
     setSelectedVehicle('');
     setTripDetails(null);
     setBookingForm({
@@ -554,47 +397,14 @@ const Hero = () => {
                       <div className="relative">
                         <Clock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                         <input
-                          type="text"
+                          type="time"
                           name="time"
-                          placeholder="Select Time"
-                          value={bookingForm.time || ''}
-                          onClick={() => setShowAnalogClock(true)}
-                          readOnly
-                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm cursor-pointer"
+                          value={bookingForm.time}
+                          onChange={handleInputChange}
+                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
                           required
                         />
                       </div>
-                      
-                      {/* Analog Clock Popup */}
-                      {showAnalogClock && (
-                        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-                          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 shadow-2xl">
-                            <div className="text-center mb-4">
-                              <h3 className="text-white font-bold text-lg">Select Pickup Time</h3>
-                            </div>
-                            <AnalogClock 
-                              selectedTime={bookingForm.time}
-                              onTimeChange={(time) => {
-                                setBookingForm(prev => ({ ...prev, time }));
-                              }}
-                            />
-                            <div className="flex gap-3 mt-6">
-                              <button
-                                onClick={() => setShowAnalogClock(false)}
-                                className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition-all"
-                              >
-                                Confirm Time
-                              </button>
-                              <button
-                                onClick={() => setShowAnalogClock(false)}
-                                className="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition-all"
-                              >
-                                Cancel
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </div>
 

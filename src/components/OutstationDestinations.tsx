@@ -195,33 +195,6 @@ const OutstationDestinations = () => {
           ))}
         </div>
 
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl shadow-xl p-10 text-white">
-            <h3 className="text-3xl font-bold mb-4">Ready for Your Next Adventure?</h3>
-            <p className="text-xl mb-8 opacity-90">
-              Book your outstation trip with 1waytaxi - Professional drivers, comfortable vehicles, transparent pricing
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <a 
-                href="tel:+917810095200" 
-                className="bg-white text-orange-600 px-10 py-4 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-lg transform hover:scale-105"
-              >
-                <Phone className="inline h-5 w-5 mr-2" />
-                Call +91 7810095200
-              </a>
-              <a 
-                href="https://wa.me/917810095200" 
-                className="bg-green-600 text-white px-10 py-4 rounded-xl font-bold hover:bg-green-700 transition-colors shadow-lg transform hover:scale-105"
-              >
-                <MessageCircle className="inline h-5 w-5 mr-2" />
-                WhatsApp Us
-              </a>
-              <button className="border-2 border-white text-white px-10 py-4 rounded-xl font-bold hover:bg-white hover:text-orange-600 transition-colors backdrop-blur-sm">
-                Get Custom Quote
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

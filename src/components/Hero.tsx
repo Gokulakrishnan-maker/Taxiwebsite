@@ -287,14 +287,14 @@ const Hero = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-3xl shadow-2xl p-8 border border-white/20">
+          <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl shadow-2xl p-6 border border-white/20 max-w-md mx-auto">
             {!showEstimation && !showSuccessMessage && (
               <>
                 
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {/* Pickup Address */}
                   <div>
-                    <label className="block text-white font-semibold mb-3">Pickup Address</label>
+                    <label className="block text-white font-semibold mb-2 text-sm">Pickup Address</label>
                     <div className="relative">
                       <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                       <input
@@ -304,7 +304,7 @@ const Hero = () => {
                         placeholder="Pickup Location"
                         value={bookingForm.from}
                         onChange={handleInputChange}
-                        className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                        className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
                         required
                       />
                     </div>
@@ -312,7 +312,7 @@ const Hero = () => {
 
                   {/* Drop Address */}
                   <div>
-                    <label className="block text-white font-semibold mb-3">Drop Address</label>
+                    <label className="block text-white font-semibold mb-2 text-sm">Drop Address</label>
                     <div className="relative">
                       <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-red-400" />
                       <input
@@ -322,16 +322,16 @@ const Hero = () => {
                         placeholder="Drop Location"
                         value={bookingForm.to}
                         onChange={handleInputChange}
-                        className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                        className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
                         required
                       />
                     </div>
                   </div>
 
                   {/* Name and Mobile */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-white font-semibold mb-3">Full Name</label>
+                      <label className="block text-white font-semibold mb-2 text-sm">Full Name</label>
                       <div className="relative">
                         <User className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                         <input
@@ -340,13 +340,13 @@ const Hero = () => {
                           placeholder="Full Name"
                           value={bookingForm.customerName}
                           onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
                           required
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="block text-white font-semibold mb-3">Mobile Number</label>
+                      <label className="block text-white font-semibold mb-2 text-sm">Mobile Number</label>
                       <div className="relative">
                         <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                         <input
@@ -355,7 +355,7 @@ const Hero = () => {
                           placeholder="Mobile Number"
                           value={bookingForm.customerPhone}
                           onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
                           required
                         />
                       </div>
@@ -364,7 +364,7 @@ const Hero = () => {
 
                   {/* Email */}
                   <div>
-                    <label className="block text-white font-semibold mb-3">Email(optional)</label>
+                    <label className="block text-white font-semibold mb-2 text-sm">Email (optional)</label>
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                       <input
@@ -373,15 +373,15 @@ const Hero = () => {
                         placeholder="Email"
                         value={bookingForm.customerEmail}
                         onChange={handleInputChange}
-                        className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                        className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
                       />
                     </div>
                   </div>
 
                   {/* Date and Time */}
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-white font-semibold mb-3">Pickup Date</label>
+                      <label className="block text-white font-semibold mb-2 text-sm">Pickup Date</label>
                       <div className="relative">
                         <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                         <input
@@ -389,13 +389,13 @@ const Hero = () => {
                           name="date"
                           value={bookingForm.date}
                           onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
                           required
                         />
                       </div>
                     </div>
                     <div>
-                      <label className="block text-white font-semibold mb-3">Pickup Time</label>
+                      <label className="block text-white font-semibold mb-2 text-sm">Pickup Time</label>
                       <div className="relative">
                         <Clock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
                         <input
@@ -403,7 +403,7 @@ const Hero = () => {
                           name="time"
                           value={bookingForm.time}
                           onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-4 bg-white rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
                           required
                         />
                       </div>
@@ -411,18 +411,18 @@ const Hero = () => {
                   </div>
 
                   {/* Vehicle Selection */}
-                  <div className="grid grid-cols-4 gap-3 mb-6">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
                     {vehicles.map((vehicle, index) => (
                       <div 
                         key={index}
-                        className={`bg-white/10 backdrop-blur-sm border-2 rounded-lg p-4 text-center cursor-pointer transition-all hover:bg-white/20 ${
+                        className={`bg-white/10 backdrop-blur-sm border-2 rounded-lg p-3 text-center cursor-pointer transition-all hover:bg-white/20 ${
                           selectedVehicle === vehicle.name ? 'border-orange-400 bg-orange-400/20' : 'border-white/30'
                         }`}
                         onClick={() => setSelectedVehicle(vehicle.name)}
                       >
-                        <div className="text-3xl mb-2">{vehicle.image}</div>
-                        <div className="text-white font-bold text-sm mb-1">{vehicle.rate}₹/KM</div>
-                        <div className="text-white text-sm font-semibold">{vehicle.name}</div>
+                        <div className="text-2xl mb-1">{vehicle.image}</div>
+                        <div className="text-white font-bold text-xs mb-1">{vehicle.rate}₹/KM</div>
+                        <div className="text-white text-xs font-semibold">{vehicle.name}</div>
                       </div>
                     ))}
                   </div>
@@ -431,7 +431,7 @@ const Hero = () => {
                 <button
                   onClick={handleGetEstimation}
                   disabled={!selectedVehicle}
-                  className={`w-full py-4 rounded-lg text-lg font-bold transition-all ${
+                  className={`w-full py-3 rounded-lg font-bold transition-all ${
                     selectedVehicle 
                       ? 'bg-yellow-500 text-black hover:bg-yellow-600 shadow-lg' 
                       : 'bg-gray-400 text-gray-600 cursor-not-allowed'
@@ -445,14 +445,14 @@ const Hero = () => {
             {/* Trip Estimation */}
             {showEstimation && tripDetails && !showSuccessMessage && (
               <div className="text-center text-white">
-                <h3 className="text-xl font-bold mb-6">
+                <h3 className="text-lg font-bold mb-4">
                   Trip estimation for {bookingForm.from.split(',')[0]} to {bookingForm.to.split(',')[0]}
                 </h3>
                 
-                <div className="mb-8">
-                  <h2 className="text-5xl font-bold mb-6">Fare ₹{tripDetails.fare.toLocaleString()}</h2>
+                <div className="mb-6">
+                  <h2 className="text-4xl font-bold mb-4">Fare ₹{tripDetails.fare.toLocaleString()}</h2>
                   
-                  <div className="space-y-3 text-lg">
+                  <div className="space-y-2 text-sm">
                     <p><span className="font-semibold">Total Distance:</span> {tripDetails.distance}</p>
                     <p><span className="font-semibold">Total Duration:</span> {tripDetails.duration}</p>
                     <p><span className="font-semibold">Selected Car:</span> {tripDetails.selectedCar}</p>
@@ -460,7 +460,7 @@ const Hero = () => {
                   </div>
                 </div>
                 
-                <div className="bg-yellow-500/20 border border-yellow-400 rounded-lg p-4 mb-6">
+                <div className="bg-yellow-500/20 border border-yellow-400 rounded-lg p-3 mb-4">
                   <p className="text-yellow-200 text-sm italic">
                     Note: Above estimation is exclusive of Toll Gate and State Permit Etc
                   </p>
@@ -468,7 +468,7 @@ const Hero = () => {
                 
                 <button
                   onClick={handleConfirmBooking}
-                  className="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white py-4 rounded-xl text-lg font-bold hover:from-blue-600 hover:to-blue-800 transition-all shadow-lg"
+                  className="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white py-3 rounded-xl font-bold hover:from-blue-600 hover:to-blue-800 transition-all shadow-lg"
                 >
                   Confirm Booking
                 </button>
@@ -478,16 +478,16 @@ const Hero = () => {
             {/* Success Message */}
             {showSuccessMessage && successBookingData && (
               <div className="text-center text-white">
-                <div className="bg-green-500 p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-green-500 p-3 rounded-full w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-2xl font-bold text-green-400 mb-2">Booking Confirmed!</h3>
-                <p className="text-gray-200 mb-6">Thanks for booking 1waytaxi</p>
+                <h3 className="text-xl font-bold text-green-400 mb-2">Booking Confirmed!</h3>
+                <p className="text-gray-200 mb-4">Thanks for booking 1waytaxi</p>
                 
-                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-6 text-left">
-                  <h4 className="font-semibold text-lg mb-4">Booking Details:</h4>
+                <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-4 text-left">
+                  <h4 className="font-semibold mb-3">Booking Details:</h4>
                   <div className="space-y-2 text-sm">
                     <p><span className="font-medium">Booking ID:</span> {successBookingData.bookingId}</p>
                     <p><span className="font-medium">From:</span> {successBookingData.from}</p>
@@ -498,16 +498,16 @@ const Hero = () => {
                   </div>
                 </div>
                 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <button
                     onClick={handleGoHome}
-                    className="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transition-all"
+                    className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all"
                   >
                     Home Page
                   </button>
                 </div>
                 
-                <div className="text-center text-sm text-gray-300 mt-6">
+                <div className="text-center text-xs text-gray-300 mt-4">
                   <p>We have sent booking details to your email.</p>
                   <p>Our team will contact you shortly at {successBookingData.customerPhone}</p>
                   <p className="text-green-400 font-semibold mt-2">✅ WhatsApp confirmation sent automatically!</p>

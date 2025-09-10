@@ -486,8 +486,26 @@ export const sendWhatsAppConfirmationNotification = async (booking: BookingEnqui
 
 // Send WhatsApp confirmation notification to customer
 export const sendCustomerWhatsAppConfirmationNotification = async (booking: BookingEnquiry): Promise<void> => {
-  console.log('📱 Customer WhatsApp confirmation disabled - only business notifications sent');
-  return;
+  if (!booking.customerPhone) {
+    console.log('⚠️ No customer phone number provided for WhatsApp notification');
+    return;
+  }
+
+  const message = formatCustomerWhatsAppConfirmationMessage(booking);
+  const customerPhone = booking.customerPhone.replace(/\D/g, ''); // Remove non-digits
+  const formattedPhone = customerPhone.startsWith('91') ? customerPhone : `91${customerPhone}`;
+  const whatsappUrl = `https://wa.me/${formattedPhone}?text=${message}`;
+  
+  console.log('📱 Sending WhatsApp confirmation notification to customer...');
+  console.log('📱 Customer phone:', formattedPhone);
+  
+  try {
+    // Open WhatsApp to send confirmation to customer
+    window.open(whatsappUrl, '_blank');
+    console.log('✅ WhatsApp confirmation notification opened for customer:', formattedPhone);
+  } catch (error) {
+    console.error('❌ Error sending customer WhatsApp confirmation notification:', error);
+  }
 };
 // Send enquiry notifications (email via backend + WhatsApp)
 export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): Promise<void> => {

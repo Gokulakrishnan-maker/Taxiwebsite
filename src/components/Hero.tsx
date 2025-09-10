@@ -381,31 +381,52 @@ const Hero = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="block text-white font-semibold mb-2 text-sm">Pickup Date</label>
-                      <AnalogClock
-                        value={bookingForm.time}
-                        onChange={(time) => setBookingForm(prev => ({ ...prev, time }))}
-                        placeholder="Select Pickup Time"
-                      />
+                      <div className="relative">
+                        <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
+                        <input
+                          type="date"
+                          name="date"
+                          value={bookingForm.date}
+                          onChange={handleInputChange}
+                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                          required
+                        />
+                      </div>
                     </div>
                     <div>
                       <label className="block text-white font-semibold mb-2 text-sm">Pickup Time</label>
-                      <AnalogClock
-                        value={bookingForm.time}
-                        onChange={(time) => setBookingForm(prev => ({ ...prev, time }))}
-                        placeholder="Select Pickup Time"
-                      />
-                      <div 
-                        key={index}
-                        className={`bg-white/10 backdrop-blur-sm border-2 rounded-lg p-3 text-center cursor-pointer transition-all hover:bg-white/20 ${
-                          selectedVehicle === vehicle.name ? 'border-orange-400 bg-orange-400/20' : 'border-white/30'
-                        }`}
-                        onClick={() => setSelectedVehicle(vehicle.name)}
-                      >
-                        <div className="text-2xl mb-1">{vehicle.image}</div>
-                        <div className="text-white font-bold text-xs mb-1">{vehicle.rate}₹/KM</div>
-                        <div className="text-white text-xs font-semibold">{vehicle.name}</div>
+                      <div className="relative">
+                        <Clock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
+                        <input
+                          type="time"
+                          name="time"
+                          value={bookingForm.time}
+                          onChange={handleInputChange}
+                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
+                          required
+                        />
                       </div>
-                    ))}
+                    </div>
+                  </div>
+
+                  {/* Vehicle Selection */}
+                  <div>
+                    <label className="block text-white font-semibold mb-3 text-sm">Select Vehicle</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {vehicles.map((vehicle, index) => (
+                        <div 
+                          key={index}
+                          className={`bg-white/10 backdrop-blur-sm border-2 rounded-lg p-3 text-center cursor-pointer transition-all hover:bg-white/20 ${
+                            selectedVehicle === vehicle.name ? 'border-orange-400 bg-orange-400/20' : 'border-white/30'
+                          }`}
+                          onClick={() => setSelectedVehicle(vehicle.name)}
+                        >
+                          <div className="text-2xl mb-1">{vehicle.image}</div>
+                          <div className="text-white font-bold text-xs mb-1">{vehicle.rate}₹/KM</div>
+                          <div className="text-white text-xs font-semibold">{vehicle.name}</div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 

@@ -13,7 +13,7 @@ const Footer = () => {
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed max-w-md">
               Your trusted 1waytaxi service providing safe, reliable, and comfortable transportation 
-              across all district in Tamil Nadu. Available 24/7 for local and outstation trips.
+              across all districts in Tamil Nadu. Available 24/7 for local and outstation trips.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-blue-600 transition-colors">

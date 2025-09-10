@@ -2,9 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Services from './components/Services';
 import Fleet from './components/Fleet';
 import Tariff from './components/Tariff';
+import MostBookedRoutes from './components/MostBookedRoutes';
 import OutstationDestinations from './components/OutstationDestinations';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
@@ -17,9 +17,9 @@ import FloatingIcons from './components/FloatingIcons';
 const HomePage = () => (
   <>
     <Hero />
-    <Services />
-    <Fleet />
     <Tariff />
+    <MostBookedRoutes />
+    <Fleet />
     <OutstationDestinations />
     <Testimonials />
     <Contact />

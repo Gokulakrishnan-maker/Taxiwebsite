@@ -9,10 +9,9 @@ interface AnalogClockProps {
 
 const AnalogClock: React.FC<AnalogClockProps> = ({ value, onChange, placeholder = "Select Time" }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedHour, setSelectedHour] = useState(12);
-  const [selectedMinute, setSelectedMinute] = useState(0);
+  const [selectedHour, setSelectedHour] = useState(5);
+  const [selectedMinute, setSelectedMinute] = useState(29);
   const [isAM, setIsAM] = useState(true);
-  const [isDragging, setIsDragging] = useState<'hour' | 'minute' | null>(null);
 
   useEffect(() => {
     if (value) {
@@ -41,15 +40,6 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ value, onChange, placeholder 
     return `${hour12}:${minutes.toString().padStart(2, '0')} ${ampm}`;
   };
 
-  const getClockHandStyle = (value: number, max: number, length: number) => {
-    const angle = (value / max) * 360 - 90;
-    return {
-      transform: `rotate(${angle}deg)`,
-      transformOrigin: '4px 50%',
-      width: `${length}px`,
-    };
-  };
-
   const handleClockClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -62,47 +52,25 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ value, onChange, placeholder 
     
     const distance = Math.sqrt(x * x + y * y);
     
-    if (distance < 40) return; // Too close to center
+    if (distance < 30) return; // Too close to center
     
-    if (distance < 70) {
-      // Hour hand area
+    if (distance < 80) {
+      // Hour selection (inner area)
       const hour = Math.round(normalizedAngle / 30);
       setSelectedHour(hour === 0 ? 12 : hour);
-    } else if (distance < 90) {
-      // Minute hand area
+    } else {
+      // Minute selection (outer area)
       const minute = Math.round(normalizedAngle / 6) % 60;
       setSelectedMinute(minute);
     }
   };
 
-  const handleMouseDown = (event: React.MouseEvent<HTMLDivElement>, hand: 'hour' | 'minute') => {
-    event.preventDefault();
-    setIsDragging(hand);
-  };
-
-  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
-    
-    const rect = event.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const x = event.clientX - centerX;
-    const y = event.clientY - centerY;
-    
-    const angle = Math.atan2(y, x) * (180 / Math.PI) + 90;
-    const normalizedAngle = angle < 0 ? angle + 360 : angle;
-    
-    if (isDragging === 'hour') {
-      const hour = Math.round(normalizedAngle / 30);
-      setSelectedHour(hour === 0 ? 12 : hour);
-    } else if (isDragging === 'minute') {
-      const minute = Math.round(normalizedAngle / 6) % 60;
-      setSelectedMinute(minute);
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(null);
+  const getMinuteHandStyle = () => {
+    const angle = (selectedMinute / 60) * 360 - 90;
+    return {
+      transform: `rotate(${angle}deg)`,
+      transformOrigin: '2px 50%',
+    };
   };
 
   return (
@@ -119,116 +87,105 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ value, onChange, placeholder 
 
       {isOpen && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-900">Select Time</h3>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-              >
-                <X className="h-5 w-5 text-gray-500" />
-              </button>
-            </div>
-
-            {/* Analog Clock Display */}
-            <div className="flex justify-center mb-6">
-              <div className="relative w-48 h-48 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-full border-8 border-white shadow-lg">
-                className="relative w-48 h-48 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-full border-8 border-white shadow-lg cursor-pointer select-none"
-                onClick={handleClockClick}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
-                {/* Clock Numbers */}
-                {[12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((num, index) => {
-                  const angle = (index * 30) - 90;
-                  const x = Math.cos(angle * Math.PI / 180) * 70 + 96;
-                  const y = Math.sin(angle * Math.PI / 180) * 70 + 96;
-                  return (
-                    <div
-                      key={num}
-                      className="absolute text-lg font-bold text-gray-700 transform -translate-x-1/2 -translate-y-1/2"
-                      style={{ left: x, top: y }}
-                    >
-                      {num}
-                    </div>
-                  );
-                })}
-
-                {/* Hour Hand */}
-                <div
-                  className="absolute top-1/2 left-1/2 bg-gray-800 h-2 rounded-full origin-left z-10 cursor-grab active:cursor-grabbing"
-                  className="absolute top-1/2 left-1/2 bg-gray-800 h-1 rounded-full origin-left z-10"
-                  style={getClockHandStyle(selectedHour + selectedMinute / 60, 12, 50)}
-                  onMouseDown={(e) => handleMouseDown(e, 'hour')}
-                />
-
-                {/* Minute Hand */}
-                <div
-                  className="absolute top-1/2 left-1/2 bg-blue-600 h-1 rounded-full origin-left z-20 cursor-grab active:cursor-grabbing"
-                  className="absolute top-1/2 left-1/2 bg-blue-600 h-0.5 rounded-full origin-left z-20"
-                  style={getClockHandStyle(selectedMinute, 60, 70)}
-                  onMouseDown={(e) => handleMouseDown(e, 'minute')}
-                />
-
-                {/* Center Dot */}
-                <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-red-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30"></div>
-                
-                {/* Instruction Text */}
-                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 text-xs text-gray-500 text-center whitespace-nowrap">
-                  Click or drag hands to set time
+          <div className="bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden">
+            
+            {/* Digital Time Display Header */}
+            <div className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white p-6 text-center">
+              <div className="flex items-center justify-center space-x-2">
+                <div className="text-6xl font-bold">{selectedHour}</div>
+                <div className="text-6xl font-bold border-4 border-white rounded-lg px-3 py-1">
+                  {selectedMinute.toString().padStart(2, '0')}
                 </div>
-              </div>
-            </div>
-
-            <div className="space-y-4 mt-8">
-              {/* AM/PM Toggle */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Period</label>
-                <div className="flex space-x-2">
+                <div className="flex flex-col text-lg font-semibold">
                   <button
                     onClick={() => setIsAM(true)}
-                    className={`flex-1 p-3 rounded-lg font-semibold transition-all ${
-                      isAM
-                        ? 'bg-blue-600 text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    className={`px-3 py-1 rounded transition-colors ${
+                      isAM ? 'bg-white text-blue-500' : 'text-white/70 hover:text-white'
                     }`}
                   >
                     AM
                   </button>
                   <button
                     onClick={() => setIsAM(false)}
-                    className={`flex-1 p-3 rounded-lg font-semibold transition-all ${
-                      !isAM
-                        ? 'bg-blue-600 text-white shadow-md'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    className={`px-3 py-1 rounded transition-colors ${
+                      !isAM ? 'bg-white text-blue-500' : 'text-white/70 hover:text-white'
                     }`}
                   >
                     PM
                   </button>
                 </div>
               </div>
+            </div>
 
-              {/* Selected Time Display */}
-              <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 text-center">
-                <div className="text-sm text-blue-600 font-semibold mb-1">Selected Time</div>
-                <div className="text-2xl font-bold text-blue-800">
-                  {selectedHour}:{selectedMinute.toString().padStart(2, '0')} {isAM ? 'AM' : 'PM'}
+            {/* Analog Clock */}
+            <div className="p-8">
+              <div className="flex justify-center mb-6">
+                <div 
+                  className="relative w-64 h-64 bg-gray-100 rounded-full cursor-pointer select-none"
+                  onClick={handleClockClick}
+                >
+                  {/* Minute markers and numbers */}
+                  {[0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55].map((minute) => {
+                    const angle = (minute / 60) * 360 - 90;
+                    const x = Math.cos(angle * Math.PI / 180) * 110 + 128;
+                    const y = Math.sin(angle * Math.PI / 180) * 110 + 128;
+                    return (
+                      <div
+                        key={minute}
+                        className="absolute text-lg font-semibold text-gray-600 transform -translate-x-1/2 -translate-y-1/2"
+                        style={{ left: x, top: y }}
+                      >
+                        {minute.toString().padStart(2, '0')}
+                      </div>
+                    );
+                  })}
+
+                  {/* Minute markers (small dots) */}
+                  {Array.from({ length: 60 }, (_, i) => {
+                    if (i % 5 !== 0) {
+                      const angle = (i / 60) * 360 - 90;
+                      const x = Math.cos(angle * Math.PI / 180) * 105 + 128;
+                      const y = Math.sin(angle * Math.PI / 180) * 105 + 128;
+                      return (
+                        <div
+                          key={i}
+                          className="absolute w-1 h-1 bg-gray-400 rounded-full transform -translate-x-1/2 -translate-y-1/2"
+                          style={{ left: x, top: y }}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
+
+                  {/* Minute Hand */}
+                  <div
+                    className="absolute top-1/2 left-1/2 bg-cyan-500 h-1 rounded-full origin-left z-20"
+                    style={{
+                      ...getMinuteHandStyle(),
+                      width: '90px',
+                      marginLeft: '-2px',
+                      marginTop: '-2px'
+                    }}
+                  />
+
+                  {/* Center Dot */}
+                  <div className="absolute top-1/2 left-1/2 w-4 h-4 bg-cyan-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 z-30"></div>
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex space-x-3">
+              <div className="flex space-x-4">
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+                  className="flex-1 text-cyan-500 py-4 rounded-lg font-bold text-lg hover:bg-gray-50 transition-colors"
                 >
-                  Cancel
+                  CANCEL
                 </button>
                 <button
                   onClick={handleTimeSelect}
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md"
+                  className="flex-1 text-cyan-500 py-4 rounded-lg font-bold text-lg hover:bg-gray-50 transition-colors"
                 >
-                  Select Time
+                  OK
                 </button>
               </div>
             </div>

@@ -381,17 +381,11 @@ const Hero = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <label className="block text-white font-semibold mb-2 text-sm">Pickup Date</label>
-                      <div className="relative">
-                        <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
-                        <input
-                          type="date"
-                          name="date"
-                          value={bookingForm.date}
-                          onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
-                          required
-                        />
-                      </div>
+                      <AnalogClock
+                        value={bookingForm.time}
+                        onChange={(time) => setBookingForm(prev => ({ ...prev, time }))}
+                        placeholder="Select Pickup Time"
+                      />
                     </div>
                     <div>
                       <label className="block text-white font-semibold mb-2 text-sm">Pickup Time</label>

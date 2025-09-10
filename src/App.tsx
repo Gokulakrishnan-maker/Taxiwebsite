@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
 import FAQ from './components/FAQ';
+import FloatingIcons from './components/FloatingIcons';
 
 const HomePage = () => (
   <>
@@ -37,6 +38,7 @@ function App() {
           <Route path="/faq" element={<FAQ />} />
         </Routes>
         <Footer />
+        <FloatingIcons />
       </div>
     </Router>
     

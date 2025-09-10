@@ -1,5 +1,9 @@
 // Notification utilities for booking enquiries
 
+// Telegram Bot Configuration
+const TELEGRAM_BOT_TOKEN = '7810095200:AAH_example_token'; // Replace with actual bot token
+const TELEGRAM_CHAT_ID = '7810095200'; // Replace with actual chat ID
+
 // API base URL for backend
 const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:3001/api' : '/api';
 
@@ -11,6 +15,41 @@ export const generateBookingId = (): string => {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return result;
+};
+
+// Send Telegram notification
+export const sendTelegramNotification = async (message: string): Promise<boolean> => {
+  try {
+    console.log('📱 Sending Telegram notification...');
+    
+    const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+    
+    const response = await fetch(telegramUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: message,
+        parse_mode: 'Markdown'
+      })
+    });
+
+    const result = await response.json();
+    
+    if (result.ok) {
+      console.log('✅ Telegram notification sent successfully');
+      console.log('📱 Message sent to Telegram chat:', TELEGRAM_CHAT_ID);
+      return true;
+    } else {
+      console.error('❌ Telegram notification failed:', result.description);
+      return false;
+    }
+  } catch (error) {
+    console.error('❌ Error sending Telegram notification:', error);
+    return false;
+  }
 };
 
 export interface BookingEnquiry {
@@ -324,6 +363,68 @@ ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
   return encodeURIComponent(message);
 };
 
+// Format booking enquiry for Telegram
+export const formatTelegramEnquiryMessage = (booking: BookingEnquiry): string => {
+  return `🚖 *BOOKING ENQUIRY - 1waytaxi*
+
+📋 *Trip Details:*
+• Booking ID: \`${booking.bookingId}\`
+• Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
+• From: ${booking.from}
+• To: ${booking.to}
+• Date: ${booking.date}
+• Time: ${booking.time}
+• Passengers: ${booking.passengers}
+• Distance: ${booking.tripDistance}
+• Duration: ${booking.tripDuration}
+
+💰 *Fare Estimate:*
+• Total Fare: ₹${booking.fareEstimate}
+• Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
+• Vehicle: ${booking.vehicleType}
+
+👤 *Customer Info:*
+• Name: ${booking.customerName}
+• Phone: ${booking.customerPhone}
+${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
+
+⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+
+📞 *Contact:* +91 7810095200`;
+};
+
+// Format booking confirmation for Telegram
+export const formatTelegramConfirmationMessage = (booking: BookingEnquiry): string => {
+  return `🚖 *BOOKING CONFIRMATION - 1waytaxi*
+
+✅ *CONFIRMED BOOKING*
+
+📋 *Trip Details:*
+• Booking ID: \`${booking.bookingId}\`
+• Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
+• From: ${booking.from}
+• To: ${booking.to}
+• Date: ${booking.date}
+• Time: ${booking.time}
+• Passengers: ${booking.passengers}
+• Distance: ${booking.tripDistance}
+• Duration: ${booking.tripDuration}
+
+💰 *Fare Details:*
+• Total Fare: ₹${booking.fareEstimate}
+• Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
+• Vehicle: ${booking.vehicleType}
+
+👤 *Customer Info:*
+• Name: ${booking.customerName}
+• Phone: ${booking.customerPhone}
+${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
+
+⏰ *Confirmed Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+
+📞 *Contact:* +91 7810095200`;
+};
+
 // Send WhatsApp enquiry notification
 export const sendWhatsAppEnquiryNotification = async (booking: BookingEnquiry): Promise<void> => {
   const message = formatWhatsAppEnquiryMessage(booking);
@@ -405,6 +506,11 @@ export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): 
     console.log('📧 Sending enquiry email...');
     const emailSent = await sendBookingEnquiryEmail(booking);
     
+    // Send Telegram enquiry notification
+    console.log('📱 Sending Telegram enquiry notification...');
+    const telegramMessage = formatTelegramEnquiryMessage(booking);
+    const telegramSent = await sendTelegramNotification(telegramMessage);
+    
     if (emailSent) {
       console.log('✅ Enquiry email sent successfully');
      console.log('📧 1waytaxi team notified via email at: 1waytaxi.booking@gmail.com');
@@ -412,16 +518,23 @@ export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): 
       console.log('⚠️ Enquiry email failed');
     }
     
+    if (telegramSent) {
+      console.log('✅ Telegram enquiry notification sent successfully');
+      console.log('📱 1waytaxi team notified via Telegram');
+    } else {
+      console.log('⚠️ Telegram enquiry notification failed');
+    }
+    
     // Send WhatsApp enquiry notification
     console.log('📱 Sending WhatsApp enquiry notification...');
     await sendWhatsAppEnquiryNotification(booking);
     
     // Show status to user
-    if (emailSent) {
-      console.log('✅ All enquiry notifications sent successfully');
-      console.log('📧 1waytaxi team has been notified via email and WhatsApp');
+    if (emailSent || telegramSent) {
+      console.log('✅ Enquiry notifications sent successfully');
+      console.log('📧📱 1waytaxi team has been notified via email, WhatsApp, and Telegram');
     } else {
-      console.log('⚠️ Enquiry email failed, but WhatsApp notification sent');
+      console.log('⚠️ Some notifications failed, but WhatsApp notification sent');
     }
   } catch (error) {
     console.error('❌ Error in enquiry notifications:', error);
@@ -447,6 +560,11 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     console.log('📧 Sending confirmation email...');
     const emailSent = await sendBookingConfirmationEmail(booking);
     
+    // Send Telegram confirmation notification
+    console.log('📱 Sending Telegram confirmation notification...');
+    const telegramMessage = formatTelegramConfirmationMessage(booking);
+    const telegramSent = await sendTelegramNotification(telegramMessage);
+    
     if (emailSent) {
       console.log('✅ Confirmation email sent successfully');
      console.log('📧 1waytaxi team notified via email at: 1waytaxi.booking@gmail.com');
@@ -454,16 +572,23 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
       console.log('⚠️ Confirmation email failed');
     }
     
+    if (telegramSent) {
+      console.log('✅ Telegram confirmation notification sent successfully');
+      console.log('📱 1waytaxi team notified via Telegram');
+    } else {
+      console.log('⚠️ Telegram confirmation notification failed');
+    }
+    
     // Send WhatsApp confirmation notification
     console.log('📱 Sending WhatsApp confirmation notification...');
     await sendWhatsAppConfirmationNotification(booking);
     
     // Show status to user
-    if (emailSent) {
-      console.log('✅ All confirmation notifications sent successfully');
-      console.log('📧 Business team notified via email and WhatsApp');
+    if (emailSent || telegramSent) {
+      console.log('✅ Confirmation notifications sent successfully');
+      console.log('📧📱 Business team notified via email, WhatsApp, and Telegram');
     } else {
-      console.log('⚠️ Confirmation email failed, but WhatsApp notification sent');
+      console.log('⚠️ Some notifications failed, but WhatsApp notification sent');
     }
   } catch (error) {
     console.error('❌ Error in confirmation notifications:', error);

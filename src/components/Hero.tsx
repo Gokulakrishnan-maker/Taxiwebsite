@@ -328,9 +328,9 @@ const Hero = () => {
 
                 console.log('📧📱 Auto-sending enquiry notifications (Email + WhatsApp)...');
                 sendBookingEnquiryNotifications(enquiryData).then(() => {
-                  console.log('✅ Enquiry sent to 1waytaxi team via Email + WhatsApp');
+                  console.log('✅ Enquiry sent to 1waytaxi team via Email + WhatsApp + Telegram');
                   // Show user feedback
-                  alert('📧📱 Booking enquiry sent! 1waytaxi team has been notified and will contact you shortly.');
+                  alert('📧📱 Booking enquiry sent! 1waytaxi team has been notified via Email, WhatsApp & Telegram and will contact you shortly.');
                 }).catch(console.error);
                 
                 setShowEstimation(true);
@@ -385,7 +385,7 @@ const Hero = () => {
     sendBookingConfirmationNotifications(bookingData).then(() => {
       console.log('✅ Confirmation notifications sent automatically');
       // Show user feedback
-      alert('📧 Booking confirmed! 1waytaxi team has been notified and will contact you shortly.');
+      alert('📧📱 Booking confirmed! 1waytaxi team has been notified via Email, WhatsApp & Telegram and will contact you shortly.');
     }).catch(console.error);
 
     setSuccessBookingData(bookingData);

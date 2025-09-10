@@ -226,6 +226,11 @@ const Hero = () => {
       driverAllowance: tripDetails?.driverAllowance || 400
     };
 
+    // Set success state immediately
+    setSuccessBookingData(bookingData);
+    setShowSuccessMessage(true);
+    setShowEstimation(false);
+
     console.log('📧 Auto-sending confirmation notifications...');
     
     // Send business notifications (Email + Telegram + WhatsApp to business)
@@ -238,18 +243,12 @@ const Hero = () => {
       console.log('📱 Opening customer WhatsApp confirmation...');
       sendCustomerWhatsAppConfirmationNotification(bookingData).then(() => {
         console.log('✅ Customer WhatsApp tab opened');
-        alert('📧📱 Booking confirmed! WhatsApp confirmation opened for you to send. 1waytaxi team has been notified.');
       }).catch((error) => {
         console.error('❌ Customer WhatsApp failed:', error);
-        alert('📧📱 Booking confirmed! 1waytaxi team has been notified via Email, WhatsApp & Telegram.');
       });
     } else {
-      alert('📧📱 Booking confirmed! Please provide phone number for WhatsApp confirmation.');
+      console.log('⚠️ No customer phone provided for WhatsApp');
     }
-
-    setSuccessBookingData(bookingData);
-    setShowSuccessMessage(true);
-    setShowEstimation(false);
   };
 
   const handleGoHome = () => {
@@ -271,10 +270,14 @@ const Hero = () => {
   };
 
   const handleWhatsAppBooking = () => {
+    console.log('📱 Manual WhatsApp booking triggered...');
     if (successBookingData) {
       const message = formatWhatsAppConfirmationMessage(successBookingData);
       const whatsappUrl = `https://wa.me/917810095200?text=${message}`;
       window.open(whatsappUrl, '_blank');
+      console.log('✅ WhatsApp tab opened manually');
+    } else {
+      console.error('❌ No booking data available for WhatsApp');
     }
   };
 
@@ -496,17 +499,22 @@ const Hero = () => {
                   </svg>
                 </div>
                 <h3 className="text-xl font-bold text-green-400 mb-2">Booking Confirmed!</h3>
-                <p className="text-gray-200 mb-4">Thanks for booking 1waytaxi</p>
+                <p className="text-gray-200 mb-4">Thanks for booking 1waytaxi! 🎉</p>
+                <p className="text-yellow-300 text-sm mb-4">
+                  📧📱 1waytaxi team has been notified via Email, WhatsApp & Telegram
+                </p>
                 
                 <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-4 text-left">
                   <h4 className="font-semibold mb-3">Booking Details:</h4>
                   <div className="space-y-2 text-sm">
                     <p><span className="font-medium">Booking ID:</span> {successBookingData.bookingId}</p>
-                    <p><span className="font-medium">From:</span> {successBookingData.from}</p>
-                    <p><span className="font-medium">To:</span> {successBookingData.to}</p>
+                    <p><span className="font-medium">From:</span> {successBookingData.from.split(',')[0]}</p>
+                    <p><span className="font-medium">To:</span> {successBookingData.to.split(',')[0]}</p>
                     <p><span className="font-medium">Date & Time:</span> {successBookingData.date} {successBookingData.time}</p>
                     <p><span className="font-medium">Vehicle:</span> {successBookingData.vehicleType}</p>
                     <p><span className="font-medium">Fare:</span> ₹{successBookingData.fareEstimate}</p>
+                    <p><span className="font-medium">Customer:</span> {successBookingData.customerName}</p>
+                    <p><span className="font-medium">Phone:</span> {successBookingData.customerPhone}</p>
                   </div>
                 </div>
                 
@@ -515,7 +523,7 @@ const Hero = () => {
                     onClick={handleGoHome}
                     className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all"
                   >
-                    Home Page
+                    Book Another Trip
                   </button>
                   <button
                     onClick={handleWhatsAppBooking}
@@ -529,6 +537,7 @@ const Hero = () => {
                 <div className="text-center text-xs text-gray-300 mt-4">
                   <p>Our team will contact you shortly at {successBookingData.customerPhone}</p>
                   <p className="text-green-400 font-semibold mt-2">✅ 1waytaxi team has been notified!</p>
+                  <p className="text-yellow-300 mt-1">📱 WhatsApp tabs opened for confirmation</p>
                 </div>
               </div>
             )}

@@ -272,7 +272,7 @@ Contact: +91 78100 95200`;
 
             <div style="text-align: center; color: #6b7280; font-size: 14px;">
               <p>Booking Time: ${currentDateTime}</p>
-              <p>Contact: +91 78100 95200</p>
+              <p>Contact: +91 7810095200</p>
               <p>www.1waytaxi.com</p>
             </div>
           </div>
@@ -382,7 +382,7 @@ www.1waytaxi.com`;
 
             <div style="text-align: center; color: #6b7280; font-size: 14px; margin-top: 20px;">
               <p>Enquiry Time: ${currentDateTime}</p>
-              <p>Contact: +91 78100 95200</p>
+              <p>Contact: +91 7810095200</p>
               <p>www.1waytaxi.com</p>
             </div>
           </div>

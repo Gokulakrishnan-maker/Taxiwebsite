@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp, Phone, Clock, MapPin, AtSign } from 'lucide-react';
+import { HelpCircle, ChevronDown, ChevronUp, Phone, Clock, MapPin, AtSign, MessageCircle } from 'lucide-react';
 
 const FAQ = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
@@ -127,13 +127,14 @@ const FAQ = () => {
               href="tel:+917810095200" 
               className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
             >
+              <Phone className="inline h-4 w-4 mr-2" />
               Call +91 7810095200
             </a>
             <a 
               href="https://wa.me/917810095200" 
               className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center space-x-2"
             >
-              <Send className="h-4 w-4" />
+              <MessageCircle className="h-4 w-4" />
               <span>WhatsApp</span>
             </a>
             <a 

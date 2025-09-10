@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Calendar, Clock, MapPin, ArrowRight, User, Phone, Mail, Car } from 'lucide-react';
+import { Calendar, Clock, MapPin, ArrowRight, User, Phone, Mail, Car, MessageCircle } from 'lucide-react';
 import { calculateFare } from '../utils/fareCalculator';
 import { loadGoogleMapsAPI } from '../utils/googleMaps';
 import { 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, AtSign } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, AtSign, MessageCircle } from 'lucide-react';
 import { sendContactEmail } from '../utils/notifications';
 
 const Contact = () => {
@@ -60,8 +60,14 @@ Please respond to the customer promptly.`;
     {
       icon: Phone,
       title: 'Call Us',
-      details: '+91 78100 95200',
+      details: '+91 7810095200',
       description: '24/7 booking and support'
+    },
+    {
+      icon: MessageCircle,
+      title: 'WhatsApp Us',
+      details: '+91 7810095200',
+      description: 'Quick chat support'
     },
     {
       icon: AtSign,
@@ -74,12 +80,6 @@ Please respond to the customer promptly.`;
       title: 'Service Area',
       details: 'Coimbatore & TamilNadu',
       description: 'Local & outstation trips'
-    },
-    {
-      icon: Clock,
-      title: 'Operating Hours',
-      details: '24/7 Service',
-      description: 'Always available'
     }
   ];
 

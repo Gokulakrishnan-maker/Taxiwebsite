@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Clock, Star, ArrowRight, Plane, Mountain, Building, Waves } from 'lucide-react';
+import { MapPin, Clock, Star, ArrowRight, Plane, Mountain, Building, Waves, Phone, MessageCircle } from 'lucide-react';
 
 const OutstationDestinations = () => {
   const destinations = [
@@ -206,12 +206,14 @@ const OutstationDestinations = () => {
                 href="tel:+917810095200" 
                 className="bg-white text-orange-600 px-10 py-4 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-lg transform hover:scale-105"
               >
+                <Phone className="inline h-5 w-5 mr-2" />
                 Call +91 7810095200
               </a>
               <a 
                 href="https://wa.me/917810095200" 
                 className="bg-green-600 text-white px-10 py-4 rounded-xl font-bold hover:bg-green-700 transition-colors shadow-lg transform hover:scale-105"
               >
+                <MessageCircle className="inline h-5 w-5 mr-2" />
                 WhatsApp Us
               </a>
               <button className="border-2 border-white text-white px-10 py-4 rounded-xl font-bold hover:bg-white hover:text-orange-600 transition-colors backdrop-blur-sm">

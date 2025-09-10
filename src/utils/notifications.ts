@@ -207,7 +207,9 @@ ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
 Thanks for booking 1waytaxi
 
-⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
+⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+
+📞 *Contact:* +91 7810095200`;
 
   return encodeURIComponent(message);
 };
@@ -238,7 +240,7 @@ We have received your booking enquiry! 📋
 Our team will contact you shortly to confirm your booking and provide driver details.
 
 📞 *Contact Us:*
-• Phone: +91 78100 95200
+• Phone: +91 7810095200
 • Email: 1waytaxi.booking@gmail.com
 • Website: www.1waytaxi.com
 
@@ -276,8 +278,8 @@ Your booking has been confirmed! ✅
 • Please be ready at the pickup location on time
 
 📞 *24/7 Support:*
-• Phone: +91 78100 95200
-• WhatsApp: +91 78100 95200
+• Phone: +91 7810095200
+• WhatsApp: +91 7810095200
 • Email: 1waytaxi.booking@gmail.com
 
 Thank you for choosing 1waytaxi! 🙏
@@ -314,7 +316,7 @@ Thanks for booking 1waytaxi! 🙏
 • Phone: ${booking.customerPhone}
 ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
-📞 *Contact:* +91 78100 95200
+📞 *Contact:* +91 7810095200
 🌐 *Website:* www.1waytaxi.com
 
 ⏰ *Confirmed Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, Phone, MessageCircle } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,10 +22,17 @@ const Header = () => {
           </nav>
 
           <div className="hidden md:flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-blue-600">
+            <div className="flex items-center space-x-2 text-blue-600 bg-blue-50 px-3 py-2 rounded-lg">
               <Phone className="h-4 w-4" />
               <span className="font-semibold">+91 7810095200</span>
             </div>
+            <a 
+              href="https://wa.me/917810095200" 
+              className="flex items-center space-x-2 text-green-600 bg-green-50 px-3 py-2 rounded-lg hover:bg-green-100 transition-colors"
+            >
+              <MessageCircle className="h-4 w-4" />
+              <span className="font-semibold">WhatsApp</span>
+            </a>
             <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors">
               Book Now
             </button>
@@ -47,10 +54,17 @@ const Header = () => {
               <a href="#fleet" className="text-gray-700 hover:text-blue-600 transition-colors">Fleet</a>
               <a href="#pricing" className="text-gray-700 hover:text-blue-600 transition-colors">Pricing</a>
               <a href="#contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</a>
-              <div className="flex items-center space-x-2 text-blue-600 pt-2">
+              <div className="flex items-center space-x-2 text-blue-600 bg-blue-50 px-3 py-2 rounded-lg">
                 <Phone className="h-4 w-4" />
                 <span className="font-semibold">+91 7810095200</span>
               </div>
+              <a 
+                href="https://wa.me/917810095200" 
+                className="flex items-center space-x-2 text-green-600 bg-green-50 px-3 py-2 rounded-lg hover:bg-green-100 transition-colors"
+              >
+                <MessageCircle className="h-4 w-4" />
+                <span className="font-semibold">WhatsApp</span>
+              </a>
               <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors w-full">
                 Book Now
               </button>

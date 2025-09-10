@@ -445,7 +445,7 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-white">
             <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              1waytaxi - Book Service in 
+              Book - 1waytaxi Service in 
               <span className="text-yellow-300 drop-shadow-lg"> All Over TamilNadu</span>
             </h1>
            <div className="flex flex-col sm:flex-row gap-6">

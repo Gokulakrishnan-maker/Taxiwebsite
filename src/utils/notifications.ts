@@ -1,8 +1,8 @@
 // Notification utilities for booking enquiries
 
 // Telegram Bot Configuration
-const TELEGRAM_BOT_TOKEN = '7810095200:AAH_example_token'; // Replace with actual bot token
-const TELEGRAM_CHAT_ID = '7810095200'; // Replace with actual chat ID
+const TELEGRAM_BOT_TOKEN = '7810095200:AAH_your_actual_bot_token_here'; // Replace with your actual bot token from @BotFather
+const TELEGRAM_CHAT_ID = '-1001234567890'; // Replace with your actual chat ID (group or personal chat)
 
 // API base URL for backend
 const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:3001/api' : '/api';

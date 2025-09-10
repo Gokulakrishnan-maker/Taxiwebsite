@@ -503,8 +503,10 @@ export const sendCustomerWhatsAppConfirmationNotification = async (booking: Book
     // Open WhatsApp to send confirmation to customer
     window.open(whatsappUrl, '_blank');
     console.log('✅ WhatsApp confirmation notification opened for customer:', formattedPhone);
+    return Promise.resolve();
   } catch (error) {
     console.error('❌ Error sending customer WhatsApp confirmation notification:', error);
+    return Promise.reject(error);
   }
 };
 // Send enquiry notifications (email via backend + WhatsApp)

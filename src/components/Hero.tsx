@@ -229,8 +229,16 @@ const Hero = () => {
     console.log('📧 Auto-sending confirmation notifications...');
     sendBookingConfirmationNotifications(bookingData).then(() => {
       console.log('✅ Confirmation notifications sent automatically');
-      // Show user feedback
-      alert('📧📱 Booking confirmed! 1waytaxi team has been notified via Email, WhatsApp & Telegram and will contact you shortly.');
+      
+      // Send customer WhatsApp confirmation
+      console.log('📱 Sending customer WhatsApp confirmation...');
+      sendCustomerWhatsAppConfirmationNotification(bookingData).then(() => {
+        console.log('✅ Customer WhatsApp confirmation sent');
+        // Show user feedback
+        alert('📧📱 Booking confirmed! You will receive WhatsApp confirmation shortly. 1waytaxi team has been notified and will contact you.');
+      }).catch(() => {
+        alert('📧📱 Booking confirmed! 1waytaxi team has been notified via Email, WhatsApp & Telegram and will contact you shortly.');
+      });
     }).catch(console.error);
 
     setSuccessBookingData(bookingData);

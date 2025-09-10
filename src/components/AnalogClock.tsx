@@ -15,19 +15,25 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ value, onChange, placeholder 
 
   useEffect(() => {
     if (value) {
-      const [hours, minutes] = value.split(':').map(Number);
-      setSelectedHour(hours > 12 ? hours - 12 : hours === 0 ? 12 : hours);
-      setSelectedMinute(minutes);
-      setIsAM(hours < 12);
+      if (value.includes('AM') || value.includes('PM')) {
+        // 12-hour format
+        const [time, period] = value.split(' ');
+        const [hours, minutes] = time.split(':').map(Number);
+        setSelectedHour(hours);
+        setSelectedMinute(minutes);
+        setIsAM(period === 'AM');
+      } else {
+        // 24-hour format (fallback)
+        const [hours, minutes] = value.split(':').map(Number);
+        setSelectedHour(hours > 12 ? hours - 12 : hours === 0 ? 12 : hours);
+        setSelectedMinute(minutes);
+        setIsAM(hours < 12);
+      }
     }
   }, [value]);
 
   const handleTimeSelect = () => {
-    let hour24 = selectedHour;
-    if (!isAM && selectedHour !== 12) hour24 += 12;
-    if (isAM && selectedHour === 12) hour24 = 0;
-    
-    const timeString = `${hour24.toString().padStart(2, '0')}:${selectedMinute.toString().padStart(2, '0')}`;
+    const timeString = `${selectedHour}:${selectedMinute.toString().padStart(2, '0')} ${isAM ? 'AM' : 'PM'}`;
     onChange(timeString);
     setIsOpen(false);
   };

@@ -9,7 +9,7 @@ const OutstationDestinations = () => {
       distance: '500 km',
       duration: '7-8 hours',
       description: 'Capital city with Marina Beach and IT corridor',
-      fare: '₹8,500',
+      fare: '₹7,500',
       icon: Building,
       highlights: ['Marina Beach', 'Central Railway Station', 'IT Parks', 'Temples']
     },
@@ -19,7 +19,7 @@ const OutstationDestinations = () => {
       distance: '360 km',
       duration: '6-7 hours',
       description: 'Silicon Valley of India with gardens and tech hubs',
-      fare: '₹6,200',
+      fare: '₹5,300',
       icon: Building,
       highlights: ['Lalbagh Garden', 'Cubbon Park', 'IT Companies', 'Pubs & Cafes']
     },
@@ -29,7 +29,7 @@ const OutstationDestinations = () => {
       distance: '85 km',
       duration: '2.5 hours',
       description: 'Queen of Hill Stations with tea gardens',
-      fare: '₹1,800',
+      fare: '₹2,600',
       icon: Mountain,
       highlights: ['Tea Gardens', 'Botanical Garden', 'Toy Train', 'Lake']
     },
@@ -39,7 +39,7 @@ const OutstationDestinations = () => {
       distance: '180 km',
       duration: '4 hours',
       description: 'Princess of Hill Stations with pristine lakes',
-      fare: '₹3,200',
+      fare: '₹3,500',
       icon: Mountain,
       highlights: ['Kodai Lake', 'Coakers Walk', 'Bryant Park', 'Pillar Rocks']
     },
@@ -49,7 +49,7 @@ const OutstationDestinations = () => {
       distance: '220 km',
       duration: '4-5 hours',
       description: 'Temple city with Meenakshi Amman Temple',
-      fare: '₹3,800',
+      fare: '₹3,400',
       icon: Building,
       highlights: ['Meenakshi Temple', 'Thirumalai Nayak Palace', 'Gandhi Museum', 'Local Markets']
     },
@@ -59,7 +59,7 @@ const OutstationDestinations = () => {
       distance: '450 km',
       duration: '8-9 hours',
       description: 'Southernmost tip with Thiruvalluvar Statue',
-      fare: '₹7,800',
+      fare: '₹7,500',
       icon: Waves,
       highlights: ['Thiruvalluvar Statue', 'Sunset Point', 'Vivekananda Rock', 'Beach']
     },
@@ -79,7 +79,7 @@ const OutstationDestinations = () => {
       distance: '160 km',
       duration: '4 hours',
       description: 'Kerala hill station with spice plantations',
-      fare: '₹2,800',
+      fare: '₹3,500',
       icon: Mountain,
       highlights: ['Tea Plantations', 'Eravikulam Park', 'Mattupetty Dam', 'Spice Gardens']
     },
@@ -89,37 +89,37 @@ const OutstationDestinations = () => {
       distance: '380 km',
       duration: '6-7 hours',
       description: 'French colonial town with beaches',
-      fare: '₹6,500',
+      fare: '₹5,800',
       icon: Waves,
       highlights: ['French Quarter', 'Auroville', 'Beach Promenade', 'Cafes']
     },
     {
-      name: 'Tirupati',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3P9vlUXlwaAtYAFWJH8bsPLUcfdwT9hTCFQ&s',
-      distance: '420 km',
-      duration: '7-8 hours',
-      description: 'Sacred temple town with Tirumala Temple',
-      fare: '₹7,200',
+      name: 'Salem',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Yercaud_hill_station.jpg/640px-Yercaud_hill_station.jpg',
+      distance: '165 km',
+      duration: '3 hours',
+      description: 'A vibrant city in Tamil Nadu, known for hills, steel, and mangoes.',
+      fare: '₹2,750',
       icon: Building,
-      highlights: ['Tirumala Temple', 'Chandragiri Fort', 'Sri Venkateswara Temple', 'Spiritual Tours']
+      highlights: ['Yercaud Hills', '1008 Lingam Temple', 'Sugavaneshwarar Temple', 'Kailasanathar Temple']
     },
     {
       name: 'Rameshwaram',
       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuAHXKMueQqj8hJT_9c-3wEIQkeKAwNM84Mg&s',
-      distance: '320 km',
+      distance: '380 km',
       duration: '6 hours',
       description: 'Holy island with Ramanathaswamy Temple',
-      fare: '₹5,500',
+      fare: '₹5,800',
       icon: Waves,
       highlights: ['Ramanathaswamy Temple', 'Pamban Bridge', 'Dhanushkodi', 'Holy Waters']
     },
     {
       name: 'Cochin (Kochi)',
       image: 'https://www.tusktravel.com/img/kerala-tusk-01.jpg',
-      distance: '190 km',
+      distance: '165 km',
       duration: '4-5 hours',
       description: 'Queen of Arabian Sea with backwaters',
-      fare: '₹3,400',
+      fare: '₹3,550',
       icon: Waves,
       highlights: ['Chinese Fishing Nets', 'Fort Kochi', 'Backwaters', 'Spice Markets']
     }

@@ -13,7 +13,7 @@ const Footer = () => {
             </div>
             <p className="text-gray-300 mb-6 leading-relaxed max-w-md">
               Your trusted 1waytaxi service providing safe, reliable, and comfortable transportation 
-              across Coimbatore and Tamil Nadu. Available 24/7 for local and outstation trips.
+              across all district in Tamil Nadu. Available 24/7 for local and outstation trips.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-blue-600 transition-colors">
@@ -69,6 +69,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
             © 2025 1waytaxi. All rights reserved.
+            Designed by Gk WebDesigns
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link to="/privacy-policy" className="text-gray-400 hover:text-white text-sm transition-colors">

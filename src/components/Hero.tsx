@@ -232,13 +232,17 @@ const Hero = () => {
       
       // Send customer WhatsApp confirmation
       console.log('📱 Sending customer WhatsApp confirmation...');
-      sendCustomerWhatsAppConfirmationNotification(bookingData).then(() => {
-        console.log('✅ Customer WhatsApp confirmation sent');
-        // Show user feedback
-        alert('📧📱 Booking confirmed! You will receive WhatsApp confirmation shortly. 1waytaxi team has been notified and will contact you.');
-      }).catch(() => {
+      if (bookingData.customerPhone) {
+        sendCustomerWhatsAppConfirmationNotification(bookingData).then(() => {
+          console.log('✅ Customer WhatsApp confirmation sent');
+          alert('📧📱 Booking confirmed! You will receive WhatsApp confirmation shortly. 1waytaxi team has been notified and will contact you.');
+        }).catch((error) => {
+          console.error('❌ Customer WhatsApp failed:', error);
+          alert('📧📱 Booking confirmed! 1waytaxi team has been notified via Email, WhatsApp & Telegram and will contact you shortly.');
+        });
+      } else {
         alert('📧📱 Booking confirmed! 1waytaxi team has been notified via Email, WhatsApp & Telegram and will contact you shortly.');
-      });
+      }
     }).catch(console.error);
 
     setSuccessBookingData(bookingData);
@@ -403,17 +407,11 @@ const Hero = () => {
                     </div>
                     <div>
                       <label className="block text-white font-semibold mb-2 text-sm">Pickup Time</label>
-                      <div className="relative">
-                        <Clock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
-                        <input
-                          type="time"
-                          name="time"
-                          value={bookingForm.time}
-                          onChange={handleInputChange}
-                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm"
-                          required
-                        />
-                      </div>
+                      <AnalogClock
+                        value={bookingForm.time}
+                        onChange={(time) => setBookingForm(prev => ({ ...prev, time }))}
+                        placeholder="Select Time"
+                      />
                     </div>
                   </div>
 

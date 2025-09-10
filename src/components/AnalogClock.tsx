@@ -33,18 +33,11 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ value, onChange, placeholder 
   }, [value]);
 
   const handleTimeSelect = () => {
-    const timeString = `${selectedHour}:${selectedMinute.toString().padStart(2, '0')} ${isAM ? 'AM' : 'PM'}`;
+    const timeString = `${selectedHour.toString().padStart(2, '0')}:${selectedMinute.toString().padStart(2, '0')} ${isAM ? 'AM' : 'PM'}`;
     onChange(timeString);
     setIsOpen(false);
   };
 
-  const formatDisplayTime = (time: string) => {
-    if (!time) return placeholder;
-    const [hours, minutes] = time.split(':').map(Number);
-    const hour12 = hours > 12 ? hours - 12 : hours === 0 ? 12 : hours;
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    return `${hour12}:${minutes.toString().padStart(2, '0')} ${ampm}`;
-  };
 
   const handleClockClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -87,7 +80,7 @@ const AnalogClock: React.FC<AnalogClockProps> = ({ value, onChange, placeholder 
       >
         <Clock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
         <span className={value ? 'text-gray-900' : 'text-gray-500'}>
-          {formatDisplayTime(value)}
+          {value || placeholder}
         </span>
       </div>
 

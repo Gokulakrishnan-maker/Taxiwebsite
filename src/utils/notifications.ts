@@ -487,8 +487,8 @@ export const sendWhatsAppConfirmationNotification = async (booking: BookingEnqui
 // Send WhatsApp confirmation notification to customer
 export const sendCustomerWhatsAppConfirmationNotification = async (booking: BookingEnquiry): Promise<void> => {
   if (!booking.customerPhone) {
-    console.log('⚠️ No customer phone number provided for WhatsApp notification');
-    return;
+    console.error('⚠️ No customer phone number provided for WhatsApp notification');
+    return Promise.reject(new Error('No customer phone number provided'));
   }
 
   const message = formatCustomerWhatsAppConfirmationMessage(booking);
@@ -498,6 +498,7 @@ export const sendCustomerWhatsAppConfirmationNotification = async (booking: Book
   
   console.log('📱 Sending WhatsApp confirmation notification to customer...');
   console.log('📱 Customer phone:', formattedPhone);
+  console.log('📱 WhatsApp URL:', whatsappUrl);
   
   try {
     // Open WhatsApp to send confirmation to customer

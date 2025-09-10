@@ -26,15 +26,6 @@ const Header = () => {
               <Phone className="h-4 w-4" />
               <span className="font-semibold">+91 7810095200</span>
             </div>
-            <a 
-              href="https://wa.me/917810095200" 
-              className="text-green-600 bg-green-50 px-3 py-2 rounded-lg hover:bg-green-100 transition-colors"
-            >
-              <span className="font-semibold">WhatsApp</span>
-            </a>
-            <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors">
-              Book Now
-            </button>
           </div>
 
           <button 
@@ -57,15 +48,6 @@ const Header = () => {
                 <Phone className="h-4 w-4" />
                 <span className="font-semibold">+91 7810095200</span>
               </div>
-              <a 
-                href="https://wa.me/917810095200" 
-                className="text-green-600 bg-green-50 px-3 py-2 rounded-lg hover:bg-green-100 transition-colors"
-              >
-                <span className="font-semibold">WhatsApp</span>
-              </a>
-              <button className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600 transition-colors w-full">
-                Book Now
-              </button>
             </nav>
           </div>
         )}

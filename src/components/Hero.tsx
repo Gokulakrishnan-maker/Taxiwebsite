@@ -127,6 +127,7 @@ const Hero = () => {
   const [showEstimation, setShowEstimation] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [successBookingData, setSuccessBookingData] = useState<any>(null);
+  const [showAnalogClock, setShowAnalogClock] = useState(false);
   const [tripDetails, setTripDetails] = useState<{
     distance: string;
     duration: string;
@@ -348,6 +349,7 @@ const Hero = () => {
     setShowSuccessMessage(false);
     setSuccessBookingData(null);
     setShowEstimation(false);
+    setShowAnalogClock(false);
     setSelectedVehicle('');
     setTripDetails(null);
     setBookingForm({
@@ -520,10 +522,50 @@ const Hero = () => {
                     </div>
                     <div>
                       <label className="block text-white font-semibold mb-2 text-sm">Pickup Time</label>
-                      <AnalogClock 
-                        selectedTime={bookingForm.time}
-                        onTimeChange={(time) => setBookingForm(prev => ({ ...prev, time }))}
-                      />
+                      <div className="relative">
+                        <Clock className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-blue-300" />
+                        <input
+                          type="text"
+                          name="time"
+                          placeholder="Select Time"
+                          value={bookingForm.time || ''}
+                          onClick={() => setShowAnalogClock(true)}
+                          readOnly
+                          className="w-full pl-12 pr-4 py-3 bg-white rounded-lg text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-orange-400 focus:outline-none text-sm cursor-pointer"
+                          required
+                        />
+                      </div>
+                      
+                      {/* Analog Clock Popup */}
+                      {showAnalogClock && (
+                        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+                          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 shadow-2xl">
+                            <div className="text-center mb-4">
+                              <h3 className="text-white font-bold text-lg">Select Pickup Time</h3>
+                            </div>
+                            <AnalogClock 
+                              selectedTime={bookingForm.time}
+                              onTimeChange={(time) => {
+                                setBookingForm(prev => ({ ...prev, time }));
+                              }}
+                            />
+                            <div className="flex gap-3 mt-6">
+                              <button
+                                onClick={() => setShowAnalogClock(false)}
+                                className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-lg font-semibold hover:from-green-600 hover:to-green-700 transition-all"
+                              >
+                                Confirm Time
+                              </button>
+                              <button
+                                onClick={() => setShowAnalogClock(false)}
+                                className="flex-1 bg-gray-500 text-white py-3 rounded-lg font-semibold hover:bg-gray-600 transition-all"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
 

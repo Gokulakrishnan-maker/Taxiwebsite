@@ -476,8 +476,12 @@ export const sendWhatsAppConfirmationNotification = async (booking: BookingEnqui
   
   // Open WhatsApp to send confirmation notification to 1waytaxi team
   try {
-    // Open WhatsApp in new tab to send confirmation to 1waytaxi team
-    window.open(whatsappUrl, '_blank');
+    // Open business WhatsApp first
+    setTimeout(() => {
+      window.open(whatsappUrl, '_blank');
+      console.log('✅ Business WhatsApp tab opened successfully');
+    }, 500);
+    
     console.log('✅ WhatsApp confirmation notification opened for +91 7810095200');
   } catch (error) {
     console.error('❌ Error sending WhatsApp confirmation notification:', error);
@@ -501,8 +505,12 @@ export const sendCustomerWhatsAppConfirmationNotification = async (booking: Book
   console.log('📱 WhatsApp URL:', whatsappUrl);
   
   try {
-    // Open WhatsApp to send confirmation to customer
-    window.open(whatsappUrl, '_blank');
+    // Add small delay to ensure business WhatsApp opens first
+    setTimeout(() => {
+      window.open(whatsappUrl, '_blank');
+      console.log('✅ Customer WhatsApp tab opened successfully');
+    }, 1000);
+    
     console.log('✅ WhatsApp confirmation notification opened for customer:', formattedPhone);
     return Promise.resolve();
   } catch (error) {

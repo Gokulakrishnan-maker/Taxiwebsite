@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Calendar, Clock, MapPin, ArrowRight, User, Phone, Mail, Car } from 'lucide-react';
+import { Calendar, Clock, MapPin, ArrowRight, User, Phone, Mail, Car, MessageCircle } from 'lucide-react';
 import AnalogClock from './AnalogClock';
 import { calculateFare } from '../utils/fareCalculator';
 import { loadGoogleMapsAPI } from '../utils/googleMaps';
@@ -227,23 +227,25 @@ const Hero = () => {
     };
 
     console.log('📧 Auto-sending confirmation notifications...');
+    
+    // Send business notifications (Email + Telegram + WhatsApp to business)
     sendBookingConfirmationNotifications(bookingData).then(() => {
-      console.log('✅ Confirmation notifications sent automatically');
-      
-      // Send customer WhatsApp confirmation
-      console.log('📱 Sending customer WhatsApp confirmation...');
-      if (bookingData.customerPhone) {
-        sendCustomerWhatsAppConfirmationNotification(bookingData).then(() => {
-          console.log('✅ Customer WhatsApp confirmation sent');
-          alert('📧📱 Booking confirmed! You will receive WhatsApp confirmation shortly. 1waytaxi team has been notified and will contact you.');
-        }).catch((error) => {
-          console.error('❌ Customer WhatsApp failed:', error);
-          alert('📧📱 Booking confirmed! 1waytaxi team has been notified via Email, WhatsApp & Telegram and will contact you shortly.');
-        });
-      } else {
-        alert('📧📱 Booking confirmed! 1waytaxi team has been notified via Email, WhatsApp & Telegram and will contact you shortly.');
-      }
+      console.log('✅ Business confirmation notifications sent');
     }).catch(console.error);
+    
+    // Send customer WhatsApp confirmation (opens WhatsApp tab)
+    if (bookingData.customerPhone) {
+      console.log('📱 Opening customer WhatsApp confirmation...');
+      sendCustomerWhatsAppConfirmationNotification(bookingData).then(() => {
+        console.log('✅ Customer WhatsApp tab opened');
+        alert('📧📱 Booking confirmed! WhatsApp confirmation opened for you to send. 1waytaxi team has been notified.');
+      }).catch((error) => {
+        console.error('❌ Customer WhatsApp failed:', error);
+        alert('📧📱 Booking confirmed! 1waytaxi team has been notified via Email, WhatsApp & Telegram.');
+      });
+    } else {
+      alert('📧📱 Booking confirmed! Please provide phone number for WhatsApp confirmation.');
+    }
 
     setSuccessBookingData(bookingData);
     setShowSuccessMessage(true);
@@ -514,6 +516,13 @@ const Hero = () => {
                     className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all"
                   >
                     Home Page
+                  </button>
+                  <button
+                    onClick={handleWhatsAppBooking}
+                    className="w-full bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition-all flex items-center justify-center space-x-2"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    <span>Send WhatsApp Again</span>
                   </button>
                 </div>
                 

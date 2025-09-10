@@ -24,7 +24,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Service Area',
-      details: 'Coimbatore & TamilNadu',
+      details: 'All major cities in Tamil Nadu',
       description: 'Local & outstation trips'
     }
   ];

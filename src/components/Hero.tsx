@@ -2,7 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, Clock, MapPin, ArrowRight, User, Phone, Mail, Car } from 'lucide-react';
 import { calculateFare } from '../utils/fareCalculator';
 import { loadGoogleMapsAPI } from '../utils/googleMaps';
-import { sendBookingEnquiryNotifications, sendBookingConfirmationNotifications, BookingEnquiry, generateBookingId, formatWhatsAppConfirmationMessage } from '../utils/notifications';
+import { 
+  sendBookingEnquiryNotifications, 
+  sendBookingConfirmationNotifications, 
+  BookingEnquiry, 
+  generateBookingId, 
+  formatWhatsAppConfirmationMessage 
+} from '../utils/notifications';
 
 // Analog Clock Component
 const AnalogClock = ({ selectedTime, onTimeChange }: { selectedTime: string, onTimeChange: (time: string) => void }) => {
@@ -323,6 +329,8 @@ const Hero = () => {
                 console.log('📧 Auto-sending enquiry notifications...');
                 sendBookingEnquiryNotifications(enquiryData).then(() => {
                   console.log('✅ Enquiry notifications sent automatically');
+                  // Show user feedback
+                  alert('📧 Booking enquiry sent! You will receive an email confirmation shortly.');
                 }).catch(console.error);
                 
                 setShowEstimation(true);
@@ -376,6 +384,8 @@ const Hero = () => {
     console.log('📧 Auto-sending confirmation notifications...');
     sendBookingConfirmationNotifications(bookingData).then(() => {
       console.log('✅ Confirmation notifications sent automatically');
+      // Show user feedback
+      alert('📧 Booking confirmed! You will receive an email confirmation shortly.');
     }).catch(console.error);
 
     // Auto-send WhatsApp confirmation to client

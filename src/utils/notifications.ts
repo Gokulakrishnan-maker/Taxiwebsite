@@ -35,7 +35,12 @@ export interface BookingEnquiry {
 // Send booking enquiry email via backend
 export const sendBookingEnquiryEmail = async (booking: BookingEnquiry): Promise<boolean> => {
   try {
-    console.log('📧 Sending booking enquiry email via backend...');
+    console.log('📧 Sending booking enquiry email via backend...', {
+      bookingId: booking.bookingId,
+      customerName: booking.customerName,
+      from: booking.from,
+      to: booking.to
+    });
     
     const response = await fetch(`${API_BASE_URL}/send-booking-email`, {
       method: 'POST',
@@ -70,6 +75,8 @@ export const sendBookingEnquiryEmail = async (booking: BookingEnquiry): Promise<
     
     if (result.success) {
       console.log('✅ Booking enquiry email sent successfully via backend');
+      console.log('📧 Email sent to: 1waytaxi.booking@gmail.com');
+      console.log('📧 Message ID:', result.messageId);
       return true;
     } else {
       console.error('❌ Backend enquiry email sending failed:', result.message);
@@ -84,7 +91,12 @@ export const sendBookingEnquiryEmail = async (booking: BookingEnquiry): Promise<
 // Send booking confirmation email via backend
 export const sendBookingConfirmationEmail = async (booking: BookingEnquiry): Promise<boolean> => {
   try {
-    console.log('📧 Sending booking confirmation email via backend...');
+    console.log('📧 Sending booking confirmation email via backend...', {
+      bookingId: booking.bookingId,
+      customerName: booking.customerName,
+      from: booking.from,
+      to: booking.to
+    });
     
     const response = await fetch(`${API_BASE_URL}/send-booking-email`, {
       method: 'POST',
@@ -119,6 +131,8 @@ export const sendBookingConfirmationEmail = async (booking: BookingEnquiry): Pro
     
     if (result.success) {
       console.log('✅ Booking confirmation email sent successfully via backend');
+      console.log('📧 Email sent to: 1waytaxi.booking@gmail.com');
+      console.log('📧 Message ID:', result.messageId);
       return true;
     } else {
       console.error('❌ Backend confirmation email sending failed:', result.message);
@@ -269,8 +283,15 @@ export const sendWhatsAppConfirmationNotification = async (booking: BookingEnqui
 
 // Send enquiry notifications (email via backend + WhatsApp)
 export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): Promise<void> => {
-  console.log('📧 Starting booking enquiry notifications...');
-  console.log('📋 Booking data:', booking);
+  console.log('📧 Starting booking enquiry notifications...', {
+    bookingId: booking.bookingId,
+    customerName: booking.customerName,
+    customerPhone: booking.customerPhone,
+    tripType: booking.tripType,
+    from: booking.from,
+    to: booking.to,
+    fareEstimate: booking.fareEstimate
+  });
   
   try {
     // Send enquiry email via backend
@@ -279,6 +300,7 @@ export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): 
     
     if (emailSent) {
       console.log('✅ Enquiry email sent successfully');
+     console.log('📧 1waytaxi team notified via email at: 1waytaxi.booking@gmail.com');
     } else {
       console.log('⚠️ Enquiry email failed');
     }
@@ -290,6 +312,7 @@ export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): 
     // Show status to user
     if (emailSent) {
       console.log('✅ All enquiry notifications sent successfully');
+     console.log('📧 Customer will receive email confirmation if provided');
     } else {
       console.log('⚠️ Enquiry email failed, but WhatsApp notification sent');
     }
@@ -302,8 +325,15 @@ export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): 
 
 // Send confirmation notifications (email via backend + WhatsApp)
 export const sendBookingConfirmationNotifications = async (booking: BookingEnquiry): Promise<void> => {
-  console.log('📧 Starting booking confirmation notifications...');
-  console.log('📋 Booking data:', booking);
+  console.log('📧 Starting booking confirmation notifications...', {
+    bookingId: booking.bookingId,
+    customerName: booking.customerName,
+    customerPhone: booking.customerPhone,
+    tripType: booking.tripType,
+    from: booking.from,
+    to: booking.to,
+    fareEstimate: booking.fareEstimate
+  });
   
   try {
     // Send confirmation email via backend
@@ -312,6 +342,7 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     
     if (emailSent) {
       console.log('✅ Confirmation email sent successfully');
+     console.log('📧 1waytaxi team notified via email at: 1waytaxi.booking@gmail.com');
     } else {
       console.log('⚠️ Confirmation email failed');
     }
@@ -323,6 +354,7 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     // Show status to user
     if (emailSent) {
       console.log('✅ All confirmation notifications sent successfully');
+     console.log('📧 Customer will receive email confirmation if provided');
     } else {
       console.log('⚠️ Confirmation email failed, but WhatsApp notification sent');
     }
@@ -331,4 +363,3 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     // Still send WhatsApp even if email fails
     await sendWhatsAppConfirmationNotification(booking);
   }
-};

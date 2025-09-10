@@ -212,6 +212,81 @@ Thanks for booking 1waytaxi
   return encodeURIComponent(message);
 };
 
+// Format customer enquiry WhatsApp message
+export const formatCustomerWhatsAppEnquiryMessage = (booking: BookingEnquiry): string => {
+  const message = `🚖 *Thank you for your enquiry - 1waytaxi*
+
+Dear ${booking.customerName}, 
+
+We have received your booking enquiry! 📋
+
+*Your Trip Details:*
+• Booking ID: ${booking.bookingId}
+• From: ${booking.from}
+• To: ${booking.to}
+• Date: ${booking.date}
+• Time: ${booking.time}
+• Vehicle: ${booking.vehicleType}
+• Passengers: ${booking.passengers}
+
+💰 *Fare Estimate: ₹${booking.fareEstimate}*
+• Distance: ${booking.tripDistance}
+• Duration: ${booking.tripDuration}
+• Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
+
+✅ *Next Steps:*
+Our team will contact you shortly to confirm your booking and provide driver details.
+
+📞 *Contact Us:*
+• Phone: +91 78100 95200
+• Email: 1waytaxi.booking@gmail.com
+• Website: www.1waytaxi.com
+
+Thank you for choosing 1waytaxi! 🙏
+
+⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
+
+  return encodeURIComponent(message);
+};
+
+// Format customer confirmation WhatsApp message
+export const formatCustomerWhatsAppConfirmationMessage = (booking: BookingEnquiry): string => {
+  const message = `🚖 *BOOKING CONFIRMED - 1waytaxi*
+
+Dear ${booking.customerName},
+
+Your booking has been confirmed! ✅
+
+*Confirmed Trip Details:*
+• Booking ID: ${booking.bookingId}
+• From: ${booking.from}
+• To: ${booking.to}
+• Date: ${booking.date}
+• Time: ${booking.time}
+• Vehicle: ${booking.vehicleType}
+• Passengers: ${booking.passengers}
+
+💰 *Total Fare: ₹${booking.fareEstimate}*
+• Distance: ${booking.tripDistance}
+• Duration: ${booking.tripDuration}
+
+🚗 *What's Next:*
+• Our driver will contact you 15-30 minutes before pickup
+• Driver details will be shared via SMS/WhatsApp
+• Please be ready at the pickup location on time
+
+📞 *24/7 Support:*
+• Phone: +91 78100 95200
+• WhatsApp: +91 78100 95200
+• Email: 1waytaxi.booking@gmail.com
+
+Thank you for choosing 1waytaxi! 🙏
+Safe travels!
+
+⏰ *Confirmed Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
+
+  return encodeURIComponent(message);
+};
 // Format booking confirmation for WhatsApp message
 export const formatWhatsAppConfirmationMessage = (booking: BookingEnquiry): string => {
   const message = `🚖 *BOOKING CONFIRMATION - 1waytaxi*
@@ -265,6 +340,29 @@ export const sendWhatsAppEnquiryNotification = async (booking: BookingEnquiry): 
   }
 };
 
+// Send WhatsApp enquiry notification to customer
+export const sendCustomerWhatsAppEnquiryNotification = async (booking: BookingEnquiry): Promise<void> => {
+  if (!booking.customerPhone) {
+    console.log('⚠️ No customer phone number provided for WhatsApp notification');
+    return;
+  }
+
+  const message = formatCustomerWhatsAppEnquiryMessage(booking);
+  const customerPhone = booking.customerPhone.replace(/\D/g, ''); // Remove non-digits
+  const formattedPhone = customerPhone.startsWith('91') ? customerPhone : `91${customerPhone}`;
+  const whatsappUrl = `https://wa.me/${formattedPhone}?text=${message}`;
+  
+  console.log('📱 Sending WhatsApp enquiry notification to customer...');
+  console.log('📱 Customer phone:', formattedPhone);
+  
+  try {
+    // Open WhatsApp to send enquiry confirmation to customer
+    window.open(whatsappUrl, '_blank');
+    console.log('✅ WhatsApp enquiry notification opened for customer:', formattedPhone);
+  } catch (error) {
+    console.error('❌ Error sending customer WhatsApp enquiry notification:', error);
+  }
+};
 // Send WhatsApp confirmation notification
 export const sendWhatsAppConfirmationNotification = async (booking: BookingEnquiry): Promise<void> => {
   const message = formatWhatsAppConfirmationMessage(booking);
@@ -283,6 +381,29 @@ export const sendWhatsAppConfirmationNotification = async (booking: BookingEnqui
   }
 };
 
+// Send WhatsApp confirmation notification to customer
+export const sendCustomerWhatsAppConfirmationNotification = async (booking: BookingEnquiry): Promise<void> => {
+  if (!booking.customerPhone) {
+    console.log('⚠️ No customer phone number provided for WhatsApp notification');
+    return;
+  }
+
+  const message = formatCustomerWhatsAppConfirmationMessage(booking);
+  const customerPhone = booking.customerPhone.replace(/\D/g, ''); // Remove non-digits
+  const formattedPhone = customerPhone.startsWith('91') ? customerPhone : `91${customerPhone}`;
+  const whatsappUrl = `https://wa.me/${formattedPhone}?text=${message}`;
+  
+  console.log('📱 Sending WhatsApp confirmation notification to customer...');
+  console.log('📱 Customer phone:', formattedPhone);
+  
+  try {
+    // Open WhatsApp to send confirmation to customer
+    window.open(whatsappUrl, '_blank');
+    console.log('✅ WhatsApp confirmation notification opened for customer:', formattedPhone);
+  } catch (error) {
+    console.error('❌ Error sending customer WhatsApp confirmation notification:', error);
+  }
+};
 // Send enquiry notifications (email via backend + WhatsApp)
 export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): Promise<void> => {
   console.log('📧 Starting booking enquiry notifications...', {
@@ -311,6 +432,10 @@ export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): 
     console.log('📱 Sending WhatsApp enquiry notification...');
     await sendWhatsAppEnquiryNotification(booking);
     
+    // Send WhatsApp enquiry notification to customer
+    console.log('📱 Sending WhatsApp enquiry notification to customer...');
+    await sendCustomerWhatsAppEnquiryNotification(booking);
+    
     // Show status to user
     if (emailSent) {
       console.log('✅ All enquiry notifications sent successfully');
@@ -322,6 +447,7 @@ export const sendBookingEnquiryNotifications = async (booking: BookingEnquiry): 
     console.error('❌ Error in enquiry notifications:', error);
     // Still send WhatsApp even if email fails
     await sendWhatsAppEnquiryNotification(booking);
+    await sendCustomerWhatsAppEnquiryNotification(booking);
   }
 };
 
@@ -353,6 +479,10 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     console.log('📱 Sending WhatsApp confirmation notification...');
     await sendWhatsAppConfirmationNotification(booking);
     
+    // Send WhatsApp confirmation notification to customer
+    console.log('📱 Sending WhatsApp confirmation notification to customer...');
+    await sendCustomerWhatsAppConfirmationNotification(booking);
+    
     // Show status to user
     if (emailSent) {
       console.log('✅ All confirmation notifications sent successfully');
@@ -364,6 +494,7 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     console.error('❌ Error in confirmation notifications:', error);
     // Still send WhatsApp even if email fails
     await sendWhatsAppConfirmationNotification(booking);
+    await sendCustomerWhatsAppConfirmationNotification(booking);
   }
 
 }

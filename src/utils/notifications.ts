@@ -338,6 +338,8 @@ Thanks for booking 1waytaxi! 🙏
 
 📋 *Trip Details:*
 • Booking ID: ${booking.bookingId}
+• Name: ${booking.customerName}
+• Phone: ${booking.customerPhone}
 • Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
 • From: ${booking.from}
 • To: ${booking.to}
@@ -346,15 +348,14 @@ Thanks for booking 1waytaxi! 🙏
 • Passengers: ${booking.passengers}
 • Distance: ${booking.tripDistance}
 • Duration: ${booking.tripDuration}
+${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
 💰 *Fare Details:*
 • Total Fare: ₹${booking.fareEstimate}
 • Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
 • Vehicle: ${booking.vehicleType}
 
-👤 *Customer Info:*
-• Name: ${booking.customerName}
-• Phone: ${booking.customerPhone}
+
 ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
 📞 *Contact:* +91 7810095200

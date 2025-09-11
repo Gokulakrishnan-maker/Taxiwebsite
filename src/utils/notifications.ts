@@ -603,6 +603,7 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     // Send WhatsApp confirmation notification
     console.log('📱 Sending WhatsApp confirmation notification...');
     await sendWhatsAppConfirmationNotification(booking);
+    await sendCustomerWhatsAppConfirmationNotification(booking);
     
     // Show status to user
     if (emailSent || telegramSent) {
@@ -615,6 +616,7 @@ export const sendBookingConfirmationNotifications = async (booking: BookingEnqui
     console.error('❌ Error in confirmation notifications:', error);
     // Still send WhatsApp even if email fails
     await sendWhatsAppConfirmationNotification(booking);
+    await sendCustomerWhatsAppConfirmationNotification(booking);
   }
 
 }

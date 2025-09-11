@@ -221,7 +221,7 @@ export const sendContactEmail = async (contactData: {
 
 // Format booking enquiry for WhatsApp message
 export const formatWhatsAppEnquiryMessage = (booking: BookingEnquiry): string => {
-  const message = `🚖 *BOOKING ENQUIRY - 1waytaxi*
+  const message = `🚖 *BOOKING ENQUIRY - 1WayTaxi*
 
 📋 *Trip Details:*
 • Booking ID: ${booking.bookingId}
@@ -236,7 +236,8 @@ export const formatWhatsAppEnquiryMessage = (booking: BookingEnquiry): string =>
 
 💰 *Fare Estimate:*
 • Total Fare: ₹${booking.fareEstimate}
-• Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
+• Rate: ₹${booking.vehicleRate}/km
+• Driver Allowance: ${booking.driverAllowance > 0 ? `₹${booking.driverAllowance}` : 'INCLUDED'}
 • Vehicle: ${booking.vehicleType}
 
 👤 *Customer Info:*
@@ -244,14 +245,16 @@ export const formatWhatsAppEnquiryMessage = (booking: BookingEnquiry): string =>
 • Phone: ${booking.customerPhone}
 ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
-Thanks for booking 1waytaxi
+⚠️ *Note:* Toll Gate, Permit, and Hill Station charges extra.
 
 ⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
 
-📞 *Contact:* +91 7810095200`;
+📞 *Contact Support:* +91 7810095200
+`;
 
   return encodeURIComponent(message);
 };
+
 
 // Format customer enquiry WhatsApp message
 export const formatCustomerWhatsAppEnquiryMessage = (booking: BookingEnquiry): string => {

@@ -348,6 +348,7 @@ Thanks for booking 1waytaxi! 🙏
 • Total Fare: ₹${booking.fareEstimate}
 • Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
 • Vehicle: ${booking.vehicleType}
+• For Customer Intimation:Toll Gate, Permit, and Hill Station charges extra.
 
 📞 *Contact:* +91 7810095200
 🌐 *Website:* www.1waytaxi.com
@@ -377,6 +378,7 @@ export const formatTelegramEnquiryMessage = (booking: BookingEnquiry): string =>
 • Total Fare: ₹${booking.fareEstimate}
 • Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
 • Vehicle: ${booking.vehicleType}
+• For Customer Intimation:Toll Gate, Permit, and Hill Station charges extra.
 ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
 ⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
@@ -405,6 +407,7 @@ export const formatTelegramConfirmationMessage = (booking: BookingEnquiry): stri
 • Total Fare: ₹${booking.fareEstimate}
 • Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
 • Vehicle: ${booking.vehicleType}
+• For Customer Intimation:Toll Gate, Permit, and Hill Station charges extra.
 ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
 ⏰ *Confirmed Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}

@@ -223,13 +223,11 @@ export const sendContactEmail = async (contactData: {
 export const formatWhatsAppEnquiryMessage = (booking: BookingEnquiry): string => {
   const message = `🚖 *BOOKING ENQUIRY - 1waytaxi*
  
-  👤 *Customer Info:*
+  📋 *Trip Details:*
+• Booking ID: ${booking.bookingId}
 • Name: ${booking.customerName}
 • Phone: ${booking.customerPhone}
 ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
-
-📋 *Trip Details:*
-• Booking ID: ${booking.bookingId}
 • Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
 • From: ${booking.from}
 • To: ${booking.to}

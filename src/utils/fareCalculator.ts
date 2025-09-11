@@ -28,17 +28,20 @@ export const calculateFare = (
   isNightTime: boolean = false,
   hasAC: boolean = true
 ): FareCalculation => {
+  // ✅ Apply minimum distance rule (80 km)
+  const effectiveDistance = Math.max(distanceKm, 80);
+
   const baseFare = FARE_CONFIG.baseFare;
   const perKmRate = FARE_CONFIG.perKmRate[vehicleType];
   
-  const distanceFare = distanceKm * perKmRate;
-  const acSurcharge = hasAC ? distanceKm * FARE_CONFIG.acSurcharge : 0;
+  const distanceFare = effectiveDistance * perKmRate;
+  const acSurcharge = hasAC ? effectiveDistance * FARE_CONFIG.acSurcharge : 0;
   const nightSurcharge = isNightTime ? (baseFare + distanceFare) * FARE_CONFIG.nightSurcharge : 0;
   
   const totalFare = baseFare + distanceFare + acSurcharge + nightSurcharge;
   
   // Estimate time (assuming average speed of 30 km/h in city)
-  const estimatedMinutes = Math.round((distanceKm / 30) * 60);
+  const estimatedMinutes = Math.round((effectiveDistance / 30) * 60);
   const hours = Math.floor(estimatedMinutes / 60);
   const minutes = estimatedMinutes % 60;
   const estimatedTime = hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
@@ -50,7 +53,7 @@ export const calculateFare = (
     acSurcharge,
     totalFare: Math.round(totalFare),
     estimatedTime,
-    distance: `${distanceKm.toFixed(1)} km`
+    distance: `${effectiveDistance.toFixed(1)} km` // ✅ show adjusted distance
   };
 };
 
@@ -63,7 +66,11 @@ export const getOutstationFare = (
   const driverAllowance = FARE_CONFIG.driverAllowance.outstation * days;
   
   // For outstation, calculate round trip distance
-  const roundTripDistance = distanceKm * 2;
+  let roundTripDistance = distanceKm * 2;
+
+  // ✅ Apply minimum roundtrip rule (250 km)
+  roundTripDistance = Math.max(roundTripDistance, 250);
+
   const fareWithoutAllowance = roundTripDistance * perKmRate;
   
   return Math.round(fareWithoutAllowance + driverAllowance);

@@ -220,33 +220,33 @@ export const sendContactEmail = async (contactData: {
 };
 
 // Format booking enquiry for WhatsApp message
-export const formatWhatsAppEnquiryMessage = (booking: BookingEnquiry): string => {
-  const message = `🚖 *BOOKING ENQUIRY - 1WayTaxi*
+export const formatBookingDetailsMessage = (booking: BookingEnquiry): string => {
+  const message = `✅ *1WayTaxi*
 
-📋 *Trip Details:*
+📋 *Booking Details*
 • Booking ID: ${booking.bookingId}
-• Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
-• From: ${booking.from}
-• To: ${booking.to}
-• Date: ${booking.date}
-• Time: ${booking.time}
-• Passengers: ${booking.passengers}
-• Distance: ${booking.tripDistance}
-• Duration: ${booking.tripDuration}
-
-💰 *Fare Estimate:*
-• Total Fare: ₹${booking.fareEstimate}
-• Rate: ₹${booking.vehicleRate}/km
-• Driver Allowance: ${booking.driverAllowance > 0 ? `₹${booking.driverAllowance}` : 'INCLUDED'}
-• Vehicle: ${booking.vehicleType}
-
-👤 *Customer Info:*
 • Name: ${booking.customerName}
+• Email ID: ${booking.customerEmail || 'NA'}
 • Phone: ${booking.customerPhone}
-${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
-⚠️ *Note:* Toll Gate, Permit, and Hill Station charges extra.
+🚖 *Trip Info*
+• Pickup Location: ${booking.from}
+• Drop Location: ${booking.to}
+• Vehicle Type: ${booking.vehicleType}
+• Journey Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
+• Travel Date & Time: ${booking.date} ${booking.time}
+• Trip Distance: ${booking.tripDistance}
+• Trip Duration: ${booking.tripDuration}
 
+💰 *Fare Details*
+• Extra per KM: ₹${booking.vehicleRate}
+• Driver Allowance: ${booking.driverAllowance > 0 ? `₹${booking.driverAllowance}` : 'INCLUDED'}
+• Toll: EXTRA
+• Total Trip Fare: ₹${booking.fareEstimate} (Driver Allowance Included)
+
+⚠️ *For Customer Intimation:*
+Toll Gate, Permit, Hill Station Charges Extra.
+`;
 ⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
 
 📞 *Contact Support:* +91 7810095200
@@ -254,6 +254,7 @@ ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
   return encodeURIComponent(message);
 };
+
 
 
 // Format customer enquiry WhatsApp message

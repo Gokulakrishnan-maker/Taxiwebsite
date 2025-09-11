@@ -98,7 +98,7 @@ const Tariff = () => {
             <ul className="space-y-2 text-gray-700">
               <li>• Driver Bata: ₹400</li>
               <li>• Waiting Charges: ₹100 per hour</li>
-              <li>• Minimum running: 130kms per day</li>
+              <li>• <strong>Minimum billing: 130 KM</strong></li>
               <li>• Hill station charges: ₹300</li>
             </ul>
           </div>
@@ -109,8 +109,8 @@ const Tariff = () => {
               <h4 className="text-lg font-bold text-gray-900">Round Trip Terms</h4>
             </div>
             <ul className="space-y-2 text-gray-700">
-              <li>• Driver Bata: ₹400 per day</li>
-              <li>• Minimum running: 250kms per day</li>
+              <li>• Driver Bata: ₹500 per day</li>
+              <li>• <strong>Minimum billing: 250 KM</strong></li>
               <li>• Bangalore pickup: 300kms minimum</li>
               <li>• Any other state: 250kms minimum</li>
             </ul>

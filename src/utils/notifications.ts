@@ -227,7 +227,6 @@ export const formatWhatsAppEnquiryMessage = (booking: BookingEnquiry): string =>
 • Booking ID: ${booking.bookingId}
 • Name: ${booking.customerName}
 • Phone: ${booking.customerPhone}
-${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 • Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
 • From: ${booking.from}
 • To: ${booking.to}
@@ -236,18 +235,16 @@ ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 • Passengers: ${booking.passengers}
 • Distance: ${booking.tripDistance}
 • Duration: ${booking.tripDuration}
-
-💰 *Fare Estimate:*
 • Total Fare: ₹${booking.fareEstimate}
 • Rate: ₹${booking.vehicleRate}/km
 • Driver Allowance: ₹${booking.driverAllowance}
 • Vehicle: ${booking.vehicleType}
-
-⚠️ *Note:* Toll Gate, Permit, and Hill Station charges extra.
+• For Customer Intimation:Toll Gate, Permit, and Hill Station charges extra.
 
 ⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
 
 📞 *Contact Support:* +91 7810095200
+ 🌐 *Website:* www.1waytaxi.com
 `;
 
   return encodeURIComponent(message);
@@ -348,18 +345,13 @@ Thanks for booking 1waytaxi! 🙏
 • Passengers: ${booking.passengers}
 • Distance: ${booking.tripDistance}
 • Duration: ${booking.tripDuration}
-${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
-
-💰 *Fare Details:*
 • Total Fare: ₹${booking.fareEstimate}
 • Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
 • Vehicle: ${booking.vehicleType}
 
-
-${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
-
 📞 *Contact:* +91 7810095200
 🌐 *Website:* www.1waytaxi.com
+${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
 ⏰ *Confirmed Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}`;
 
@@ -372,6 +364,8 @@ export const formatTelegramEnquiryMessage = (booking: BookingEnquiry): string =>
 
 📋 *Trip Details:*
 • Booking ID: \`${booking.bookingId}\`
+• Name: ${booking.customerName}
+• Phone: ${booking.customerPhone}
 • Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
 • From: ${booking.from}
 • To: ${booking.to}
@@ -380,15 +374,9 @@ export const formatTelegramEnquiryMessage = (booking: BookingEnquiry): string =>
 • Passengers: ${booking.passengers}
 • Distance: ${booking.tripDistance}
 • Duration: ${booking.tripDuration}
-
-💰 *Fare Estimate:*
 • Total Fare: ₹${booking.fareEstimate}
 • Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
 • Vehicle: ${booking.vehicleType}
-
-👤 *Customer Info:*
-• Name: ${booking.customerName}
-• Phone: ${booking.customerPhone}
 ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
 ⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
@@ -404,6 +392,8 @@ export const formatTelegramConfirmationMessage = (booking: BookingEnquiry): stri
 
 📋 *Trip Details:*
 • Booking ID: \`${booking.bookingId}\`
+• Name: ${booking.customerName}
+• Phone: ${booking.customerPhone}
 • Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
 • From: ${booking.from}
 • To: ${booking.to}
@@ -412,15 +402,9 @@ export const formatTelegramConfirmationMessage = (booking: BookingEnquiry): stri
 • Passengers: ${booking.passengers}
 • Distance: ${booking.tripDistance}
 • Duration: ${booking.tripDuration}
-
-💰 *Fare Details:*
 • Total Fare: ₹${booking.fareEstimate}
 • Rate: ₹${booking.vehicleRate}/km + ₹${booking.driverAllowance} driver allowance
 • Vehicle: ${booking.vehicleType}
-
-👤 *Customer Info:*
-• Name: ${booking.customerName}
-• Phone: ${booking.customerPhone}
 ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
 ⏰ *Confirmed Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}

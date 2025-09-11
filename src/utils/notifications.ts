@@ -246,11 +246,12 @@ export const formatBookingDetailsMessage = (booking: BookingEnquiry): string => 
 
 ⚠️ *For Customer Intimation:*
 Toll Gate, Permit, Hill Station Charges Extra.
-`;
+
 ⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
 
 📞 *Contact Support:* +91 7810095200
 `;
+
 
   return encodeURIComponent(message);
 };

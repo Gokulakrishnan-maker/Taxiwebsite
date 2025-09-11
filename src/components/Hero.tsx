@@ -20,7 +20,8 @@ const Hero = () => {
     to: '',
     date: '',
     time: '',
-    passengers: '1'
+    passengers: '1',
+    tripType: 'oneway'
   });
 
   const [selectedVehicle, setSelectedVehicle] = useState<string>('');
@@ -140,20 +141,38 @@ const Hero = () => {
               const duration = response.rows[0].elements[0].duration;
               if (distance) {
                 const distanceKm = distance.value / 1000;
-                const fare = Math.round((distanceKm * vehicle.rate) + 400);
+                
+                // Apply minimum distance billing
+                let effectiveDistance = distanceKm;
+                let driverAllowance = 400;
+                
+                if (bookingForm.tripType === 'oneway') {
+                  // One way: minimum 130 KM
+                  effectiveDistance = Math.max(distanceKm, 130);
+                  driverAllowance = 400;
+                } else {
+                  // Round trip: minimum 250 KM (actual distance × 2)
+                  const roundTripDistance = distanceKm * 2;
+                  effectiveDistance = Math.max(roundTripDistance, 250);
+                  driverAllowance = 500;
+                }
+                
+                const fare = Math.round((effectiveDistance * vehicle.rate) + driverAllowance);
                 
                 setTripDetails({
-                  distance: `${Math.round(distanceKm)} KM`,
+                  distance: bookingForm.tripType === 'oneway' 
+                    ? `${Math.round(distanceKm)} KM (Min: 130 KM)`
+                    : `${Math.round(distanceKm * 2)} KM (Min: 250 KM)`,
                   duration: duration ? `${Math.round(duration.value / 3600)} hours ${Math.round((duration.value % 3600) / 60)} mins` : 'Calculating...',
                   fare: fare,
                   selectedCar: vehicle.name,
-                  driverAllowance: 400,
+                  driverAllowance: driverAllowance,
                   vehicleRate: vehicle.rate
                 });
                 
                 // Auto-send enquiry notifications (Email + WhatsApp)
                 const enquiryData: BookingEnquiry = {
-                  tripType: 'oneway',
+                  tripType: bookingForm.tripType,
                   from: bookingForm.from,
                   to: bookingForm.to,
                   date: bookingForm.date,
@@ -165,10 +184,12 @@ const Hero = () => {
                   customerName: bookingForm.customerName,
                   customerPhone: bookingForm.customerPhone,
                   customerEmail: bookingForm.customerEmail,
-                  tripDistance: `${Math.round(distanceKm)} KM`,
+                  tripDistance: bookingForm.tripType === 'oneway' 
+                    ? `${Math.round(distanceKm)} KM (Min: 130 KM)`
+                    : `${Math.round(distanceKm * 2)} KM (Min: 250 KM)`,
                   tripDuration: duration ? `${Math.round(duration.value / 3600)} hours ${Math.round((duration.value % 3600) / 60)} mins` : 'Calculating...',
                   vehicleRate: vehicle.rate,
-                  driverAllowance: 400
+                  driverAllowance: driverAllowance
                 };
 
                 console.log('📧📱 Auto-sending enquiry notifications (Email + WhatsApp)...');
@@ -208,7 +229,7 @@ const Hero = () => {
     const confirmationBookingId = generateBookingId();
     
     const bookingData: BookingEnquiry = {
-      tripType: 'oneway',
+      tripType: bookingForm.tripType,
       from: bookingForm.from,
       to: bookingForm.to,
       date: bookingForm.date,
@@ -281,7 +302,8 @@ const Hero = () => {
       to: '',
       date: '',
       time: '',
-      passengers: '1'
+      passengers: '1',
+      tripType: 'oneway'
     });
   };
 
@@ -436,6 +458,33 @@ const Hero = () => {
                     </div>
                   </div>
 
+                  {/* Trip Type Selection */}
+                  <div>
+                    <label className="block text-white font-semibold mb-3 text-sm">Trip Type</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div 
+                        className={`bg-white/10 backdrop-blur-sm border-2 rounded-lg p-4 text-center cursor-pointer transition-all hover:bg-white/20 ${
+                          bookingForm.tripType === 'oneway' ? 'border-orange-400 bg-orange-400/20' : 'border-white/30'
+                        }`}
+                        onClick={() => setBookingForm(prev => ({ ...prev, tripType: 'oneway' }))}
+                      >
+                        <div className="text-white font-bold text-sm mb-1">One Way</div>
+                        <div className="text-white/80 text-xs">Min: 130 KM</div>
+                        <div className="text-white/80 text-xs">Driver Bata: ₹400</div>
+                      </div>
+                      <div 
+                        className={`bg-white/10 backdrop-blur-sm border-2 rounded-lg p-4 text-center cursor-pointer transition-all hover:bg-white/20 ${
+                          bookingForm.tripType === 'roundtrip' ? 'border-orange-400 bg-orange-400/20' : 'border-white/30'
+                        }`}
+                        onClick={() => setBookingForm(prev => ({ ...prev, tripType: 'roundtrip' }))}
+                      >
+                        <div className="text-white font-bold text-sm mb-1">Round Trip</div>
+                        <div className="text-white/80 text-xs">Min: 250 KM</div>
+                        <div className="text-white/80 text-xs">Driver Bata: ₹500</div>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Vehicle Selection */}
                   <div>
                     <label className="block text-white font-semibold mb-3 text-sm">Select Vehicle</label>
@@ -477,7 +526,7 @@ const Hero = () => {
             {showEstimation && tripDetails && !showSuccessMessage && (
               <div className="text-center text-white">
                 <h3 className="text-lg font-bold mb-4">
-                  Trip estimation for {bookingForm.from.split(',')[0]} to {bookingForm.to.split(',')[0]}
+                  {bookingForm.tripType === 'oneway' ? 'One Way' : 'Round Trip'} estimation for {bookingForm.from.split(',')[0]} to {bookingForm.to.split(',')[0]}
                 </h3>
                 
                 <div className="mb-6">
@@ -493,7 +542,8 @@ const Hero = () => {
                 
                 <div className="bg-yellow-500/20 border border-yellow-400 rounded-lg p-3 mb-4">
                   <p className="text-yellow-200 text-sm italic">
-                    Note: Above estimation is exclusive of Toll Gate and State Permit Etc
+                    Note: Above estimation is exclusive of Toll Gate and State Permit Etc. 
+                    {bookingForm.tripType === 'oneway' ? 'Minimum billing: 130 KM' : 'Minimum billing: 250 KM'}
                   </p>
                 </div>
                 

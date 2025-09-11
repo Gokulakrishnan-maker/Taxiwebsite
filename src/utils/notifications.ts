@@ -227,7 +227,7 @@ export const formatWhatsAppEnquiryMessage = (booking: BookingEnquiry): string =>
 • Booking ID: ${booking.bookingId}
 • Name: ${booking.customerName}
 • Phone: ${booking.customerPhone}
-• Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
+• Trip Type: ${booking.tripType === 'oneway' ? 'One Way (Min: 130 KM)' : 'Round Trip (Min: 250 KM)'}
 • From: ${booking.from}
 • To: ${booking.to}
 • Date: ${booking.date}
@@ -262,6 +262,7 @@ We have received your booking enquiry! 📋
 
 *Your Trip Details:*
 • Booking ID: ${booking.bookingId}
+• Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
 • From: ${booking.from}
 • To: ${booking.to}
 • Date: ${booking.date}
@@ -299,6 +300,7 @@ Your booking has been confirmed! ✅
 
 *Confirmed Trip Details:*
 • Booking ID: ${booking.bookingId}
+• Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
 • From: ${booking.from}
 • To: ${booking.to}
 • Date: ${booking.date}
@@ -337,7 +339,7 @@ Thanks for booking 1waytaxi! 🙏
 • Booking ID: ${booking.bookingId}
 • Name: ${booking.customerName}
 • Phone: ${booking.customerPhone}
-• Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
+• Trip Type: ${booking.tripType === 'oneway' ? 'One Way (Min: 130 KM)' : 'Round Trip (Min: 250 KM)'}
 • From: ${booking.from}
 • To: ${booking.to}
 • Date: ${booking.date}
@@ -367,7 +369,7 @@ export const formatTelegramEnquiryMessage = (booking: BookingEnquiry): string =>
 • Booking ID: \`${booking.bookingId}\`
 • Name: ${booking.customerName}
 • Phone: ${booking.customerPhone}
-• Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
+• Trip Type: ${booking.tripType === 'oneway' ? 'One Way (Min: 130 KM)' : 'Round Trip (Min: 250 KM)'}
 • From: ${booking.from}
 • To: ${booking.to}
 • Date: ${booking.date}
@@ -396,7 +398,7 @@ export const formatTelegramConfirmationMessage = (booking: BookingEnquiry): stri
 • Booking ID: \`${booking.bookingId}\`
 • Name: ${booking.customerName}
 • Phone: ${booking.customerPhone}
-• Trip Type: ${booking.tripType === 'oneway' ? 'One Way' : 'Round Trip'}
+• Trip Type: ${booking.tripType === 'oneway' ? 'One Way (Min: 130 KM)' : 'Round Trip (Min: 250 KM)'}
 • From: ${booking.from}
 • To: ${booking.to}
 • Date: ${booking.date}

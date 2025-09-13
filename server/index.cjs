@@ -61,7 +61,7 @@ const createTransporter = () => {
     logger: false
   };
 
-  return { primary: nodemailer.createTransporter(primaryConfig), fallback: nodemailer.createTransporter(fallbackConfig) };
+  return { primary: nodemailer.createTransport(primaryConfig), fallback: nodemailer.createTransport(fallbackConfig) };
 };
 
 const { primary: transporter, fallback: fallbackTransporter } = createTransporter();

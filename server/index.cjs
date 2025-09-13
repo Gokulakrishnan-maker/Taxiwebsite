@@ -113,20 +113,77 @@ app.get('/api/test-email', async (req, res) => {
     const info = await transporter.sendMail(testMailOptions);
     console.log('✅ Test email sent successfully:', info.messageId);
     
-    res.status(200).json({
-      success: true,
-      message: 'Test email sent successfully',
-      messageId: info.messageId,
-      response: info.response
-    });
+    res.status(200).send(`
+      <html>
+        <head>
+          <title>1waytaxi Email Test</title>
+          <style>
+            body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+            .success { background: #d1fae5; border: 2px solid #10b981; padding: 20px; border-radius: 10px; }
+            .error { background: #fee2e2; border: 2px solid #ef4444; padding: 20px; border-radius: 10px; }
+            .info { background: #dbeafe; border: 2px solid #3b82f6; padding: 20px; border-radius: 10px; margin: 20px 0; }
+            h1 { color: #1e40af; }
+            .back-btn { background: #3b82f6; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 20px; }
+          </style>
+        </head>
+        <body>
+          <h1>🚖 1waytaxi Email Test</h1>
+          <div class="success">
+            <h2>✅ Test Email Sent Successfully!</h2>
+            <p><strong>Message ID:</strong> ${info.messageId}</p>
+            <p><strong>Response:</strong> ${info.response}</p>
+            <p><strong>Time:</strong> ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
+          </div>
+          <div class="info">
+            <h3>📧 Email Details:</h3>
+            <p><strong>From:</strong> ${process.env.EMAIL_USER}</p>
+            <p><strong>To:</strong> 1waytaxi.booking@gmail.com</p>
+            <p><strong>Subject:</strong> Test Email - 1waytaxi System</p>
+          </div>
+          <a href="/" class="back-btn">← Back to Website</a>
+        </body>
+      </html>
+    `);
 
   } catch (error) {
     console.error('❌ Test email failed:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Test email failed',
-      error: error.message
-    });
+    res.status(500).send(`
+      <html>
+        <head>
+          <title>1waytaxi Email Test - Error</title>
+          <style>
+            body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; padding: 20px; }
+            .error { background: #fee2e2; border: 2px solid #ef4444; padding: 20px; border-radius: 10px; }
+            .info { background: #fef3c7; border: 2px solid #f59e0b; padding: 20px; border-radius: 10px; margin: 20px 0; }
+            h1 { color: #dc2626; }
+            .back-btn { background: #3b82f6; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin-top: 20px; }
+            code { background: #f3f4f6; padding: 2px 4px; border-radius: 3px; }
+          </style>
+        </head>
+        <body>
+          <h1>❌ Email Test Failed</h1>
+          <div class="error">
+            <h2>Email Configuration Error</h2>
+            <p><strong>Error:</strong> ${error.message}</p>
+            <p><strong>Time:</strong> ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</p>
+          </div>
+          <div class="info">
+            <h3>🔧 Troubleshooting Steps:</h3>
+            <ol>
+              <li>Check your Gmail credentials in <code>.env</code> file</li>
+              <li>Ensure 2-Factor Authentication is enabled on Gmail</li>
+              <li>Generate App Password (not regular password)</li>
+              <li>App Password should be 16 characters without spaces</li>
+              <li>Restart the server after making changes</li>
+            </ol>
+            <h4>Current Configuration:</h4>
+            <p><strong>EMAIL_USER:</strong> ${process.env.EMAIL_USER || 'NOT SET'}</p>
+            <p><strong>EMAIL_PASS:</strong> ${process.env.EMAIL_PASS ? 'SET (' + process.env.EMAIL_PASS.length + ' chars)' : 'NOT SET'}</p>
+          </div>
+          <a href="/" class="back-btn">← Back to Website</a>
+        </body>
+      </html>
+    `);
   }
 });
 

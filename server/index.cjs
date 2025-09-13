@@ -33,9 +33,9 @@ const createTransporter = () => {
       rejectUnauthorized: false,
       ciphers: 'SSLv3'
     },
-    connectionTimeout: 10000, // 10 seconds
-    greetingTimeout: 10000,   // 10 seconds
-    socketTimeout: 10000,     // 10 seconds
+    connectionTimeout: 30000, // 30 seconds
+    greetingTimeout: 30000,   // 30 seconds
+    socketTimeout: 30000,     // 30 seconds
     pool: false,              // Disable connection pooling
     debug: false,
     logger: false
@@ -53,9 +53,9 @@ const createTransporter = () => {
     tls: {
       rejectUnauthorized: false
     },
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 10000,
+    connectionTimeout: 30000,
+    greetingTimeout: 30000,
+    socketTimeout: 30000,
     pool: false,
     debug: false,
     logger: false
@@ -98,7 +98,7 @@ const verifyEmailConfig = async () => {
         const fallbackResult = await Promise.race([
           fallbackTransporter.verify(),
           new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Fallback connection timeout after 10 seconds')), 10000)
+            setTimeout(() => reject(new Error('Fallback connection timeout after 30 seconds')), 30000)
           )
         ]);
         

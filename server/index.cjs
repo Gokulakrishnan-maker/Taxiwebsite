@@ -18,55 +18,99 @@ console.log('📧 Email User:', process.env.EMAIL_USER || 'NOT SET');
 console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? 'SET' : 'NOT SET');
 
 // Create nodemailer transporter
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
-  requireTLS: true,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  },
-  tls: {
-    rejectUnauthorized: false,
-    ciphers: 'SSLv3',
-    minVersion: 'TLSv1.2'
-  },
-  connectionTimeout: 60000,
-  greetingTimeout: 30000,
-  socketTimeout: 60000,
-  pool: true,
-  maxConnections: 5,
-  rateDelta: 1000,
-  rateLimit: 10,
-  debug: false,
-  logger: false
-});
+const createTransporter = () => {
+  // Primary configuration (port 587)
+  const primaryConfig = {
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    requireTLS: true,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    },
+    tls: {
+      rejectUnauthorized: false,
+      ciphers: 'SSLv3'
+    },
+    connectionTimeout: 10000, // 10 seconds
+    greetingTimeout: 10000,   // 10 seconds
+    socketTimeout: 10000,     // 10 seconds
+    pool: false,              // Disable connection pooling
+    debug: false,
+    logger: false
+  };
+
+  // Fallback configuration (port 465)
+  const fallbackConfig = {
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    },
+    tls: {
+      rejectUnauthorized: false
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
+    pool: false,
+    debug: false,
+    logger: false
+  };
+
+  return { primary: nodemailer.createTransporter(primaryConfig), fallback: nodemailer.createTransporter(fallbackConfig) };
+};
+
+const { primary: transporter, fallback: fallbackTransporter } = createTransporter();
 
 // Verify email configuration
 const verifyEmailConfig = async () => {
   try {
     console.log('🔧 Verifying email configuration...');
     console.log('📧 Email User:', process.env.EMAIL_USER || 'NOT SET');
-    console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? 'SET (16 chars)' : 'NOT SET');
+    console.log('🔑 Email Pass:', process.env.EMAIL_PASS ? `SET (${process.env.EMAIL_PASS.length} chars)` : 'NOT SET');
     
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
       console.log('❌ Email credentials not configured in .env file');
       return false;
     }
 
-    console.log('🔌 Testing SMTP connection...');
-    const result = await Promise.race([
-      transporter.verify(),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Connection timeout after 30 seconds')), 30000)
-      )
-    ]);
+    console.log('🔌 Testing primary SMTP connection (port 587)...');
+    try {
+      const result = await Promise.race([
+        transporter.verify(),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Primary connection timeout after 10 seconds')), 10000)
+        )
+      ]);
+      
+      console.log('✅ Primary email server is ready to send messages');
+      console.log('📧 Using port 587 (STARTTLS)');
+      return true;
+    } catch (primaryError) {
+      console.log('⚠️ Primary connection failed:', primaryError.message);
+      console.log('🔄 Trying fallback connection (port 465)...');
+      
+      try {
+        const fallbackResult = await Promise.race([
+          fallbackTransporter.verify(),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Fallback connection timeout after 10 seconds')), 10000)
+          )
+        ]);
+        
+        console.log('✅ Fallback email server is ready to send messages');
+        console.log('📧 Using port 465 (SSL/TLS)');
+        return true;
+      } catch (fallbackError) {
+        console.log('❌ Both connections failed');
+        throw fallbackError;
+      }
+    }
     
-    console.log('✅ Email server is ready to send messages');
-    console.log('📧 Configured email:', process.env.EMAIL_USER);
-    console.log('📬 Emails will be sent to: 1waytaxi.booking@gmail.com');
-    return true;
   } catch (error) {
     console.log('❌ Email configuration error:', error.message);
     
@@ -78,6 +122,7 @@ const verifyEmailConfig = async () => {
       console.log('   3. Ensure EMAIL_PASS is App Password (16 chars, no spaces)');
       console.log('   4. Check if firewall is blocking port 587');
       console.log('   5. Try using different network connection');
+      console.log('   6. Check if your ISP blocks SMTP ports');
       console.log('');
     }
     
@@ -88,10 +133,22 @@ const verifyEmailConfig = async () => {
     console.log('   3. Generate App Password (not regular password)');
     console.log('   4. App Password should be 16 characters without spaces');
     console.log('   5. Try restarting the server after changes');
-    console.log('');
+    console.log('   6. Check network connectivity and firewall settings');
     console.log('📧 Current EMAIL_USER:', process.env.EMAIL_USER || 'NOT SET');
     console.log('🔑 Current EMAIL_PASS length:', process.env.EMAIL_PASS ? process.env.EMAIL_PASS.length : 'NOT SET');
     return false;
+  }
+};
+
+// Helper function to send email with fallback
+const sendEmailWithFallback = async (mailOptions) => {
+  try {
+    console.log('📤 Attempting to send email via primary connection...');
+    return await transporter.sendMail(mailOptions);
+  } catch (primaryError) {
+    console.log('⚠️ Primary email failed, trying fallback...');
+    console.log('🔄 Using fallback connection (port 465)...');
+    return await fallbackTransporter.sendMail(mailOptions);
   }
 };
 
@@ -131,7 +188,7 @@ app.get('/api/test-email', async (req, res) => {
       `
     };
 
-    const info = await transporter.sendMail(testMailOptions);
+    const info = await sendEmailWithFallback(testMailOptions);
     console.log('✅ Test email sent successfully:', info.messageId);
     
     res.status(200).send(`
@@ -360,7 +417,7 @@ Contact: +91 78100 95200`;
     console.log('📤 Sending email to:', mailOptions.to);
     console.log('📧 Email subject:', mailOptions.subject);
 
-    const info = await transporter.sendMail(mailOptions);
+    const info = await sendEmailWithFallback(mailOptions);
     console.log(`✅ ${statusText} email sent successfully:`, info.messageId);
     console.log('📬 Email response:', info.response);
 
@@ -469,7 +526,7 @@ www.1waytaxi.com`;
 
     console.log('📤 Sending contact email to:', mailOptions.to);
 
-    const info = await transporter.sendMail(mailOptions);
+    const info = await sendEmailWithFallback(mailOptions);
     console.log('✅ Contact email sent successfully:', info.messageId);
 
     res.status(200).json({

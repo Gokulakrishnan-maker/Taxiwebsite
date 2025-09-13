@@ -22,23 +22,25 @@ const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
   secure: false,
+  requireTLS: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS
   },
   tls: {
     rejectUnauthorized: false,
-    ciphers: 'SSLv3'
+    ciphers: 'SSLv3',
+    minVersion: 'TLSv1.2'
   },
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 10000,
+  connectionTimeout: 60000,
+  greetingTimeout: 30000,
+  socketTimeout: 60000,
   pool: true,
   maxConnections: 5,
   rateDelta: 1000,
   rateLimit: 10,
-  debug: true,
-  logger: true
+  debug: false,
+  logger: false
 });
 
 // Verify email configuration
@@ -53,13 +55,32 @@ const verifyEmailConfig = async () => {
       return false;
     }
 
-    await transporter.verify();
+    console.log('🔌 Testing SMTP connection...');
+    const result = await Promise.race([
+      transporter.verify(),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Connection timeout after 30 seconds')), 30000)
+      )
+    ]);
+    
     console.log('✅ Email server is ready to send messages');
     console.log('📧 Configured email:', process.env.EMAIL_USER);
     console.log('📬 Emails will be sent to: 1waytaxi.booking@gmail.com');
     return true;
   } catch (error) {
     console.log('❌ Email configuration error:', error.message);
+    
+    if (error.message.includes('timeout') || error.message.includes('Timeout')) {
+      console.log('');
+      console.log('🔧 TIMEOUT ERROR - Troubleshooting steps:');
+      console.log('   1. Check your internet connection');
+      console.log('   2. Verify Gmail credentials are correct');
+      console.log('   3. Ensure EMAIL_PASS is App Password (16 chars, no spaces)');
+      console.log('   4. Check if firewall is blocking port 587');
+      console.log('   5. Try using different network connection');
+      console.log('');
+    }
+    
     console.log('');
     console.log('🔧 Troubleshooting steps:');
     console.log('   1. Check your Gmail credentials in .env file');

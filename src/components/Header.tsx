@@ -30,7 +30,7 @@ const Header = () => {
               <img
                 src="/image.png.png"
                 alt="Taxi Logo"
-                className="h-16 w-auto"
+                className="h-20 w-auto"
               />
               <span className="text-2xl font-bold text-gray-900"></span>
             </Link>

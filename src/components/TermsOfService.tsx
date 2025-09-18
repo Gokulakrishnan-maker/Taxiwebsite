@@ -1,9 +1,55 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { FileText, AlertTriangle, CreditCard, Users } from 'lucide-react';
 
 const TermsOfService = () => {
   return (
-    <div className="min-h-screen bg-gray-50 py-20">
+    <>
+      <Helmet>
+        <title>Terms of Service - 1waytaxi | Taxi Booking Terms & Conditions</title>
+        <meta name="description" content="1waytaxi Terms of Service - Booking terms, cancellation policy, payment terms, and service agreement for taxi booking across Tamil Nadu. Licensed taxi service." />
+        <meta name="keywords" content="1waytaxi terms of service, taxi booking terms, cancellation policy, payment terms, Tamil Nadu taxi service, licensed taxi operator" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://1waytaxi.com/terms-of-service" />
+        
+        {/* Open Graph tags */}
+        <meta property="og:title" content="Terms of Service - 1waytaxi | Taxi Service Terms" />
+        <meta property="og:description" content="1waytaxi Terms of Service - Booking terms, cancellation policy, and service agreement for taxi booking across Tamil Nadu." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://1waytaxi.com/terms-of-service" />
+        <meta property="og:site_name" content="1waytaxi" />
+        
+        {/* Twitter Card tags */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Terms of Service - 1waytaxi" />
+        <meta name="twitter:description" content="1waytaxi Terms of Service - Booking terms and service agreement for taxi booking." />
+        
+        {/* Structured Data for Google */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Terms of Service - 1waytaxi",
+            "description": "1waytaxi Terms of Service - Booking terms, cancellation policy, and service agreement for taxi booking across Tamil Nadu",
+            "url": "https://1waytaxi.com/terms-of-service",
+            "isPartOf": {
+              "@type": "WebSite",
+              "name": "1waytaxi",
+              "url": "https://1waytaxi.com"
+            },
+            "about": {
+              "@type": "Organization",
+              "name": "1waytaxi",
+              "description": "Licensed taxi service across Tamil Nadu with transparent pricing",
+              "telephone": "+91-7810095200",
+              "email": "1waytaxi.booking@gmail.com",
+              "areaServed": "Tamil Nadu, India"
+            }
+          })}
+        </script>
+      </Helmet>
+      
+      <div className="min-h-screen bg-gray-50 py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-xl shadow-lg p-8">
           <div className="text-center mb-12">
@@ -134,7 +180,8 @@ const TermsOfService = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

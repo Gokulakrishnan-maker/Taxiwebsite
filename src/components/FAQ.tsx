@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { HelpCircle, ChevronDown, ChevronUp, Phone, Clock, MapPin, AtSign } from 'lucide-react';
 
 const FAQ = () => {
@@ -66,7 +67,71 @@ const FAQ = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-20">
+    <>
+      <Helmet>
+        <title>FAQ - 1waytaxi | Frequently Asked Questions about Taxi Service</title>
+        <meta name="description" content="1waytaxi FAQ - Get answers to common questions about taxi booking, pricing, service areas, cancellation policy, and outstation trips across Tamil Nadu." />
+        <meta name="keywords" content="1waytaxi FAQ, taxi booking questions, Tamil Nadu taxi service, outstation taxi, local taxi, fare calculation, booking help" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://1waytaxi.com/faq" />
+        
+        {/* Open Graph tags */}
+        <meta property="og:title" content="FAQ - 1waytaxi | Taxi Service Questions & Answers" />
+        <meta property="og:description" content="Get answers to common questions about 1waytaxi booking, pricing, service areas, and policies across Tamil Nadu." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://1waytaxi.com/faq" />
+        <meta property="og:site_name" content="1waytaxi" />
+        
+        {/* Twitter Card tags */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="FAQ - 1waytaxi" />
+        <meta name="twitter:description" content="Get answers to common questions about 1waytaxi booking and service." />
+        
+        {/* Structured Data for FAQ */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "name": "1waytaxi FAQ - Frequently Asked Questions",
+            "description": "Common questions and answers about 1waytaxi booking, pricing, and service",
+            "url": "https://1waytaxi.com/faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How can I book a taxi with 1waytaxi?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "You can book through our website, call +91 78100 95200, or use our mobile app. We accept advance bookings and immediate pickup requests based on availability."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How is the fare calculated?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Fares are calculated based on distance (₹18-35/km depending on vehicle type), base fare (₹50), and additional charges like AC (₹3/km), night surcharge (25% between 11 PM - 5 AM), and waiting time (₹2/min)."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Which areas do you cover in Coimbatore?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "We cover all areas within Coimbatore city including RS Puram, Gandhipuram, Peelamedu, Saibaba Colony, Race Course, Singanallur, and surrounding suburbs."
+                }
+              }
+            ],
+            "about": {
+              "@type": "Organization",
+              "name": "1waytaxi",
+              "telephone": "+91-7810095200",
+              "email": "1waytaxi.booking@gmail.com"
+            }
+          })}
+        </script>
+      </Helmet>
+      
+      <div className="min-h-screen bg-gray-50 py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <HelpCircle className="h-16 w-16 text-blue-600 mx-auto mb-4" />
@@ -147,7 +212,8 @@ const FAQ = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Calendar, Clock, MapPin, ArrowRight, User, Phone, Mail, Car, MessageCircle } from 'lucide-react';
 import AnalogClock from './AnalogClock';
 import { calculateFare } from '../utils/fareCalculator';
@@ -320,7 +321,93 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
+    <>
+      <Helmet>
+        <title>1waytaxi - Book Taxi Service in All Over Tamil Nadu | 24/7 Reliable Cab Service</title>
+        <meta name="description" content="Book 1waytaxi for safe, reliable taxi service across Tamil Nadu. 24/7 availability, transparent pricing, professional drivers. Call +91 7810095200 for local & outstation trips." />
+        <meta name="keywords" content="1waytaxi, taxi booking Tamil Nadu, Coimbatore taxi, outstation taxi, local cab service, airport transfer, 24/7 taxi service, reliable taxi booking" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://1waytaxi.com/" />
+        
+        {/* Open Graph tags */}
+        <meta property="og:title" content="1waytaxi - Book Taxi Service in All Over Tamil Nadu" />
+        <meta property="og:description" content="Safe, reliable taxi service across Tamil Nadu. 24/7 availability, transparent pricing, professional drivers." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://1waytaxi.com/" />
+        <meta property="og:site_name" content="1waytaxi" />
+        <meta property="og:image" content="https://1waytaxi.com/image.png" />
+        
+        {/* Twitter Card tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="1waytaxi - Reliable Taxi Service Tamil Nadu" />
+        <meta name="twitter:description" content="Book safe, reliable taxi service across Tamil Nadu. 24/7 availability with transparent pricing." />
+        <meta name="twitter:image" content="https://1waytaxi.com/image.png" />
+        
+        {/* Local Business Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "1waytaxi",
+            "description": "Professional taxi service across Tamil Nadu with 24/7 availability, transparent pricing, and reliable drivers",
+            "url": "https://1waytaxi.com",
+            "telephone": "+91-7810095200",
+            "email": "1waytaxi.booking@gmail.com",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Coimbatore",
+              "addressRegion": "Tamil Nadu",
+              "addressCountry": "India"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "11.0168",
+              "longitude": "76.9558"
+            },
+            "areaServed": [
+              {
+                "@type": "State",
+                "name": "Tamil Nadu"
+              }
+            ],
+            "serviceType": "Taxi Service",
+            "priceRange": "₹₹",
+            "openingHours": "Mo-Su 00:00-23:59",
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Taxi Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Local Taxi Service",
+                    "description": "Local taxi service within Coimbatore and nearby areas"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Outstation Taxi Service",
+                    "description": "Outstation taxi service across Tamil Nadu and neighboring states"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Airport Transfer",
+                    "description": "Airport pickup and drop service to/from Coimbatore Airport"
+                  }
+                }
+              ]
+            }
+          })}
+        </script>
+      </Helmet>
+      
+      <section id="home" className="relative min-h-screen flex items-center overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-500"></div>
       <div className="absolute inset-0 bg-gradient-to-tr from-orange-400 via-pink-500 to-red-500 opacity-70"></div>
@@ -611,7 +698,8 @@ const Hero = () => {
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 };
 

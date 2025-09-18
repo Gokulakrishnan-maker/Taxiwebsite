@@ -1,9 +1,54 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Shield, Eye, Lock, Database } from 'lucide-react';
 
 const PrivacyPolicy = () => {
   return (
-    <div className="min-h-screen bg-gray-50 py-20">
+    <>
+      <Helmet>
+        <title>Privacy Policy - 1waytaxi | Secure Taxi Service in Tamil Nadu</title>
+        <meta name="description" content="1waytaxi Privacy Policy - Learn how we protect your personal information, location data, and ensure secure taxi booking across Tamil Nadu. GDPR compliant taxi service." />
+        <meta name="keywords" content="1waytaxi privacy policy, data protection, secure taxi booking, Tamil Nadu taxi privacy, GDPR compliance, personal information security" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://1waytaxi.com/privacy-policy" />
+        
+        {/* Open Graph tags */}
+        <meta property="og:title" content="Privacy Policy - 1waytaxi | Secure Taxi Service" />
+        <meta property="og:description" content="Learn how 1waytaxi protects your personal information and ensures secure taxi booking across Tamil Nadu." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://1waytaxi.com/privacy-policy" />
+        <meta property="og:site_name" content="1waytaxi" />
+        
+        {/* Twitter Card tags */}
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Privacy Policy - 1waytaxi" />
+        <meta name="twitter:description" content="Learn how 1waytaxi protects your personal information and ensures secure taxi booking." />
+        
+        {/* Structured Data for Google */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Privacy Policy - 1waytaxi",
+            "description": "1waytaxi Privacy Policy - Data protection and security information for taxi booking service in Tamil Nadu",
+            "url": "https://1waytaxi.com/privacy-policy",
+            "isPartOf": {
+              "@type": "WebSite",
+              "name": "1waytaxi",
+              "url": "https://1waytaxi.com"
+            },
+            "about": {
+              "@type": "Organization",
+              "name": "1waytaxi",
+              "description": "Professional taxi service across Tamil Nadu",
+              "telephone": "+91-7810095200",
+              "email": "1waytaxi.booking@gmail.com"
+            }
+          })}
+        </script>
+      </Helmet>
+      
+      <div className="min-h-screen bg-gray-50 py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-xl shadow-lg p-8">
           <div className="text-center mb-12">
@@ -117,7 +162,8 @@ const PrivacyPolicy = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 

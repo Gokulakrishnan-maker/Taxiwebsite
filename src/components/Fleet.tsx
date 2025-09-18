@@ -5,7 +5,7 @@ const Fleet = () => {
   const vehicles = [
     {
       name: 'Economy Sedan',
-      image: 'https://skylinecabs.com/images/keyword/68.jpg',
+      image: 'https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=400',
       passengers: '1-4',
       luggage: '2 bags',
       features: ['Air Conditioning', 'GPS Tracking', 'Phone Charger'],
@@ -13,7 +13,7 @@ const Fleet = () => {
     },
     {
       name: 'Premium SUV',
-      image: 'https://sanatancabs.com/wp-content/uploads/2022/06/Udhayam-Cabs-SUV-Ertiga.png',
+      image: 'https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=400',
       passengers: '1-6',
       luggage: '4 bags',
       features: ['Luxury Interior', 'WiFi Available', 'Extra Space'],
@@ -21,7 +21,7 @@ const Fleet = () => {
     },
     {
       name: 'Executive Class',
-      image: 'https://www.holidaystravelworld.com/img/1484taxi-3.jpg',
+      image: 'https://images.pexels.com/photos/1545743/pexels-photo-1545743.jpeg?auto=compress&cs=tinysrgb&w=400',
       passengers: '1-3',
       luggage: '3 bags',
       features: ['Premium Comfort', 'Business Amenities', 'Professional Driver'],

@@ -10,7 +10,7 @@ const FloatingIcons = () => {
           href="https://wa.me/917810095200"
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-green-500 hover:bg-green-600 text-white h-14 w-14 flex items-center justify-center rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 group relative"
+          className="bg-green-500 hover:bg-green-600 text-white h-14 w-14 flex items-center justify-center rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 group relative animate-pulse"
           title="WhatsApp Us"
         >
           <MessageCircle className="h-7 w-7" />
@@ -24,7 +24,7 @@ const FloatingIcons = () => {
       <div className="fixed right-6 bottom-6 z-50">
         <a
           href="tel:+917810095200"
-          className="bg-blue-500 hover:bg-blue-600 text-white h-14 w-14 flex items-center justify-center rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 group relative"
+          className="bg-blue-500 hover:bg-blue-600 text-white h-14 w-14 flex items-center justify-center rounded-full shadow-2xl transition-all duration-300 transform hover:scale-110 group relative animate-pulse"
           title="Call Us"
         >
           <Phone className="h-7 w-7" />

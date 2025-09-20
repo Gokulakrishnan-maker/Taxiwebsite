@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import Navbar from './components/Navbar';
 import AdBanner from './components/AdBanner';
 import HeroSection from './components/HeroSection';
 import Header from './components/Header';
@@ -37,8 +36,7 @@ function App() {
     <HelmetProvider>
       <Router>
         <div className="min-h-screen bg-white">
-          <Navbar /> {/* 👈 Replace Header with Navbar, or add both */}
-          <Routes>
+         <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />

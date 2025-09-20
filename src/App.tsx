@@ -15,6 +15,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
 import FAQ from './components/FAQ';
 import FloatingIcons from './components/FloatingIcons';
+import GkWebDesigns from "./pages/GkWebDesigns";
 
 const HomePage = () => (
   <>
@@ -40,6 +41,7 @@ function App() {
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/faq" element={<FAQ />} />
+            <Route path="/gk-web-designs" element={<GkWebDesigns />} />
           </Routes>
           <Footer />
           <FloatingIcons />

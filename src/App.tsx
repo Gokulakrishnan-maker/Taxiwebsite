@@ -34,6 +34,7 @@ function App() {
       <Router>
         <div className="min-h-screen bg-white">
           <Header />
+          <AdBanner />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

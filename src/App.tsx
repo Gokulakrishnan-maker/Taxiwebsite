@@ -15,7 +15,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
 import FAQ from './components/FAQ';
 import FloatingIcons from './components/FloatingIcons';
-import GkWebDesigns from './components/pages/GkWebDesigns';
+import GkWebDesigns from './components/pages/GkWebDesigns.jsx';
 
 const HomePage = () => (
   <>

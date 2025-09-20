@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import AdBanner from './components/AdBanner';
-import HeroSection from './components/HeroSection';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Fleet from './components/Fleet';
@@ -19,8 +18,6 @@ import FloatingIcons from './components/FloatingIcons';
 
 const HomePage = () => (
   <>
-   <AdBanner /> {/* 👈 Add here if you want it on homepage */}
-    <HeroSection /> {/* 👈 Add here if you want it on homepage */}
     <Hero />
     <Tariff />
     <MostBookedRoutes />
@@ -36,7 +33,8 @@ function App() {
     <HelmetProvider>
       <Router>
         <div className="min-h-screen bg-white">
-         <Routes>
+          <Header />
+          <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
@@ -47,7 +45,9 @@ function App() {
         </div>
       </Router>
     </HelmetProvider>
+    
   );
 }
+
 
 export default App;

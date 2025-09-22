@@ -97,7 +97,7 @@ const Tariff = () => {
             </div>
             <ul className="space-y-2 text-gray-700">
               <li>• Driver Bata: ₹400</li>
-              <li>• Waiting Charges: ₹100 per hour</li>
+              <li>• Waiting Charges: ₹120 per hour</li>
               <li>• <strong>Minimum billing: 130 KM</strong></li>
               <li>• Hill station charges: ₹300</li>
             </ul>

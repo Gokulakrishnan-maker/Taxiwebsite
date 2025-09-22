@@ -9,7 +9,7 @@ const Fleet = () => {
       passengers: '1-4',
       luggage: '2 bags',
       features: ['Air Conditioning', 'GPS Tracking', 'Phone Charger'],
-      price: 'From ₹18/km'
+      price: 'From ₹14/km'
     },
     {
       name: 'Premium SUV',
@@ -17,7 +17,7 @@ const Fleet = () => {
       passengers: '1-6',
       luggage: '4 bags',
       features: ['Luxury Interior', 'WiFi Available', 'Extra Space'],
-      price: 'From ₹25/km'
+      price: 'From ₹19/km'
     },
     {
       name: 'Executive Class',
@@ -25,7 +25,7 @@ const Fleet = () => {
       passengers: '1-3',
       luggage: '3 bags',
       features: ['Premium Comfort', 'Business Amenities', 'Professional Driver'],
-      price: 'From ₹35/km'
+      price: 'From ₹20/km'
     }
   ];
 

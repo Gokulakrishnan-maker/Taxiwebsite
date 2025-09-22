@@ -330,7 +330,7 @@ const Hero = () => {
         <link rel="canonical" href="https://1waytaxi.com/" />
         
         {/* Open Graph tags */}
-        <meta property="og:title" content="1waytaxi - Book Taxi Service in All Over Tamil Nadu" />
+        <meta property="og:title" content="1waytaxi - Book Taxi Services in Tamil Nadu, Kerala & Karnataka" />
         <meta property="og:description" content="Safe, reliable taxi service across Tamil Nadu. 24/7 availability, transparent pricing, professional drivers." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://1waytaxi.com/" />

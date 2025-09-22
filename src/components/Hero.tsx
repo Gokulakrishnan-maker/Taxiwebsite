@@ -431,8 +431,8 @@ const Hero = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="text-white">
             <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Book - 1waytaxi Service in 
-              <span className="text-yellow-300 drop-shadow-lg"> All Over TamilNadu</span>
+              Book - 1waytaxi Services in 
+              <span className="text-yellow-300 drop-shadow-lg">TamilNadu, Kerala & Karnataka </span>
             </h1>
            <div className="flex flex-col sm:flex-row gap-6">
               <a href="https://wa.me/917810095200" className="bg-gradient-to-r from-green-500 to-green-600 text-white px-10 py-4 rounded-xl text-lg font-bold hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-105 shadow-2xl text-center backdrop-blur-sm">

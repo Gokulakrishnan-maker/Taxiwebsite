@@ -323,7 +323,7 @@ const Hero = () => {
   return (
     <>
       <Helmet>
-        <title>1waytaxi - Book Taxi Service in All Over Tamil Nadu | 24/7 Reliable Cab Service</title>
+        <title>1waytaxi - Book Taxi Services in Tamil Nadu, Kerala & Karnataka | 24/7 Reliable Cab Service</title>
         <meta name="description" content="Book 1waytaxi for safe, reliable taxi service across Tamil Nadu. 24/7 availability, transparent pricing, professional drivers. Call +91 7810095200 for local & outstation trips." />
         <meta name="keywords" content="1waytaxi, taxi booking Tamil Nadu, Coimbatore taxi, outstation taxi, local cab service, airport transfer, 24/7 taxi service, reliable taxi booking" />
         <meta name="robots" content="index, follow" />

@@ -60,10 +60,7 @@ const Fleet = () => {
                     e.target.style.display = 'none';
                   }}
                 />
-                <div className="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                  {vehicle.price}
-                </div>
-              </div>
+               </div>
               
               <div className="p-6">
                 <h3 className="text-xl font-bold text-gray-900 mb-4">{vehicle.name}</h3>

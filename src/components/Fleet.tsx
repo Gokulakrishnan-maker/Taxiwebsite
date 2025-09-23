@@ -5,7 +5,7 @@ const Fleet = () => {
   const vehicles = [
     {
       name: 'SEDAN',
-      image: '/assets/sedan.png',
+      image: 'https://images.pexels.com/photos/116675/pexels-photo-116675.jpeg?auto=compress&cs=tinysrgb&w=400',
       passengers: '1-4',
       luggage: '2 bags',
       features: ['Air Conditioning', 'GPS Tracking', 'Phone Charger'],
@@ -13,7 +13,7 @@ const Fleet = () => {
     },
     {
       name: 'ETIOS',
-      image: '/assets/etios.png',
+      image: 'https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?auto=compress&cs=tinysrgb&w=400',
       passengers: '1-4',
       luggage: '2 bags',
       features: ['Air Conditioning', 'GPS Tracking', 'Comfortable Seating'],
@@ -21,7 +21,7 @@ const Fleet = () => {
     },
     {
       name: 'SUV',
-      image: '/assets/suv.png',
+      image: 'https://images.pexels.com/photos/1007410/pexels-photo-1007410.jpeg?auto=compress&cs=tinysrgb&w=400',
       passengers: '1-6',
       luggage: '4 bags',
       features: ['Luxury Interior', 'WiFi Available', 'Extra Space'],
@@ -29,8 +29,8 @@ const Fleet = () => {
     },
     {
       name: 'INNOVA',
-      image: '/assets/innova.png',
-      passengers: '1-3',
+      image: 'https://images.pexels.com/photos/1592384/pexels-photo-1592384.jpeg?auto=compress&cs=tinysrgb&w=400',
+      passengers: '1-8',
       luggage: '3 bags',
       features: ['Premium Comfort', 'Business Amenities', 'Professional Driver'],
       price: 'From ₹20/km'
@@ -47,14 +47,18 @@ const Fleet = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {vehicles.map((vehicle, index) => (
             <div key={index} className="bg-white border-2 border-gray-200 rounded-xl overflow-hidden hover:border-blue-500 transition-all duration-300 group">
               <div className="relative overflow-hidden">
                 <img 
                   src={vehicle.image} 
-                  alt={vehicle.name}
+                  alt={`${vehicle.name} - Professional taxi service`}
                   className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                  onError={(e) => {
+                    console.error(`Failed to load image for ${vehicle.name}:`, vehicle.image);
+                    e.target.style.display = 'none';
+                  }}
                 />
                 <div className="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
                   {vehicle.price}

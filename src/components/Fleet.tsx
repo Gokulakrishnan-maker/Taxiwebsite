@@ -5,15 +5,23 @@ const Fleet = () => {
   const vehicles = [
     {
       name: 'SEDAN',
-      image: 'https://images.pexels.com/photos/372098/pexels-photo-372098.jpeg?auto=compress&cs=tinysrgb&w=400',
+      image: '/assets/sedan.png',
       passengers: '1-4',
       luggage: '2 bags',
       features: ['Air Conditioning', 'GPS Tracking', 'Phone Charger'],
       price: 'From ₹14/km'
     },
     {
+      name: 'ETIOS',
+      image: '/assets/etios.png',
+      passengers: '1-4',
+      luggage: '2 bags',
+      features: ['Air Conditioning', 'GPS Tracking', 'Comfortable Seating'],
+      price: 'From ₹14/km'
+    },
+    {
       name: 'SUV',
-      image: 'https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?auto=compress&cs=tinysrgb&w=400',
+      image: '/assets/suv.png',
       passengers: '1-6',
       luggage: '4 bags',
       features: ['Luxury Interior', 'WiFi Available', 'Extra Space'],
@@ -21,7 +29,7 @@ const Fleet = () => {
     },
     {
       name: 'INNOVA',
-      image: 'https://images.pexels.com/photos/164634/pexels-photo-164634.jpeg?auto=compress&cs=tinysrgb&w=400',
+      image: '/assets/innova.png',
       passengers: '1-3',
       luggage: '3 bags',
       features: ['Premium Comfort', 'Business Amenities', 'Professional Driver'],

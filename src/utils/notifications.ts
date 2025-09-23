@@ -58,7 +58,6 @@ export interface BookingEnquiry {
   to: string;
   date: string;
   time: string;
-  passengers: string;
   customerPhone?: string;
   customerName?: string;
   fareEstimate?: number;
@@ -96,7 +95,6 @@ export const sendBookingEnquiryEmail = async (booking: BookingEnquiry): Promise<
         to: booking.to,
         date: booking.date,
         time: booking.time,
-        passengers: booking.passengers,
         vehicleType: booking.vehicleType || 'SEDAN',
         tripDistance: booking.tripDistance,
         tripDuration: booking.tripDuration,
@@ -152,7 +150,6 @@ export const sendBookingConfirmationEmail = async (booking: BookingEnquiry): Pro
         to: booking.to,
         date: booking.date,
         time: booking.time,
-        passengers: booking.passengers,
         vehicleType: booking.vehicleType || 'SEDAN',
         tripDistance: booking.tripDistance,
         tripDuration: booking.tripDuration,
@@ -232,7 +229,6 @@ export const formatWhatsAppEnquiryMessage = (booking: BookingEnquiry): string =>
 • To: ${booking.to}
 • Date: ${booking.date}
 • Time: ${booking.time}
-• Passengers: ${booking.passengers}
 • Distance: ${booking.tripDistance}
 • Duration: ${booking.tripDuration}
 • Total Fare: ₹${booking.fareEstimate}
@@ -268,7 +264,7 @@ We have received your booking enquiry! 📋
 • Date: ${booking.date}
 • Time: ${booking.time}
 • Vehicle: ${booking.vehicleType}
-• Passengers: ${booking.passengers}
+
 
 💰 *Fare Estimate: ₹${booking.fareEstimate}*
 • Distance: ${booking.tripDistance}
@@ -306,7 +302,6 @@ Your booking has been confirmed! ✅
 • Date: ${booking.date}
 • Time: ${booking.time}
 • Vehicle: ${booking.vehicleType}
-• Passengers: ${booking.passengers}
 
 💰 *Total Fare: ₹${booking.fareEstimate}*
 • Distance: ${booking.tripDistance}
@@ -344,7 +339,6 @@ Thanks for booking 1waytaxi! 🙏
 • To: ${booking.to}
 • Date: ${booking.date}
 • Time: ${booking.time}
-• Passengers: ${booking.passengers}
 • Distance: ${booking.tripDistance}
 • Duration: ${booking.tripDuration}
 • Total Fare: ₹${booking.fareEstimate}
@@ -374,7 +368,6 @@ export const formatTelegramEnquiryMessage = (booking: BookingEnquiry): string =>
 • To: ${booking.to}
 • Date: ${booking.date}
 • Time: ${booking.time}
-• Passengers: ${booking.passengers}
 • Distance: ${booking.tripDistance}
 • Duration: ${booking.tripDuration}
 • Total Fare: ₹${booking.fareEstimate}
@@ -403,7 +396,6 @@ export const formatTelegramConfirmationMessage = (booking: BookingEnquiry): stri
 • To: ${booking.to}
 • Date: ${booking.date}
 • Time: ${booking.time}
-• Passengers: ${booking.passengers}
 • Distance: ${booking.tripDistance}
 • Duration: ${booking.tripDuration}
 • Total Fare: ₹${booking.fareEstimate}

@@ -5,7 +5,7 @@ const Fleet = () => {
   const vehicles = [
     {
       name: 'SEDAN',
-      image: '/assets/sedan.png',
+      image: '/assets/sedan-icon.svg',
       passengers: '1-4',
       luggage: '2 bags',
       features: ['Air Conditioning', 'GPS Tracking', 'Phone Charger'],

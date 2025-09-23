@@ -5,7 +5,7 @@ const Fleet = () => {
   const vehicles = [
     {
       name: 'SEDAN',
-      image: '/assets/sedan.png',
+      image: 'https://www.1waytaxi.com/assets/sedan.png',
       passengers: '1-4',
       luggage: '2 bags',
       features: ['Air Conditioning', 'GPS Tracking', 'Phone Charger'],
@@ -13,7 +13,7 @@ const Fleet = () => {
     },
     {
       name: 'ETIOS',
-      image: '/assets/etios.png',
+      image: 'https://www.1waytaxi.com/assets/etios.png',
       passengers: '1-4',
       luggage: '2 bags',
       features: ['Air Conditioning', 'GPS Tracking', 'Comfortable Seating'],
@@ -21,7 +21,7 @@ const Fleet = () => {
     },
     {
       name: 'SUV',
-      image: '/assets/suv.png',
+      image: 'https://www.1waytaxi.com/assets/suv.png',
       passengers: '1-6',
       luggage: '4 bags',
       features: ['Luxury Interior', 'WiFi Available', 'Extra Space'],
@@ -29,7 +29,7 @@ const Fleet = () => {
     },
     {
       name: 'INNOVA',
-      image: '/assets/innova.png',
+      image: 'https://www.1waytaxi.com/assets/innova.png',
       passengers: '1-3',
       luggage: '3 bags',
       features: ['Premium Comfort', 'Business Amenities', 'Professional Driver'],

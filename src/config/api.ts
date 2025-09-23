@@ -1,5 +1,5 @@
 // Google Maps API Configuration
-export const GOOGLE_MAPS_API_KEY = 'AIzaSyDZ67BG2Wzd7B9Fcrwb4ZtJKiKLh0eaH68';
+export const GOOGLE_MAPS_API_KEY = 'AIzaSyCZZV63TgDVY9MErb5AZ_T5PLkfm4MYuEQ';
 
 // API endpoints and configuration
 export const API_CONFIG = {
@@ -15,7 +15,7 @@ export const API_CONFIG = {
     baseUrl: 'https://maps.googleapis.com/maps/api/distancematrix/json',
     units: 'metric',
     mode: 'driving',
-    origins: 'Ariyalur,Tamil Nadu,India',
+    origins: 'Coimbatore,Tamil Nadu,India',
     avoidHighways: false,
     avoidTolls: false
   },
@@ -25,10 +25,10 @@ export const API_CONFIG = {
     baseUrl: 'https://maps.googleapis.com/maps/api/place',
     types: 'establishment|geocode',
     componentRestrictions: { country: 'IN' },
-    // Ariyalur bounds for better local suggestions
+    // Coimbatore bounds for better local suggestions
     bounds: {
-      southwest: { lat: 10.7, lng: 79.0 },
-      northeast: { lat: 11.3, lng: 79.6 }
+      southwest: { lat: 10.8, lng: 76.8 },
+      northeast: { lat: 11.2, lng: 77.2 }
     }
   }
 };

@@ -9,7 +9,7 @@ const Fleet = () => {
       passengers: '1-4',
       luggage: '2 bags',
       features: ['Air Conditioning', 'GPS Tracking', 'Phone Charger'],
-      price: 'From ₹14/km'
+      
     },
     {
       name: 'ETIOS',
@@ -17,7 +17,7 @@ const Fleet = () => {
       passengers: '1-4',
       luggage: '2 bags',
       features: ['Air Conditioning', 'GPS Tracking', 'Comfortable Seating'],
-      price: 'From ₹14/km'
+     
     },
     {
       name: 'SUV',
@@ -25,7 +25,7 @@ const Fleet = () => {
       passengers: '1-6',
       luggage: '4 bags',
       features: ['Luxury Interior', 'WiFi Available', 'Extra Space'],
-      price: 'From ₹19/km'
+      
     },
     {
       name: 'INNOVA',
@@ -33,7 +33,7 @@ const Fleet = () => {
       passengers: '1-8',
       luggage: '3 bags',
       features: ['Premium Comfort', 'Business Amenities', 'Professional Driver'],
-      price: 'From ₹20/km'
+     
     }
   ];
 

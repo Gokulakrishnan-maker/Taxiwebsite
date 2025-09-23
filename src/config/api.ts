@@ -1,5 +1,5 @@
 // Google Maps API Configuration
-export const GOOGLE_MAPS_API_KEY = 'AIzaSyCZZV63TgDVY9MErb5AZ_T5PLkfm4MYuEQ';
+export const GOOGLE_MAPS_API_KEY = 'AIzaSyDZ67BG2Wzd7B9Fcrwb4ZtJKiKLh0eaH68';
 
 // API endpoints and configuration
 export const API_CONFIG = {

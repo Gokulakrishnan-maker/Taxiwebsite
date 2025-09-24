@@ -41,7 +41,7 @@ const PrivacyPolicy = () => {
               "@type": "Organization",
               "name": "1waytaxi",
               "description": "Professional taxi service across Tamil Nadu",
-              "telephone": "+91-7810095200",
+              "telephone": "+91-7418332789",
               "email": "1waytaxi.booking@gmail.com"
             }
           })}
@@ -153,7 +153,7 @@ const PrivacyPolicy = () => {
                   For any privacy-related questions or concerns about 1waytaxi, please contact us:
                 </p>
                 <div className="space-y-2 text-gray-700">
-                  <p><strong>Phone:</strong> +91 7810095200</p>
+                  <p><strong>Phone:</strong> +91 7418332789</p>
                   <p><strong>Email:</strong> 1waytaxi.booking@gmail.com</p>
                   <p><strong>Address:</strong> Coimbatore, Tamil Nadu, India</p>
                 </div>

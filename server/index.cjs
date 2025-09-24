@@ -347,7 +347,7 @@ Driver Allowance: ₹${driverAllowance}
 Total Fare: ₹${fareEstimate}
 Additional: Toll charges extra
 Booking Time: ${currentDateTime}
-Contact: +91 78100 95200`;
+Contact: +91 74183 32789`;
 
     const mailOptions = {
       from: `1waytaxi Booking <${process.env.EMAIL_USER}>`,
@@ -406,7 +406,7 @@ Contact: +91 78100 95200`;
 
             <div style="text-align: center; color: #6b7280; font-size: 14px;">
               <p>Booking Time: ${currentDateTime}</p>
-              <p>Contact: +91 7810095200</p>
+              <p>Contact: +91 7418332789</p>
               <p>www.1waytaxi.com</p>
             </div>
           </div>
@@ -482,7 +482,7 @@ Enquiry Time: ${currentDateTime}
 
 Please respond to the customer promptly.
 
-Contact: +91 78100 95200
+Contact: +91 74183 32789
 www.1waytaxi.com`;
 
     const mailOptions = {
@@ -516,7 +516,7 @@ www.1waytaxi.com`;
 
             <div style="text-align: center; color: #6b7280; font-size: 14px; margin-top: 20px;">
               <p>Enquiry Time: ${currentDateTime}</p>
-              <p>Contact: +91 7810095200</p>
+              <p>Contact: +91 7418332789</p>
               <p>www.1waytaxi.com</p>
             </div>
           </div>

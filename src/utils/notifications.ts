@@ -239,7 +239,7 @@ export const formatWhatsAppEnquiryMessage = (booking: BookingEnquiry): string =>
 
 ⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
 
-📞 *Contact Support:* +91 7810095200
+📞 *Contact Support:* +91 7418332789
  🌐 *Website:* www.1waytaxi.com
 `;
 
@@ -275,7 +275,7 @@ We have received your booking enquiry! 📋
 Our team will contact you shortly to confirm your booking and provide driver details.
 
 📞 *Contact Us:*
-• Phone: +91 7810095200
+• Phone: +91 7418332789
 • Email: 1waytaxi.booking@gmail.com
 • Website: www.1waytaxi.com
 
@@ -313,8 +313,8 @@ Your booking has been confirmed! ✅
 • Please be ready at the pickup location on time
 
 📞 *24/7 Support:*
-• Phone: +91 7810095200
-• WhatsApp: +91 7810095200
+• Phone: +91 7418332789
+• WhatsApp: +91 7418332789
 • Email: 1waytaxi.booking@gmail.com
 
 Thank you for choosing 1waytaxi! 🙏
@@ -346,7 +346,7 @@ Thanks for booking 1waytaxi! 🙏
 • Vehicle: ${booking.vehicleType}
 • For Customer Intimation:Toll Gate, Permit, and Hill Station charges extra.
 
-📞 *Contact:* +91 7810095200
+📞 *Contact:* +91 7418332789
 🌐 *Website:* www.1waytaxi.com
 ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
@@ -378,7 +378,7 @@ ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
 ⏰ *Enquiry Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
 
-📞 *Contact:* +91 7810095200`;
+📞 *Contact:* +91 7418332789`;
 };
 
 // Format booking confirmation for Telegram
@@ -406,13 +406,13 @@ ${booking.customerEmail ? `• Email: ${booking.customerEmail}` : ''}
 
 ⏰ *Confirmed Time:* ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
 
-📞 *Contact:* +91 7810095200`;
+📞 *Contact:* +91 7418332789`;
 };
 
 // Send WhatsApp enquiry notification
 export const sendWhatsAppEnquiryNotification = async (booking: BookingEnquiry): Promise<void> => {
   const message = formatWhatsAppEnquiryMessage(booking);
-  const whatsappUrl = `https://wa.me/917810095200?text=${message}`;
+  const whatsappUrl = `https://wa.me/917418332789?text=${message}`;
   
   console.log('📱 Sending WhatsApp enquiry notification...');
   console.log('📱 WhatsApp URL prepared for 1waytaxi team');
@@ -421,7 +421,7 @@ export const sendWhatsAppEnquiryNotification = async (booking: BookingEnquiry): 
   try {
     // Open WhatsApp in new tab to send enquiry to 1waytaxi team
     window.open(whatsappUrl, '_blank');
-    console.log('✅ WhatsApp enquiry notification opened for +91 7810095200');
+    console.log('✅ WhatsApp enquiry notification opened for +91 7418332789');
   } catch (error) {
     console.error('❌ Error sending WhatsApp enquiry notification:', error);
   }
@@ -453,7 +453,7 @@ export const sendCustomerWhatsAppEnquiryNotification = async (booking: BookingEn
 // Send WhatsApp confirmation notification
 export const sendWhatsAppConfirmationNotification = async (booking: BookingEnquiry): Promise<void> => {
   const message = formatWhatsAppConfirmationMessage(booking);
-  const whatsappUrl = `https://wa.me/917810095200?text=${message}`;
+  const whatsappUrl = `https://wa.me/917418332789?text=${message}`;
   
   console.log('📱 Sending WhatsApp confirmation notification...');
   console.log('📱 WhatsApp URL prepared for 1waytaxi team');
@@ -466,7 +466,7 @@ export const sendWhatsAppConfirmationNotification = async (booking: BookingEnqui
       console.log('✅ Business WhatsApp tab opened successfully');
     }, 500);
     
-    console.log('✅ WhatsApp confirmation notification opened for +91 7810095200');
+    console.log('✅ WhatsApp confirmation notification opened for +91 7418332789');
   } catch (error) {
     console.error('❌ Error sending WhatsApp confirmation notification:', error);
   }

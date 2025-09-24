@@ -69,7 +69,7 @@ const Header = () => {
             >
               <Phone className="h-4 w-4" />
             </motion.div>
-            <span className="font-semibold">+91 7810095200</span>
+            <span className="font-semibold">+91 7418332789</span>
           </motion.div>
 
           {/* Mobile Menu Button */}
@@ -103,7 +103,7 @@ const Header = () => {
               {/* Mobile Phone */}
               <div className="flex items-center space-x-2 text-blue-600 bg-blue-50 px-3 py-2 rounded-lg">
                 <Phone className="h-4 w-4 animate-bounce" />
-                <span className="font-semibold">+91 7810095200</span>
+                <span className="font-semibold">+91 7418332789</span>
               </div>
             </nav>
           </motion.div>

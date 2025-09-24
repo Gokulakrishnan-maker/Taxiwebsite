@@ -275,7 +275,7 @@ const Hero = () => {
         setTimeout(() => {
           const customerMessage = formatCustomerWhatsAppConfirmationMessage(bookingData);
           const customerPhone = bookingData.customerPhone!.replace(/\D/g, '');
-          const formattedPhone = customerPhone.startsWith('91') ? customerPhone : `91${customerPhone}`;
+          const businessWhatsAppUrl = `https://wa.me/917418332789?text=${businessMessage}`;
           const customerWhatsAppUrl = `https://wa.me/${formattedPhone}?text=${encodeURIComponent(customerMessage)}`;
 
           

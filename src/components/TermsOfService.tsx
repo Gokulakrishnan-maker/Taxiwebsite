@@ -41,7 +41,7 @@ const TermsOfService = () => {
               "@type": "Organization",
               "name": "1waytaxi",
               "description": "Licensed taxi service across Tamil Nadu with transparent pricing",
-              "telephone": "+91-7810095200",
+              "telephone": "+91-7418332789",
               "email": "1waytaxi.booking@gmail.com",
               "areaServed": "Tamil Nadu, India"
             }
@@ -171,7 +171,7 @@ const TermsOfService = () => {
                   For any legal questions or concerns regarding these terms:
                 </p>
                 <div className="space-y-2 text-gray-700">
-                  <p><strong>Phone:</strong> +91 7810095200</p>
+                  <p><strong>Phone:</strong> +91 7418332789</p>
                   <p><strong>Email:</strong> 1waytaxi.booking@gmail.com</p>
                   <p><strong>Address:</strong> Coimbatore, Tamil Nadu, India</p>
                 </div>

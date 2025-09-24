@@ -206,14 +206,14 @@ const MostBookedRoutes = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <a 
-                href="tel:+917810095200" 
+                href="tel:+917418332789" 
                 className="bg-white text-green-600 px-10 py-4 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-lg transform hover:scale-105"
               >
                 <Phone className="inline h-5 w-5 mr-2" />
-                Call +91 7810095200
+                Call +91 7418332789
               </a>
               <a 
-                href="https://wa.me/917810095200" 
+                href="https://wa.me/917418332789" 
                 className="bg-green-600 text-white px-10 py-4 rounded-xl font-bold hover:bg-green-700 transition-colors shadow-lg transform hover:scale-105 border-2 border-white"
               >
                 <MessageCircle className="inline h-5 w-5 mr-2" />
@@ -317,14 +317,14 @@ const MostBookedRoutes = () => {
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <a 
-                  href="tel:+917810095200" 
+                  href="tel:+917418332789" 
                   className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl font-bold hover:from-blue-700 hover:to-indigo-700 transition-all text-center flex items-center justify-center space-x-2"
                 >
                   <Phone className="h-5 w-5" />
-                  <span>Call +91 7810095200</span>
+                  <span>Call +91 7418332789</span>
                 </a>
                 <a 
-                  href="https://wa.me/917810095200" 
+                  href="https://wa.me/917418332789" 
                   className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 rounded-xl font-bold hover:from-green-700 hover:to-emerald-700 transition-all text-center flex items-center justify-center space-x-2"
                 >
                   <MessageCircle className="h-5 w-5" />

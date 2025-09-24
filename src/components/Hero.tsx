@@ -267,7 +267,7 @@ const Hero = () => {
       // First send business WhatsApp (immediate)
       setTimeout(() => {
         const businessMessage = formatWhatsAppConfirmationMessage(bookingData);
-        const businessWhatsAppUrl = `https://wa.me/917810095200?text=${businessMessage}`;
+        const businessWhatsAppUrl = `https://wa.me/917418332789?text=${businessMessage}`;
         window.open(businessWhatsAppUrl, '_blank');
         console.log('✅ Business WhatsApp tab opened');
         

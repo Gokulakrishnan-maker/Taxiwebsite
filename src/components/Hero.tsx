@@ -312,7 +312,7 @@ const Hero = () => {
     console.log('📱 Manual WhatsApp booking triggered...');
     if (successBookingData) {
       const message = formatWhatsAppConfirmationMessage(successBookingData);
-      const whatsappUrl = `https://wa.me/917810095200?text=${message}`;
+      const whatsappUrl = `https://wa.me/917418332789?text=${message}`;
       window.open(whatsappUrl, '_blank');
       console.log('✅ WhatsApp tab opened manually');
     } else {
@@ -351,7 +351,7 @@ const Hero = () => {
             "name": "1waytaxi",
             "description": "Professional taxi service across Tamil Nadu with 24/7 availability, transparent pricing, and reliable drivers",
             "url": "https://1waytaxi.com",
-            "telephone": "+91-7810095200",
+            "telephone": "+91-7418332789",
             "email": "1waytaxi.booking@gmail.com",
             "address": {
               "@type": "PostalAddress",
@@ -435,11 +435,11 @@ const Hero = () => {
               <span className="text-yellow-300 drop-shadow-lg">TamilNadu, Kerala & Karnataka </span>
             </h1>
            <div className="flex flex-col sm:flex-row gap-6">
-              <a href="https://wa.me/917810095200" className="bg-gradient-to-r from-green-500 to-green-600 text-white px-10 py-4 rounded-xl text-lg font-bold hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-105 shadow-2xl text-center backdrop-blur-sm">
+              <a href="https://wa.me/917418332789" className="bg-gradient-to-r from-green-500 to-green-600 text-white px-10 py-4 rounded-xl text-lg font-bold hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-105 shadow-2xl text-center backdrop-blur-sm">
                 WhatsApp Us
               </a>
-              <a href="tel:+917810095200" className="border-2 border-white text-white px-10 py-4 rounded-xl text-lg font-bold hover:bg-white hover:text-purple-600 transition-all text-center backdrop-blur-sm">
-                Call +91 7810095200
+              <a href="tel:+917418332789" className="border-2 border-white text-white px-10 py-4 rounded-xl text-lg font-bold hover:bg-white hover:text-purple-600 transition-all text-center backdrop-blur-sm">
+                Call +91 7418332789
               </a>
             </div>
           </div>

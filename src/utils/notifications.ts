@@ -1,8 +1,10 @@
 // Notification utilities for booking enquiries
 
 // Telegram Bot Configuration
-const TELEGRAM_BOT_TOKEN = '8460050395:AAHQY-ulYMTbXBi1aksIGjoJvAJC8mirDHk'; // Replace with your actual bot token from @BotFather
-const TELEGRAM_CHAT_ID = '8397058035'; // Replace with your actual chat ID (group or personal chat)
+const TELEGRAM_BOTS = [
+  { token: '8460050395:AAHQY-ulYMTbXBi1aksIGjoJvAJC8mirDHk', chatId: '8397058035' }, // Bot 1
+  { token: '7979449753:AAFtibFHdcDmfbJNEDByWcEP9CB331UU4qE', chatId: '8417599824' } // Bot 2
+];
 
 // API base URL for backend
 const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:3001/api' : '/api';
@@ -17,37 +19,41 @@ export const generateBookingId = (): string => {
   return result;
 };
 
-// Send Telegram notification
+// Send Telegram notification (supports multiple bots)
 export const sendTelegramNotification = async (message: string): Promise<boolean> => {
   try {
-    console.log('📱 Sending Telegram notification...');
-    
-    const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-    
-    const response = await fetch(telegramUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: message,
-        parse_mode: 'Markdown'
-      })
-    });
+    console.log(`📱 Sending Telegram notification to ${TELEGRAM_BOTS.length} bots...`);
 
-    const result = await response.json();
-    
-    if (result.ok) {
-      console.log('✅ Telegram notification sent successfully');
-      console.log('📱 Message sent to Telegram chat:', TELEGRAM_CHAT_ID);
-      return true;
-    } else {
-      console.error('❌ Telegram notification failed:', result.description);
-      return false;
-    }
+    const results = await Promise.all(
+      TELEGRAM_BOTS.map(async ({ token, chatId }, index) => {
+        const telegramUrl = `https://api.telegram.org/bot${token}/sendMessage`;
+
+        const response = await fetch(telegramUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: message,
+            parse_mode: 'Markdown',
+          }),
+        });
+
+        const result = await response.json();
+
+        if (result.ok) {
+          console.log(`✅ Telegram Bot ${index + 1} sent successfully (Chat ID: ${chatId})`);
+        } else {
+          console.error(`❌ Telegram Bot ${index + 1} failed:`, result.description);
+        }
+
+        return result.ok;
+      })
+    );
+
+    // Return true if at least one succeeded
+    return results.some(success => success);
   } catch (error) {
-    console.error('❌ Error sending Telegram notification:', error);
+    console.error('❌ Error sending Telegram notifications:', error);
     return false;
   }
 };
@@ -69,6 +75,7 @@ export interface BookingEnquiry {
   vehicleRate?: number;
   driverAllowance?: number;
 }
+
 
 // Send booking enquiry email via backend
 export const sendBookingEnquiryEmail = async (booking: BookingEnquiry): Promise<boolean> => {
